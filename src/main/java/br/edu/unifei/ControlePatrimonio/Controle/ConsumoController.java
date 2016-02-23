@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Patrimonio;
-import br.edu.unifei.ControlePatrimonio.Modelo.Persistencia.PatrimonioDAO;
+import br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Consumo;
+import br.edu.unifei.ControlePatrimonio.Modelo.Persistencia.ConsumoDAO;
 
 @WebServlet("/consumo.do")
 public class ConsumoController extends HttpServlet {
@@ -27,17 +27,17 @@ public class ConsumoController extends HttpServlet {
 			dispatcher.forward(req, resp);
 
 		} else if (acao.equals("listar")) {
-			PatrimonioDAO patDAO = new PatrimonioDAO();
-			List<Patrimonio> lista= null;
+			ConsumoDAO conDAO = new ConsumoDAO();
+			List<Consumo> lista= null;
 			
 			try {
-				lista = patDAO.listarTodos();
+				lista = conDAO.listarTodos();
 			} catch (SQLException e) {
 				System.out.println("Erro ao carregar lista de patrimonio.");
 				e.printStackTrace();
 			}
 		
-			req.setAttribute("lista", lista);
+			req.setAttribute("listaCon", lista);
 			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/listaConsumo.jsp");
 			dispatcher.forward(req, resp);
 			
@@ -48,37 +48,35 @@ public class ConsumoController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		String descricao_fabricante_modelo = req.getParameter("descricao");
+		String id = req.getParameter("id");
+		String nome = req.getParameter("nome");
 		String status = req.getParameter("status");
 		String observacao = req.getParameter("observacao");
-		String numero_serie = req.getParameter("numero_serie");
-		String locacao = req.getParameter("locacao");
 		String localizacao = req.getParameter("localizacao");
 
-		Patrimonio pat = new Patrimonio();
+		Consumo con = new Consumo();
 
-		pat.setId(0);
-		pat.setDescricao_fabricante_modelo(descricao_fabricante_modelo);
+		con.setId(0);
+		
 		if (status.equals("Ativo")) {
-			pat.setStatus(1);
+			con.setStatus(1);
 		} else
-			pat.setStatus(0);
-		pat.setStatus(Integer.parseInt(status));
-		pat.setLocacao(locacao);
-		pat.setLocalizacao(localizacao);
-		pat.setNumero_serie(numero_serie);
-		pat.setObservacao(observacao);
+			con.setStatus(0);
+		con.setStatus(Integer.parseInt(status));
+		con.setNome(nome);
+		con.setObservacao(observacao);
+		con.setLocalizacao(localizacao);
 
-		PatrimonioDAO patDAO = new PatrimonioDAO();
+		ConsumoDAO conDAO = new ConsumoDAO();
 
 		try {
-			patDAO.inserir(pat);
+			conDAO.inserir(con);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Erro na inserção de patrimônio.");
 			e.printStackTrace();
 		}
-		resp.sendRedirect("patrimonio.do?acao=listar");
+		resp.sendRedirect("consumo.do?acao=listar");
 
 	}
 
