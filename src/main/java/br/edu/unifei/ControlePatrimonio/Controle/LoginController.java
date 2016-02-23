@@ -40,6 +40,7 @@ public class LoginController extends HttpServlet {
 		usu.setTipo(tipo);
 		//System.out.println("tipo usuario " + usu.getTipo());
 		usu.setSenha(senha);
+		
 
 		Usuario usuAUT=null;
 		try {
@@ -61,6 +62,8 @@ public class LoginController extends HttpServlet {
 						  resp);
 				
 			}
+			
+			System.out.println("tipo " + usu.getTipo());
 			/*
 			 * if(usuAUT.getAcesso()==1){ sessao.setAttribute("funAUT", funAUT);
 			 * sessao.setMaxInactiveInterval(60*5);

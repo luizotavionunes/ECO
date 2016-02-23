@@ -5,6 +5,9 @@
 	import="br.edu.unifei.ControlePatrimonio.Modelo.Persistencia.PatrimonioDAO"%>
 <%@page
 	import="br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Patrimonio"%>
+		
+<%@page
+	import="br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Usuario"%>
 
 <%@page import="java.util.List"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -21,7 +24,14 @@
 	</div>
 
 	<div id="nav">
+	<%Usuario usu = (Usuario) request.getSession().getAttribute("usuAUT");
+	if(usu.getTipo()==3){
+	
+	%>
+	<%@include file="menuADM.jsp"%>
+	<% } else { %>
 		<%@include file="menu.jsp"%>
+		<% } %>
 	</div>
 
 	<div id="section">

@@ -7,17 +7,36 @@
 	import="br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Patrimonio"%>
 
 <%@page import="java.util.List"%>
+	<%@page
+	import="br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Usuario"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
 </head>
+
 <body>
 
-<h1>Formulário para Cadastro de Patrimônio</h1>
+	<div id="footer">
+		<h1>SISTEMA DE CONTROLE DE PATRIMÔNIO ECO</h1>
+	</div>
 
-	<form action="patrimonio.do?acao=busca" method="post">
+	<div id="nav">
+	<%Usuario usu = (Usuario) request.getSession().getAttribute("usuAUT");
+	if(usu.getTipo()==3){
+	
+	%>
+	<%@include file="menuADM.jsp"%>
+	<% } else { %>
+		<%@include file="menu.jsp"%>
+		<% } %>
+	</div>
+
+	<div id="section">
+	<h1>Formulário para Cadastro de Patrimônio</h1>
+
+	<form action="patrimonio.do?acao=buscarefinada" method="post">
 		<fieldset>
 
 			<div class="formLab">Número de Série:</div>
@@ -97,7 +116,11 @@ if(listaPat!=null){ %>
 				%>
 			</td>
 			<td><%=f.getObservacao() %></td>
-
+			
+			<% if(usu.getTipo()==3){ %>
+			<td><a href="patrimonio.do?acao=alterar&serial=<%=f.getNumero_serie() %>" >Editar</a>
+			<td><a href="patrimonio.do?acao=remover&serial=<%=f.getNumero_serie() %>" >Excluir</a>
+			<%} %>
 		</tr>
 		<%
 			}
@@ -107,5 +130,11 @@ if(listaPat!=null){ %>
 	</table></p>
 	
 	<%} %>
+	
+	</div>
+	
+	<div id="footer">Copyright © Unifei ECO</div>
+				
 </body>
+
 </html>
