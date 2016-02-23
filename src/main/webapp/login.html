@@ -2,31 +2,36 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-
-
+<link type="text/css" rel="stylesheet" href="css/estilologin.css" /> <!-- Não esta funcionando por algum motivo -->
+<title>Login do Sistema</title>
+<!--<style rel="stylesheet" type="text/css" media="all">
+#principal {
+    width: 200px;
+    height: 200px;
+    margin-left: -100px;
+    margin-top: -300px; 
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border: 3px solid black;
+}
+</style>-->
 </head>
 <body>
 
-	<form align="center"  action="logincontroller.do" method="POST">
-		<fieldset >
+	<form align="center" action="logincontroller.do" method="POST">
+		<fieldset id="principal">
 			<legend>Login do Sistema</legend>
-			Nome: <input type="text" name="nome"></br></br>
-			Tipo: <select name="tipo" size="1">
-						<option value="#">Defina o nível de acesso 
-				
-						<option value="1"> Anistiado
-  
-						<option value="2"> Professor
-  
-						<option value="3"> Master
- 
-				</select>
-			</br></br>
-			Senha: <input type="password" name="senha"> 
-				   <input type="submit" value="Login"></br></br>
-		
-				</fieldset>
+			Nome: <input type="text" name="nome"></br> </br> Tipo: <select
+				name="tipo" size="1">
+				<option value="#">Defina o nível de acesso
+				<option value="1">Anistiado
+				<option value="2">Professor
+				<option value="3">Master
+			</select> </br> </br> Senha: <input type="password" name="senha"> <input
+				type="submit" value="Login"></br> </br>
+
+		</fieldset>
 
 	</form>
 
