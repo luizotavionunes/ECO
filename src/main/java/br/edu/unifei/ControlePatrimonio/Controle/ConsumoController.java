@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Consumo;
+import br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Patrimonio;
 import br.edu.unifei.ControlePatrimonio.Modelo.Persistencia.ConsumoDAO;
+import br.edu.unifei.ControlePatrimonio.Modelo.Persistencia.PatrimonioDAO;;
 
 @WebServlet("/consumo.do")
 public class ConsumoController extends HttpServlet {
@@ -26,7 +28,12 @@ public class ConsumoController extends HttpServlet {
 			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/registraConsumo.jsp");
 			dispatcher.forward(req, resp);
 
-		} else if (acao.equals("listar")) {
+		}
+		else if(acao.equals("buscarefinada")) {
+			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/buscaConsumo.jsp");
+			dispatcher.forward(req, resp);	
+		}
+		else if (acao.equals("listar")) {
 			ConsumoDAO conDAO = new ConsumoDAO();
 			List<Consumo> lista= null;
 			
@@ -36,48 +43,69 @@ public class ConsumoController extends HttpServlet {
 				System.out.println("Erro ao carregar lista de patrimonio.");
 				e.printStackTrace();
 			}
+			
 		
 			req.setAttribute("listaCon", lista);
 			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/listaConsumo.jsp");
 			dispatcher.forward(req, resp);
-			
-
 		}
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		String id = req.getParameter("id");
-		String nome = req.getParameter("nome");
-		String status = req.getParameter("status");
-		String observacao = req.getParameter("observacao");
-		String localizacao = req.getParameter("localizacao");
-
-		Consumo con = new Consumo();
-
-		con.setId(0);
+		String acao = req.getParameter("acao");
 		
-		if (status.equals("Ativo")) {
-			con.setStatus(1);
-		} else
-			con.setStatus(0);
-		con.setStatus(Integer.parseInt(status));
-		con.setNome(nome);
-		con.setObservacao(observacao);
-		con.setLocalizacao(localizacao);
+		if (acao.equals("cad")) {		
+			String id = req.getParameter("id");
+			String nome = req.getParameter("nome");
+			String status = req.getParameter("status");
+			String observacao = req.getParameter("observacao");
+			String localizacao = req.getParameter("localizacao");
+			
+			Consumo con = new Consumo();
 
-		ConsumoDAO conDAO = new ConsumoDAO();
+			con.setId(0);
+			
+			if (status.equals("Ativo")) {
+				con.setStatus(1);
+			} else
+				con.setStatus(0);
+			con.setStatus(Integer.parseInt(status));
+			con.setNome(nome);
+			con.setObservacao(observacao);
+			con.setLocalizacao(localizacao);
 
-		try {
-			conDAO.inserir(con);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Erro na inserção de patrimônio.");
-			e.printStackTrace();
+			ConsumoDAO conDAO = new ConsumoDAO();
+
+			try {
+				conDAO.inserir(con);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				System.out.println("Erro na inserção de consu,o.");
+				e.printStackTrace();
+			}
+			resp.sendRedirect("consumo.do?acao=listar");
 		}
-		resp.sendRedirect("consumo.do?acao=listar");
-
+		
+		else if(acao.equals("busca")){
+			List<Consumo> lista;
+			String nome = req.getParameter("nome");
+			String status = req.getParameter("status");
+			String localizacao = req.getParameter("localizacao");
+			
+			ConsumoDAO conDao = new ConsumoDAO();
+			try {
+				 lista = conDao.listaBusca(nome, status,  localizacao);
+				req.setAttribute("listaConRefinada", lista);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/buscaConsumo.jsp");
+			dispatcher.forward(req, resp);
+		}
 	}
 
 	@Override

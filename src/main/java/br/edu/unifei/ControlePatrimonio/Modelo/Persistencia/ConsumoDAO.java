@@ -131,83 +131,60 @@ public class ConsumoDAO {
 		return null;	
 	}
 		
-	
-	public List<Consumo> buscaPorSala(String localizacao) throws SQLException {
-		String sql = "SELECT * FROM consumo where localizacao=?";
-		PreparedStatement preparador = con.prepareStatement(sql);
-		List<Consumo> lista = new ArrayList<Consumo>();
-		try {
-			preparador.setString(1, localizacao);
-			ResultSet resultado = preparador.executeQuery();
-			while (resultado.next()) {
-				Consumo consumo = new Consumo();
-				consumo.setId(resultado.getInt("id"));
-				consumo.setLocalizacao(resultado.getString("localizacao"));
-				consumo.setNome(resultado.getString("nome"));
-				consumo.setObservacao(resultado.getString("observacao"));
-				consumo.setStatus(resultado.getInt("status"));
-				lista.add(consumo);
-				
-			}
-			return lista;
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				preparador.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+	public List<Consumo> listaBusca(String nome, String status,  String localizacao) throws SQLException{
+		System.out.println("statusFRomServ " + status);
+		String sql = null;
+		int status_ok;
+		if(status.equals("0")){
+			status_ok = 0;
+			status=null;
+		}else
+			status_ok = Integer.parseInt(status);
+		
+		
+		System.out.println("nome "+ nome + " status " + status + " localizacao " + localizacao);
+		
+		if (nome == null && status == null && localizacao != null)
+		{
+			sql = "SELECT * from consumo WHERE localizacao LIKE '%"+localizacao+"%'";
 		}
-		return null;
-	}
-	
-	public List<Consumo> buscaPorNome(String nome) throws SQLException {
-		String sql = "SELECT * FROM consumo where nome='%?%'";
-		PreparedStatement preparador = con.prepareStatement(sql);
-		List<Consumo> lista = new ArrayList<Consumo>();
-		try {
-			preparador.setString(1, nome);
-			ResultSet resultado = preparador.executeQuery();
-			while (resultado.next()) {
-				Consumo consumo = new Consumo();
-				consumo.setId(resultado.getInt("id"));
-				consumo.setLocalizacao(resultado.getString("localizacao"));
-				consumo.setNome(resultado.getString("nome"));
-				consumo.setObservacao(resultado.getString("observacao"));
-				consumo.setStatus(resultado.getInt("status"));
-				lista.add(consumo);
-				
-			}
-			return lista;
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				preparador.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		else if(nome == null && status != null && localizacao == null)
+		{
+			sql = "SELECT * from consumo WHERE status LIKE '%"+status_ok+"%'";
 		}
-		return null;
-	}	
-	
-	public List<Consumo> buscaPorStatus(int status) throws SQLException {
-		String sql = "SELECT * FROM consumo where status=?";
+		else if(nome != null && status == null && localizacao == null)
+		{
+			sql = "SELECT * from consumo WHERE nome LIKE '%"+nome+"%'";
+		}
+		else if(nome == null && status != null && localizacao != null)
+		{
+			sql = "SELECT * from consumo WHERE status LIKE '%"+status_ok+"%' AND localizacao LIKE '%"+localizacao+"%'";
+		}
+		else if(nome != null && status == null && localizacao != null)
+		{
+			sql = "SELECT * from consumo WHERE nome LIKE '%"+nome+"%' AND localizacao LIKE '%"+localizacao+"%'";
+		}
+		else if(nome != null && status != null && localizacao == null)
+		{
+			sql = "SELECT * from consumo WHERE nome LIKE '%"+nome+"%' AND status LIKE '%"+status_ok+"%'";
+		}
+		else if(nome != null && status != null && localizacao != null)
+		{
+			sql = "SELECT * FROM consumo WHERE nome Like '%"+nome+"%' AND status LIKE '%"+status_ok+"%' AND localizacao LIKE '%"+localizacao+"%'";
+		}
+		
 		PreparedStatement preparador = con.prepareStatement(sql);
+		System.out.println("Query "+ sql);
 		List<Consumo> lista = new ArrayList<Consumo>();
 		try {
-			preparador.setInt(1, status);
 			ResultSet resultado = preparador.executeQuery();
 			while (resultado.next()) {
 				Consumo consumo = new Consumo();
 				consumo.setId(resultado.getInt("id"));
-				consumo.setLocalizacao(resultado.getString("localizacao"));
-				consumo.setNome(resultado.getString("nome"));
-				consumo.setObservacao(resultado.getString("observacao"));
 				consumo.setStatus(resultado.getInt("status"));
+				consumo.setLocalizacao(resultado.getString("localizacao"));
+				consumo.setObservacao(resultado.getString("observacao"));
+				consumo.setNome(resultado.getString("nome"));
 				lista.add(consumo);
 				
 			}
