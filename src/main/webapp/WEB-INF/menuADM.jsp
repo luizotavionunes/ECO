@@ -38,13 +38,13 @@
 <ul id="nav">
  	<li><a href="#">Inserir Patrimônio</a>
       <ul>
-        <li><a href="#">Consumo</a></li>
+        <li><a href="consumo.do?acao=cad">Consumo</a></li>
         <li><a href="patrimonio.do?acao=cad">Patrimônio</a></li>
       </ul>
     </li>
     <li><a href="#">Consultar Patrimônio</a>
       <ul>
-        <li><a href="#">Consumo</a></li>
+        <li><a href="consumo.do?acao=buscarefinada">Consumo</a></li>
         <li><a href="patrimonio.do?acao=buscarefinada">Patrimônio</a></li>
       </ul>
     </li>

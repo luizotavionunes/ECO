@@ -5,6 +5,8 @@
 	import="br.edu.unifei.ControlePatrimonio.Modelo.Persistencia.ConsumoDAO"%>
 <%@page
 	import="br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Consumo"%>
+	<%@page
+	import="br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Usuario"%>
 
 <%@page import="java.util.List"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -14,6 +16,23 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+	<div id="footer">
+		<h1>SISTEMA DE CONTROLE DE PATRIMÔNIO ECO</h1>
+	</div>
+
+	<div id="nav">
+	<%Usuario usu = (Usuario) request.getSession().getAttribute("usuAUT");
+	if(usu.getTipo()==3){
+	
+	%>
+	<%@include file="menuADM.jsp"%>
+	<% } else { %>
+		<%@include file="menu.jsp"%>
+		<% } %>
+	</div>
+
+	<div id="section">
 
 <h1>Formulário para Busca de Iténs de Consumo</h1>
 
@@ -96,5 +115,6 @@ if(listaCon!=null){ %>
 	</table></p>
 	
 	<%} %>
+	</div>
 </body>
 </html>

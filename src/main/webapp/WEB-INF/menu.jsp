@@ -36,8 +36,8 @@
 <ul id="nav">
     <li><a href="#">Consultar Patrimônio</a>
       <ul>
-        <li><a href="#">Consumo</a></li>
-        <li><a href="patrimonio.do?acao=listar">Patrimônio</a></li>
+        <li><a href="consumo.do?acao=buscarefinada">Consumo</a></li>
+        <li><a href="patrimonio.do?acao=buscarefinada">Patrimônio</a></li>
       </ul>
     </li>
     <li><a href="#">Atualizar Patrimônio</a>

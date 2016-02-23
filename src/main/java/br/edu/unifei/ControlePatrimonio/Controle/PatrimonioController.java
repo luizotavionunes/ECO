@@ -155,7 +155,7 @@ public class PatrimonioController extends HttpServlet {
 		PatrimonioDAO patDAO = new PatrimonioDAO();
 
 		try {
-			patDAO.inserir(pat);
+			patDAO.salvar(pat);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Erro na inserção de patrimônio.");
