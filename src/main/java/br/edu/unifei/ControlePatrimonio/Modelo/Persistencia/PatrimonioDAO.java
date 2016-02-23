@@ -140,19 +140,24 @@ public class PatrimonioDAO {
 	}
 	
 	public List<Patrimonio> listaBusca(String descricao_fabricante_modelo, String status, String numero_serie, String localizacao) throws SQLException{
-		
+		System.out.println("statusFRomServ " + status);
 		String sql = null;
 		int status_ok;
-		if(status == null)
+		if(status.equals("0")){
 			status_ok = 0;
-		else
+			status=null;
+		}else
 			status_ok = Integer.parseInt(status);
+		
+		
+		System.out.println("descricao "+ descricao_fabricante_modelo + " status " + status + " numero serie " + numero_serie + " localizacao " + localizacao);
 		
 		if( descricao_fabricante_modelo == null && status == null && numero_serie == null && localizacao != null){
 			sql = "SELECT * from patrimonio WHERE localizacao='%"+localizacao+"%'";
 			
 		}else if(descricao_fabricante_modelo == null && status == null && numero_serie != null && localizacao == null){
 			sql  = "SELECT * from patrimonio WHERE numero_serie='%"+numero_serie+"%'";
+			System.out.println("passou aqui");
 			
 		}else if(descricao_fabricante_modelo == null && status != null && numero_serie == null && localizacao == null){
 			sql = "SELECT * from patrimonio WHERE status='"+status_ok+"'";
@@ -183,7 +188,7 @@ public class PatrimonioDAO {
 			
 		}else if(descricao_fabricante_modelo != null && status == null && numero_serie != null && localizacao != null){
 			sql = "SELECT * from patrimonio WHERE localizacao='%"+localizacao+"%' AND numero_serie='%"+numero_serie+"%' AND descricao_fabricante_modelo='%"+descricao_fabricante_modelo+"%'";
-			
+			//pegando aqui
 		}else if(descricao_fabricante_modelo != null && status != null && numero_serie != null && localizacao == null){
 			sql = "SELECT * from patrimonio WHERE status='"+status_ok+"' AND numero_serie='%"+numero_serie+"%' AND descricao_fabricante_modelo='%"+descricao_fabricante_modelo+"%'";
 			

@@ -44,7 +44,7 @@
 			<div class="formLab">Status:</div>
 			<div class="form">
 				<select name="status" size="1">
-					<option value="#">Sistema Ativo ou Inativo?
+					<option value="0">Sistema Ativo ou Inativo?
 
 						<option value="1">Ativo
 

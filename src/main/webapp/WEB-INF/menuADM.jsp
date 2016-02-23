@@ -39,7 +39,7 @@
  	<li><a href="#">Inserir Patrimônio</a>
       <ul>
         <li><a href="#">Consumo</a></li>
-        <li><a href="#">Patrimônio</a></li>
+        <li><a href="patrimonio.do?acao=cad">Patrimônio</a></li>
       </ul>
     </li>
     <li><a href="#">Remover Patrimônio</a>
@@ -51,7 +51,7 @@
     <li><a href="#">Consultar Patrimônio</a>
       <ul>
         <li><a href="#">Consumo</a></li>
-        <li><a href="patrimonio.do?acao=listar">Patrimônio</a></li>
+        <li><a href="patrimonio.do?acao=buscarefinada">Patrimônio</a></li>
       </ul>
     </li>
     <li><a href="#">Atualizar Patrimônio</a>

@@ -20,6 +20,9 @@ import br.edu.unifei.ControlePatrimonio.Modelo.Persistencia.PatrimonioDAO;
 
 @WebServlet("/patrimonio.do")
 public class PatrimonioController extends HttpServlet {
+	
+	
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// Obtendo ação desejada da URL acessada
@@ -56,14 +59,14 @@ public class PatrimonioController extends HttpServlet {
 			
 
 		} else if(acao.equals("buscarefinada")){
-			List<Patrimonio> lista = new ArrayList<>();
-			lista=(List)req.getAttribute("listaPatRefinada");
+			//List<Patrimonio> lista = new ArrayList<>();
+			//lista=(List)req.getAttribute("listaPatRefinada");
 			
-			for (int i = 0; i < lista.size(); i++) {
-				System.out.println("Numero de serie: " + lista.get(i).getNumero_serie() + " Descricao: "
-						+ lista.get(i).getDescricao_fabricante_modelo());
+			//for (int i = 0; i < lista.size(); i++) {
+			//	System.out.println("Numero de serie: " + lista.get(i).getNumero_serie() + " Descricao: "
+			//			+ lista.get(i).getDescricao_fabricante_modelo());
 
-			}
+		//	}
 			
 			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/buscaPatrimonio.jsp");
 			dispatcher.forward(req, resp);
@@ -109,7 +112,7 @@ public class PatrimonioController extends HttpServlet {
 		resp.sendRedirect("patrimonio.do?acao=listar");
 		
 		}else if(acao.equals("busca")){
-			
+			List<Patrimonio> lista;
 			String descricao_fabricante_modelo = req.getParameter("descricao");
 			String status = req.getParameter("status");
 			String numero_serie = req.getParameter("numero_serie");
@@ -117,7 +120,7 @@ public class PatrimonioController extends HttpServlet {
 			
 			PatrimonioDAO patDao = new PatrimonioDAO();
 			try {
-				List<Patrimonio> lista = patDao.listaBusca(descricao_fabricante_modelo, status, numero_serie, localizacao);
+				 lista = patDao.listaBusca(descricao_fabricante_modelo, status, numero_serie, localizacao);
 
 				for (int i = 0; i < lista.size(); i++) {
 					System.out.println("Numero de serie: " + lista.get(i).getNumero_serie() + " Descricao: "
@@ -130,7 +133,9 @@ public class PatrimonioController extends HttpServlet {
 				e.printStackTrace();
 			}
 			
-			resp.sendRedirect("patrimonio.do?acao=buscarefinada");
+			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/buscaPatrimonio.jsp");
+			dispatcher.forward(req, resp);
+			//resp.sendRedirect("patrimonio.do?acao=buscarefinada");
 			
 		}
 	}
