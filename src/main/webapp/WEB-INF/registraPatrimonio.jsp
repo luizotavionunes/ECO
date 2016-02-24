@@ -39,6 +39,13 @@
 
 	<form action="patrimonio.do?acao=cad" method="post">
 		<fieldset>
+		
+		<div class="formLab">Id:</div>
+			<div class="form">
+				<input type="text" name="id" readonly="readonly" value="<%= Pat.getId() %>" />
+			</div>
+			<br />
+			<br />
 
 			<div class="formLab">Número de Série:</div>
 			<div class="form">
@@ -70,7 +77,7 @@
 
 			<div class="formLab">Status:</div>
 			<div class="form">
-				<select name="status" size="1" value="<%= Pat.getStatus() %>">
+				<select name="status" size="1">
 					<option value="#">Sistema Ativo ou Inativo?
 
 						<option value="1">Ativo

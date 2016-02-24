@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Patrimonio;
 import br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Usuario;
 
 
@@ -67,12 +68,13 @@ public class UsuarioDAO {
 	}
 	
 	public boolean alterar(Usuario usuario) throws SQLException{
-		String sql = "UPDATE usuario set tipo=?, senha=?";
+		String sql = "UPDATE usuario set tipo=?, senha=? WHERE id=?";
 		PreparedStatement preparador = con.prepareStatement(sql);
 
 		try {
 			preparador.setInt(1, usuario.getTipo());
 			preparador.setString(2, usuario.getSenha());
+			preparador.setInt(3, usuario.getId());
 			preparador.execute();
 
 			return true;
@@ -151,4 +153,47 @@ public class UsuarioDAO {
 		}
 		return null;
 	}
+	
+	public void salvar(Usuario usu) throws SQLException{
+		if(usu.getId() !=0 && usu !=null)
+			alterar(usu);
+		else
+			inserir(usu);		
+		
+	}
+	
+	
+	public Usuario buscaId(int id) throws SQLException{
+		Usuario usu = new Usuario();
+		
+		String sql = "SELECT * FROM usuario WHERE id='"+id+"'";
+		PreparedStatement preparador = con.prepareStatement(sql);
+		System.out.println("Query "+ sql);
+		try {
+			ResultSet resultado = preparador.executeQuery();
+			if (resultado.next()) {
+				usu.setId(resultado.getInt("id"));
+				usu.setSenha(resultado.getString("senha"));
+				usu.setTipo(resultado.getInt("tipo"));
+			
+				
+			}
+			return usu;
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				preparador.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return null;
+		
+		
+	}
+	
 }
