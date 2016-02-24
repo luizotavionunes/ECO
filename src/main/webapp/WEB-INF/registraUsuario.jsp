@@ -32,69 +32,33 @@
 		<% } %>
 	</div>
 
-<% Patrimonio Pat = (Patrimonio) request.getAttribute("patrimonioEdit"); %>
+<% Usuario usuAux = (Usuario) request.getAttribute("usuCad"); %>
 
 <div id="section">
 	<h1>Formulário para Cadastro de Patrimônio</h1>
 
-	<form action="patrimonio.do?acao=cad" method="post">
+	<form action="usuario.do" method="post">
 		<fieldset>
 		
 		<div class="formLab">Id:</div>
 			<div class="form">
-				<input type="text" name="id" readonly="readonly" value="<%= Pat.getId() %>" />
+				<input type="text" name="id" readonly="readonly" value="<%= usuAux.getId() %>" />
 			</div>
 			<br />
 			<br />
 
-			<div class="formLab">Número de Série:</div>
+			<div class="formLab">Tipo:</div>
 			<div class="form">
-				<input type="text" name="numero_serie" value="<%= Pat.getNumero_serie() %>" />
+				<input type="text" name="tipo" value="<%= usuAux.getTipo() %>" />
 			</div>
 			<br />
 			<br />
 
-			<div class="formLab">Descrição / Fabricante / Modelo:</div>
+			<div class="formLab">Senha:</div>
 			<div class="form">
-				<input type="text" name="descricao" value="<%= Pat.getDescricao_fabricante_modelo() %>"/>
+				<input type="text" name="senha" value="<%= usuAux.getSenha() %>"/>
 			</div>
 			<br />
-			<br />
-
-			<div class="formLab">Localização:</div>
-			<div class="form">
-				<input type="text" name="localizacao" value="<%= Pat.getLocalizacao() %>" />
-			</div>
-			<br />
-			<br />
-
-			<div class="formLab">Locação:</div>
-			<div class="form">
-				<input type="text" name="locacao" value="<%= Pat.getLocacao() %>" />
-			</div>
-			<br />
-			<br />
-
-			<div class="formLab">Status:</div>
-			<div class="form">
-				<select name="status" size="1">
-					<option value="#">Sistema Ativo ou Inativo?
-
-						<option value="1">Ativo
-
-						<option value="2">Inativo
-				</select>
-			</div>
-			<br />
-			<br />
-
-			<div class="formLab">Observação:</div>
-			<div class="form">
-				<textarea style="overflow: auto; resize: none" name="observacao"
-					cols=35 rows=3 value="<%= Pat.getObservacao() %>">
-
-			</textarea>
-			</div>
 			<br />
 			<br /> <div class="formLab"><input type="submit" maxlenght="100" value="Salvar"></div>
 		</fieldset>

@@ -45,18 +45,19 @@ public class PatrimonioController extends HttpServlet {
 
 		} else if(acao.equals("remover")){
 			String serial= req.getParameter("serial");
+			int removido=0;
 			PatrimonioDAO patDAO = new PatrimonioDAO();
 			try {
 				if(patDAO.remove(serial))
-				resp.getWriter().print("<script> window.alert('Removido com Sucesso!'); </script>");
+						removido=1;
 				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/homeADM.jsp");
-			dispatcher.forward(req, resp);
+			//if(removido==1)
+			resp.getWriter().print("<script> window.alert('Item removido!');</script>");
+			resp.sendRedirect("patrimonio.do?acao=buscarefinada");
 			
 		} else if (acao.equals("listar")) {
 			PatrimonioDAO patDAO = new PatrimonioDAO();
@@ -69,11 +70,11 @@ public class PatrimonioController extends HttpServlet {
 				e.printStackTrace();
 			}
 			
-			for (int i = 0; i < lista.size(); i++) {
+		/*	for (int i = 0; i < lista.size(); i++) {
 				System.out.println("Numero de serie: " + lista.get(i).getNumero_serie() + " Descricao: "
 						+ lista.get(i).getDescricao_fabricante_modelo());
 
-			}
+			}*/
 		
 			req.setAttribute("listaPat", lista);
 			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/listaPatrimonio.jsp");
@@ -81,14 +82,6 @@ public class PatrimonioController extends HttpServlet {
 			
 
 		} else if(acao.equals("buscarefinada")){
-			//List<Patrimonio> lista = new ArrayList<>();
-			//lista=(List)req.getAttribute("listaPatRefinada");
-			
-			//for (int i = 0; i < lista.size(); i++) {
-			//	System.out.println("Numero de serie: " + lista.get(i).getNumero_serie() + " Descricao: "
-			//			+ lista.get(i).getDescricao_fabricante_modelo());
-
-		//	}
 			
 			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/buscaPatrimonio.jsp");
 			dispatcher.forward(req, resp);
@@ -104,6 +97,8 @@ public class PatrimonioController extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+			System.out.println("Id do produto alt: " + pat.getId());
 			
 			req.setAttribute("patrimonioEdit", pat);
 			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/registraPatrimonio.jsp");
@@ -127,7 +122,8 @@ public class PatrimonioController extends HttpServlet {
 		String acao = req.getParameter("acao");
 		
 		if (acao.equals("cad")) {
-		
+			
+		String id = req.getParameter("id");
 		String descricao_fabricante_modelo = req.getParameter("descricao");
 		String status = req.getParameter("status");
 		String observacao = req.getParameter("observacao");
@@ -136,19 +132,20 @@ public class PatrimonioController extends HttpServlet {
 		String localizacao = req.getParameter("localizacao");
 
 		Patrimonio pat = new Patrimonio();
-		Patrimonio patAux = new Patrimonio();
-		patAux=(Patrimonio)req.getAttribute("patrimonioEdit");
+		
+		//patAux=(Patrimonio)req.getAttribute("patrimonioEdit");
 
 		
-		if(!status.equals("0") || !status.equals("1")){
+		if(!status.equals("1") || !status.equals("2")){
 			resp.getWriter().print("<script> window.alert('Selecione o Status!'); location.href='patrimonio.do?acao=alterar&serial="+numero_serie+"'; </script>");
 			
 		}
 		
 		
-		System.out.println("Id do produto: " + patAux.getId());
+		//System.out.println("Id do produto: " + patAux.getId());
+		if (id != null)
+			pat.setId(Integer.parseInt(id));
 		
-		pat.setId(0);
 		pat.setDescricao_fabricante_modelo(descricao_fabricante_modelo);
 		pat.setStatus(Integer.parseInt(status));
 		pat.setLocacao(locacao);

@@ -48,7 +48,15 @@
         <li><a href="patrimonio.do?acao=buscarefinada">Patrimônio</a></li>
       </ul>
     </li>
+    
+      <li><a href="#">Gerenciar Usuarios</a>
+      <ul>
+        <li><a href="usuario.do?acao=cad">Inserir</a></li>
+        <li><a href="usuario.do?acao=listar">Listar</a></li>
+      </ul>
+    </li>
     <li><a href="logincontroller.do">Sair</a></li> 
+     
     
   </ul>
 

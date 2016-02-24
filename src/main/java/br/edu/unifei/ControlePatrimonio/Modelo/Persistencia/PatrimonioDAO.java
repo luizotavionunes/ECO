@@ -70,7 +70,7 @@ public class PatrimonioDAO {
 	}
 	
 	public boolean alterar(Patrimonio patrimonio) throws SQLException{
-		String sql = "UPDATE patrimonio set numero_serie=?, descricao_fabricante_modelo=?, locacao=?, localizacao=?, observacao=?, status=?";
+		String sql = "UPDATE patrimonio set numero_serie=?, descricao_fabricante_modelo=?, locacao=?, localizacao=?, observacao=?, status=? WHERE id=?";
 		PreparedStatement preparador = con.prepareStatement(sql);
 
 		try {
@@ -80,6 +80,7 @@ public class PatrimonioDAO {
 			preparador.setString(4, patrimonio.getLocalizacao());
 			preparador.setString(5, patrimonio.getObservacao());
 			preparador.setInt(6, patrimonio.getStatus());
+			preparador.setInt(7, patrimonio.getId());
 			preparador.execute();
 
 			return true;
@@ -101,7 +102,7 @@ public class PatrimonioDAO {
 	}
 	
 	public void salvar(Patrimonio pat) throws SQLException{
-		if(pat.getId() !=0 )
+		if(pat.getId() !=0 && pat !=null)
 			alterar(pat);
 		else
 			inserir(pat);		
