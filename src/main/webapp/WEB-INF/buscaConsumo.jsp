@@ -9,10 +9,13 @@
 	import="br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Usuario"%>
 
 <%@page import="java.util.List"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style>
+<%@ include file="../css/style.css"%>
+</style>
 <title>Insert title here</title>
 </head>
 <body>
@@ -34,7 +37,7 @@
 
 	<div id="section">
 
-<h1>Formulário para Busca de Iténs de Consumo</h1>
+<h1>Formulário para Busca de Ítens de Consumo</h1>
 
 	<form action="consumo.do?acao=busca" method="post">
 		<fieldset>
@@ -116,5 +119,9 @@ if(listaCon!=null){ %>
 	
 	<%} %>
 	</div>
+	
+	</div>
+	
+	<div id="footer">Copyright © Unifei ECO</div>
 </body>
 </html>

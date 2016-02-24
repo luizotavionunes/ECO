@@ -1,0 +1,73 @@
+
+body{
+	background-color: orange;
+
+}
+#header {
+    background-color:#58ACFA;
+    color:white;
+    clear:both;
+    text-align:center;
+    padding:5px;
+     overflow:auto;
+}
+#nav {
+	background-color:#babdb6;
+    line-height:30px;
+    height:100%;
+    width:150px;
+    float:left;
+    padding:5px;
+}
+#section {
+    width:800px;
+    float:left;
+    padding-left:40px;
+    padding-top:0px;
+    padding-right:10px;
+    padding-bottom:10px;
+}
+#footer {
+    background-color:#58ACFA;
+    color:white;
+    clear:both;
+    text-align:center;
+    padding:5px;
+}
+
+#patrimonio{
+	
+	
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    width: 150px;
+}
+ul li {
+    position: relative;
+}
+li ul {
+    position: absolute;
+    left: 149px;
+    top: 0;
+    display: none;
+}
+ul li a {
+    display: block;
+    text-decoration: none;
+    color: #fff;
+    background: #58ACFA;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+/* Fix IE. Hide from IE Mac \*/
+* html ul li { float: left; }
+* html ul li a { height: 1%; }
+/* End */
+li:hover ul { display: block; }
+
+.formLab { display:block; width:220px; float:left; }
+.form { display:block; width:500px; float:left; }

@@ -27,7 +27,7 @@
     </script>
 
 <title>Insert title here</title>
-<style type="text/css">           <%@ include  file="css/estilo.css"%>         </style>
+<style type="text/css">           <%@ include  file="../css/style.css"%>         </style>
 </head>
 <body>
 
