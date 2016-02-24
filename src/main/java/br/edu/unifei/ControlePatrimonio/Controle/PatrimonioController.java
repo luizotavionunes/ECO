@@ -136,6 +136,8 @@ public class PatrimonioController extends HttpServlet {
 		String localizacao = req.getParameter("localizacao");
 
 		Patrimonio pat = new Patrimonio();
+		Patrimonio patAux = new Patrimonio();
+		patAux=(Patrimonio)req.getAttribute("patrimonioEdit");
 
 		
 		if(!status.equals("0") || !status.equals("1")){
@@ -143,6 +145,8 @@ public class PatrimonioController extends HttpServlet {
 			
 		}
 		
+		
+		System.out.println("Id do produto: " + patAux.getId());
 		
 		pat.setId(0);
 		pat.setDescricao_fabricante_modelo(descricao_fabricante_modelo);
