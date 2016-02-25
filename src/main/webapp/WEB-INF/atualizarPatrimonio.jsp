@@ -5,11 +5,10 @@
 	import="br.edu.unifei.ControlePatrimonio.Modelo.Persistencia.PatrimonioDAO"%>
 <%@page
 	import="br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Patrimonio"%>
-		
-<%@page
-	import="br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Usuario"%>
 
 <%@page import="java.util.List"%>
+	<%@page
+	import="br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Usuario"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -17,8 +16,28 @@
 <style>
 <%@ include file="../css/style.css"%>
 </style>
-<title>Lista de Patrimonio</title>
+<title>Insert title here</title>
+
+<script type="text/javascript">
+	function Exclusao(id) {
+		if (window.confirm('Tem certeza que deseja excluir?')) {
+			location.href = "patrimonio.do?acao=remover&id=" + id;
+		}
+	}
+	/*function confirmaExclusao(id) {
+		if (window.confirm('ATENÇAO!!Após a exlusão deste item, não será possível recupera-lo. Você tem certeza disso?')) {
+			location.href="patrimonio.do?acao=remover&serial=" + id;
+			
+		}
+	}*/
+	
+	
+	
+</script>
+
+
 </head>
+
 <body>
 
 	<div id="footer">
@@ -37,6 +56,53 @@
 	</div>
 
 	<div id="section">
+	<h1>Formulário para Busca de Patrimônio</h1>
+
+	<form action="patrimonio.do?acao=atualizapat" method="post">
+		<fieldset id = "patrimonio">
+
+			<div class="formLab">Número de Série:</div>
+			<div class="form">
+				<input type="text" name="numero_serie" />
+			</div>
+			<br />
+			<br />
+
+			<div class="formLab">Descrição / Fabricante / Modelo:</div>
+			<div class="form">
+				<input type="text" name="descricao" />
+			</div>
+			<br />
+			<br />
+
+			<div class="formLab">Localização:</div>
+			<div class="form">
+				<input type="text" name="localizacao" />
+			</div>
+			<br />
+			<br />
+
+			<div class="formLab">Status:</div>
+			<div class="form">
+				<select name="status" size="1">
+					<option value="0">Sistema Ativo ou Inativo?
+
+						<option value="1">Ativo
+
+						<option value="2">Inativo
+				</select>
+			</div>
+			<br />
+			<br />
+			<br /> <div class="formLab"><input type="submit" maxlenght="100" value="Buscar"></div>
+		</fieldset>
+
+	</form>
+<%
+			List<Patrimonio> listaPat = (List<Patrimonio>) request.getAttribute("listaPatRefinada");
+		
+
+if(listaPat!=null){ %>
 				<h2>Lista de Patrimonio</h2>
 		<p><table border="1">
 		<tr>
@@ -48,9 +114,7 @@
 			<th>STATUS</th>
 			<th>OBSERVAÇÃO</th>
 		</tr>
-		<%
-			List<Patrimonio> listaPat = (List<Patrimonio>) request.getAttribute("listaPat");
-		%>
+		
 
 		<%
 			for (Patrimonio f : listaPat) {
@@ -75,14 +139,7 @@
 			</td>
 			<td><%=f.getObservacao() %></td>
 			
-			<% if(usu.getTipo()==3){ %>
-			<td><a href="patrimonio.do?acao=alterar&serial=<%=f.getNumero_serie() %>" >Editar</a>
-			<td><a href="javascript:Exclusao(<%= f.getId() %>)" >Excluir</a>
-			<%} else {%>
-			
 			<td><a href="patrimonio.do?acao=formatualiza&serial=<%=f.getNumero_serie() %>" >Atualizar</a>
-			<% } %>
-
 		</tr>
 		<%
 			}
@@ -90,11 +147,13 @@
 
 
 	</table></p>
+	
+	<%} %>
+	
 	</div>
-
+	
 	<div id="footer">Copyright © Unifei ECO</div>
-		
-
-
+				
 </body>
+
 </html>

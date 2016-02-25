@@ -40,10 +40,19 @@
         <li><a href="patrimonio.do?acao=buscarefinada">Patrimônio</a></li>
       </ul>
     </li>
+    
+     <li><a href="#">Listar Patrimônio</a>
+      <ul>
+        <li><a href="consumo.do?acao=listar">Consumo</a></li>
+        <li><a href="patrimonio.do?acao=listar">Patrimônio</a></li>
+      </ul>
+    </li>
+
+    
     <li><a href="#">Atualizar Patrimônio</a>
       <ul>
         <li><a href="#">Consumo</a></li>
-        <li><a href="#">Patrimônio</a></li>
+        <li><a href="patrimonio.do?acao=atualiza">Patrimônio</a></li>
       </ul>
     </li>
     <li><a href="logincontroller.do">Sair</a></li> 

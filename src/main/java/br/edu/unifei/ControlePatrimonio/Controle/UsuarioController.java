@@ -31,7 +31,7 @@ public class UsuarioController extends HttpServlet{
 			usu.setTipo(0);
 
 			
-			req.setAttribute("usuCad", usu);
+			req.setAttribute("usuEdit", usu);
 			
 			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/registraUsuario.jsp");
 			dispatcher.forward(req, resp);
@@ -86,6 +86,20 @@ public class UsuarioController extends HttpServlet{
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} 
+			
+		}else if(acao.equals("alterar")){
+				String id = req.getParameter("id");
+				Usuario us = null;
+				UsuarioDAO usuDAO = new UsuarioDAO();
+				
+				try {
+					 us = usuDAO.buscaId(Integer.parseInt(id));
+					
+					System.out.println("Id do produto senha: " + us.getSenha());
+				} catch (NumberFormatException | SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} 
 		
 		/*	try {
 				 usu = usuDAO.buscaId(Integer.parseInt(id));

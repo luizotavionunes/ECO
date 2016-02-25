@@ -110,6 +110,55 @@ public class PatrimonioController extends HttpServlet {
 			
 			
 		}
+	else if(acao.equals("atualiza")){
+		/*String serial = req.getParameter("serial");
+		Patrimonio pat = new Patrimonio();
+		PatrimonioDAO patDAO = new PatrimonioDAO();
+		
+
+		try {
+			pat = patDAO.buscaSerial(serial);
+			
+		} catch (NumberFormatException | SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} 
+
+/*	try {
+		 usu = usuDAO.buscaId(Integer.parseInt(id));
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	//System.out.println("Id do produto alt: " + usu.getId());
+	
+	req.setAttribute("patrimonioEdit", pat);*/
+	RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/atualizarPatrimonio.jsp");
+	dispatcher.forward(req, resp);
+	
+	
+
+	
+}else if(acao.equals("formatualiza")){
+	String serial=req.getParameter("serial");
+	Patrimonio pat=null;;
+	PatrimonioDAO ptDAO = new PatrimonioDAO();
+	try {
+		 pat = ptDAO.buscaSerial(serial);
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	//System.out.println("Id do produto alt: " + pat.getId());
+	
+	req.setAttribute("patrimonioEdit", pat);
+	RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/formAtualizarPatrimonio.jsp");
+	dispatcher.forward(req, resp);
+	
+	
+}
 		
 		
 		
@@ -190,7 +239,82 @@ public class PatrimonioController extends HttpServlet {
 			dispatcher.forward(req, resp);
 			//resp.sendRedirect("patrimonio.do?acao=buscarefinada");
 			
+		
+		}else if(acao.equals("atualizapat")){
+			List<Patrimonio> lista;
+			String descricao_fabricante_modelo = req.getParameter("descricao");
+			String status = req.getParameter("status");
+			String numero_serie = req.getParameter("numero_serie");
+			String localizacao = req.getParameter("localizacao");
+			
+			PatrimonioDAO patDao = new PatrimonioDAO();
+			try {
+				 lista = patDao.listaBusca(descricao_fabricante_modelo, status, numero_serie, localizacao);
+
+				for (int i = 0; i < lista.size(); i++) {
+					System.out.println("Numero de serie: " + lista.get(i).getNumero_serie() + " Descricao: "
+							+ lista.get(i).getDescricao_fabricante_modelo());
+
+				}
+				req.setAttribute("listaPatRefinada", lista);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/atualizarPatrimonio.jsp");
+			dispatcher.forward(req, resp);
+			
+		} else if(acao.equals("formatualiza")){
+			String id = req.getParameter("id");
+			String descricao_fabricante_modelo = req.getParameter("descricao");
+			String status = req.getParameter("status");
+			String observacao = req.getParameter("observacao");
+			String numero_serie = req.getParameter("numero_serie");
+			String locacao = req.getParameter("locacao");
+			String localizacao = req.getParameter("localizacao");
+
+			Patrimonio pat = new Patrimonio();
+			
+			//patAux=(Patrimonio)req.getAttribute("patrimonioEdit");
+
+			
+			if(!status.equals("1") || !status.equals("2")){
+				resp.getWriter().print("<script> window.alert('Selecione o Status!'); location.href='patrimonio.do?acao=alterar&serial="+numero_serie+"'; </script>");
+				
+			}
+			
+			
+			//System.out.println("Id do produto: " + patAux.getId());
+			if (id != null)
+				pat.setId(Integer.parseInt(id));
+			
+			pat.setDescricao_fabricante_modelo(descricao_fabricante_modelo);
+			pat.setStatus(Integer.parseInt(status));
+			pat.setLocacao(locacao);
+			pat.setLocalizacao(localizacao);
+			pat.setNumero_serie(numero_serie);
+			pat.setObservacao(observacao);
+
+			PatrimonioDAO patDAO = new PatrimonioDAO();
+
+			try {
+				patDAO.salvar(pat);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				System.out.println("Erro na inserção de patrimônio.");
+				e.printStackTrace();
+			}
+			resp.sendRedirect("patrimonio.do?acao=listar");
+			
+			
+			
+			
 		}
+		
+		
+		
+		
 	}
 	
 	

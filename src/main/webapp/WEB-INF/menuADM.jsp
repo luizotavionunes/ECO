@@ -49,6 +49,13 @@
       </ul>
     </li>
     
+         <li><a href="#">Listar Patrimônio</a>
+      <ul>
+        <li><a href="consumo.do?acao=listar">Consumo</a></li>
+        <li><a href="patrimonio.do?acao=listar">Patrimônio</a></li>
+      </ul>
+    </li>
+    
       <li><a href="#">Gerenciar Usuarios</a>
       <ul>
         <li><a href="usuario.do?acao=cad">Inserir</a></li>
