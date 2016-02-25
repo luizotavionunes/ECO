@@ -41,15 +41,14 @@ public class UsuarioController extends HttpServlet{
 			UsuarioDAO usuDAO = new UsuarioDAO();
 		
 			try {
-				if (usuDAO.remove(Integer.parseInt("id")))
+				if (usuDAO.remove(Integer.parseInt(id)))
 						System.out.println("Usuario removido com sucesso.");
 				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-	///redirecionar pagina
-			
+			resp.sendRedirect("usuario.do?acao=listar");
 			
 		} else if (acao.equals("listar")) {
 			UsuarioDAO usuDAO = new UsuarioDAO();
@@ -75,20 +74,29 @@ public class UsuarioController extends HttpServlet{
 			
 
 		} else if(acao.equals("alterar")){
-			String id=req.getParameter("id");
-			Usuario usu = null;
+			String id = req.getParameter("id");
+			Usuario us = null;
 			UsuarioDAO usuDAO = new UsuarioDAO();
-		
+			
 			try {
-				 usu = usuDAO.buscaId(Integer.parseInt("id"));
+				 us = usuDAO.buscaId(Integer.parseInt(id));
+				
+				System.out.println("Id do produto senha: " + us.getSenha());
+			} catch (NumberFormatException | SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} 
+		
+		/*	try {
+				 usu = usuDAO.buscaId(Integer.parseInt(id));
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			}*/
 			
-			//System.out.println("Id do produto alt: " + pat.getId());
+			//System.out.println("Id do produto alt: " + usu.getId());
 			
-			req.setAttribute("usuEdit", usu);
+			req.setAttribute("usuEdit", us);
 			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/registraUsuario.jsp");
 			dispatcher.forward(req, resp);
 			
@@ -108,7 +116,7 @@ public class UsuarioController extends HttpServlet{
 		String tipo = req.getParameter("tipo");
 		String senha = req.getParameter("senha");
 	
-		Usuario usu = new Usuario();
+		Usuario usu = (Usuario) req.getAttribute("usuEdit");
 		
 		
 		//System.out.println("Id do produto: " + patAux.getId());
@@ -116,7 +124,7 @@ public class UsuarioController extends HttpServlet{
 			usu.setId(Integer.parseInt(id));
 		
 		usu.setSenha(senha);
-		usu.setTipo(Integer.parseInt("tipo"));
+		usu.setTipo(Integer.parseInt(tipo));
 
 		UsuarioDAO usuDAO = new UsuarioDAO();
 

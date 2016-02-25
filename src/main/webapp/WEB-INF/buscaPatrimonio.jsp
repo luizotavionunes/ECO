@@ -20,9 +20,8 @@
 
 <script type="text/javascript">
 	function Exclusao(id) {
-		alert("You are right");
 		if (window.confirm('Tem certeza que deseja excluir?')) {
-			location.href = "funcontroller.do?acao=excluir&id=" + id;
+			location.href = "patrimonio.do?acao=remover&id=" + id;
 		}
 	}
 	/*function confirmaExclusao(id) {
@@ -142,7 +141,7 @@ if(listaPat!=null){ %>
 			
 			<% if(usu.getTipo()==3){ %>
 			<td><a href="patrimonio.do?acao=alterar&serial=<%=f.getNumero_serie() %>" >Editar</a>
-			<td><a href="javascript:Exclusao(<%= f.getNumero_serie() %>)" >Excluir</a>
+			<td><a href="javascript:Exclusao(<%= f.getId() %>)" >Excluir</a>
 			<%} %>
 		</tr>
 		<%

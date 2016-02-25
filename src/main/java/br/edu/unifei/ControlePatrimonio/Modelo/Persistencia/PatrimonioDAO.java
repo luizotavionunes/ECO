@@ -44,12 +44,12 @@ public class PatrimonioDAO {
 
 	}
 
-	public boolean remove(String serial) throws SQLException {
-		String sql = "DELETE FROM patrimonio WHERE numero_serie=?";
+	public boolean remove(int id) throws SQLException {
+		String sql = "DELETE FROM patrimonio WHERE id=?";
 		PreparedStatement preparador = con.prepareStatement(sql);
 
 		try {
-			preparador.setString(1, serial);
+			preparador.setInt(1, id);
 			preparador.execute();
 
 			return true;

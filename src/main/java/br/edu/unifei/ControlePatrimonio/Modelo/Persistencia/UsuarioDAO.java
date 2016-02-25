@@ -42,12 +42,12 @@ public class UsuarioDAO {
 
 	}
 
-	public boolean remove(int tipo) throws SQLException {
-		String sql = "DELETE FROM usuario WHERE tipo=?";
+	public boolean remove(int id) throws SQLException {
+		String sql = "DELETE FROM usuario WHERE id=?";
 		PreparedStatement preparador = con.prepareStatement(sql);
 
 		try {
-			preparador.setInt(1, tipo);
+			preparador.setInt(1, id);
 			preparador.execute();
 
 			return true;
@@ -175,10 +175,10 @@ public class UsuarioDAO {
 				usu.setId(resultado.getInt("id"));
 				usu.setSenha(resultado.getString("senha"));
 				usu.setTipo(resultado.getInt("tipo"));
-			
+				return usu;
 				
 			}
-			return usu;
+			
 		
 		} catch (Exception e) {
 			e.printStackTrace();

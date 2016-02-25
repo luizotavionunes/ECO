@@ -32,7 +32,7 @@
 		<% } %>
 	</div>
 
-<% Usuario usuAux = (Usuario) request.getAttribute("usuCad"); %>
+<% Usuario usuAux = (Usuario) request.getAttribute("usuEdit"); %>
 
 <div id="section">
 	<h1>Formulário para Cadastro de Patrimônio</h1>

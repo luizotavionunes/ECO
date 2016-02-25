@@ -18,6 +18,25 @@
 <%@ include file="../css/style.css"%>
 </style>
 <title>Insert title here</title>
+
+<script type="text/javascript">
+	function Exclusao(id) {
+		if (window.confirm('Tem certeza que deseja excluir?')) {
+			location.href = "usuario.do?acao=remover&id=" + id;
+		}
+	}
+	/*function confirmaExclusao(id) {
+		if (window.confirm('ATENÇAO!!Após a exlusão deste item, não será possível recupera-lo. Você tem certeza disso?')) {
+			location.href="patrimonio.do?acao=remover&serial=" + id;
+			
+		}
+	}*/
+	
+	
+	
+</script>
+
+
 </head>
 <body>
 
@@ -58,14 +77,18 @@
 					out.print(f.getId());
 				%>
 			</td>
-			<td><%= f.getId() %></td>
+			
 			<td><%= f.getTipo() %></td>
 			<td><%= f.getSenha() %></td>
+			
+			<td><a href="usuario.do?acao=alterar&id=<%= f.getId() %>" >Editar</a>
+			<td><a href="javascript:Exclusao(<%= f.getId() %>)" >Excluir</a>
 
 		</tr>
 		<%
 			}
 		%>
+		
 
 
 	</table></p>

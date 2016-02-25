@@ -44,12 +44,12 @@ public class PatrimonioController extends HttpServlet {
 			dispatcher.forward(req, resp);
 
 		} else if(acao.equals("remover")){
-			String serial= req.getParameter("serial");
+			String id= req.getParameter("id");
 			int removido=0;
 			PatrimonioDAO patDAO = new PatrimonioDAO();
 			try {
-				if(patDAO.remove(serial))
-						removido=1;
+				if(patDAO.remove(Integer.parseInt(id)))
+						System.out.println("Patrimonio removido com sucesso.");
 				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
