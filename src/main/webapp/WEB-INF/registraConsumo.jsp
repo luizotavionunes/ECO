@@ -81,8 +81,7 @@
 
 			<div class="formLab">Observação:</div>
 			<div class="form">
-				<textarea style="overflow: auto; resize: none" cols=35 rows=3 name="observacao"><%= Con.getObservacao() %>                 wdwdwdw
-			
+				<textarea style="overflow: auto; resize: none" cols=35 rows=3 name="observacao"><%= Con.getObservacao() %>
 			</textarea>
 			</div>
 			<br />
