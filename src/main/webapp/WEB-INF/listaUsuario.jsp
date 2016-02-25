@@ -81,8 +81,13 @@
 			<td><%= f.getTipo() %></td>
 			<td><%= f.getSenha() %></td>
 			
+			
+			<%
+			if(usu.getId()!=f.getId()){%>
 			<td><a href="usuario.do?acao=alterar&id=<%= f.getId() %>" >Editar</a>
 			<td><a href="javascript:Exclusao(<%= f.getId() %>)" >Excluir</a>
+
+<%} %>
 
 		</tr>
 		<%

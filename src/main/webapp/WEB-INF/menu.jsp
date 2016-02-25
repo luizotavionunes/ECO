@@ -54,8 +54,16 @@
         <li><a href="#">Consumo</a></li>
         <li><a href="patrimonio.do?acao=atualiza">Patrimônio</a></li>
       </ul>
-    </li>
-    <li><a href="logincontroller.do">Sair</a></li> 
+    </li>    
+    
+     <li><a href="#">Exportar Arquivos</a>
+      <ul>
+        <li><a href="usuario.do?acao=cad">Exportar Consumo</a></li>
+        <li><a href="usuario.do?acao=listar">Exportar Patrimonio</a></li>
+      </ul>
+     </li>
+     
+     <li><a href="logincontroller.do">Sair</a></li> 
     
   </ul>
 

@@ -18,6 +18,23 @@
 <%@ include file="../css/style.css"%>
 </style>
 <title>Lista de Patrimonio</title>
+<script type="text/javascript">
+	function Exclusao(id) {
+		if (window.confirm('Tem certeza que deseja excluir?')) {
+			location.href = "patrimonio.do?acao=remover&id=" + id;
+		}
+	}
+	/*function confirmaExclusao(id) {
+		if (window.confirm('ATENÇAO!!Após a exlusão deste item, não será possível recupera-lo. Você tem certeza disso?')) {
+			location.href="patrimonio.do?acao=remover&serial=" + id;
+			
+		}
+	}*/
+	
+	
+	
+</script>
+
 </head>
 <body>
 

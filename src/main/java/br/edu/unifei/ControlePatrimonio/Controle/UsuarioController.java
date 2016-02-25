@@ -72,20 +72,6 @@ public class UsuarioController extends HttpServlet{
 			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/listaUsuario.jsp");
 			dispatcher.forward(req, resp);
 			
-
-		} else if(acao.equals("alterar")){
-			String id = req.getParameter("id");
-			Usuario us = null;
-			UsuarioDAO usuDAO = new UsuarioDAO();
-			
-			try {
-				 us = usuDAO.buscaId(Integer.parseInt(id));
-				
-				System.out.println("Id do produto senha: " + us.getSenha());
-			} catch (NumberFormatException | SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} 
 			
 		}else if(acao.equals("alterar")){
 				String id = req.getParameter("id");
@@ -95,7 +81,7 @@ public class UsuarioController extends HttpServlet{
 				try {
 					 us = usuDAO.buscaId(Integer.parseInt(id));
 					
-					System.out.println("Id do produto senha: " + us.getSenha());
+					//System.out.println("Id do produto senha: " + us.getSenha());
 				} catch (NumberFormatException | SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -130,8 +116,8 @@ public class UsuarioController extends HttpServlet{
 		String tipo = req.getParameter("tipo");
 		String senha = req.getParameter("senha");
 	
-		Usuario usu = (Usuario) req.getAttribute("usuEdit");
-		
+		//Usuario usu = (Usuario) req.getAttribute("usuEdit");
+		Usuario usu = new Usuario();
 		
 		//System.out.println("Id do produto: " + patAux.getId());
 		if (id != null)

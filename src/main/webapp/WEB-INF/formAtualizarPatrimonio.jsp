@@ -37,7 +37,7 @@
 <div id="section">
 	<h1>Formulário para Cadastro de Patrimônio</h1>
 
-	<form action="patrimonio.do?acao=formatualiza" method="post">
+	<form action="patrimonio.do?acao=cad" method="post">
 		<fieldset>
 		
 		<div class="formLab">Id:</div>

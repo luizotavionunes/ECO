@@ -21,8 +21,8 @@ public class LogDAO {
 		try {
 		
 			preparador.setString(1, log.getNome());
-			preparador.setDate(2, log.getDate_Time());
-			preparador.setString(3, log.getHistorico());
+			preparador.setDate(2, log.getData());
+			preparador.setString(3, log.getPreHistorico());
 			preparador.setInt(4, log.getAcesso());
 			preparador.execute();
 
@@ -74,9 +74,9 @@ public class LogDAO {
 
 		try {
 			preparador.setString(1, log.getNome());
-			preparador.setString(2, log.getHistorico());
+			preparador.setString(2, log.getPreHistorico());
 			preparador.setInt(3, log.getAcesso());
-			preparador.setDate(4, log.getDate_Time());
+			preparador.setDate(4, log.getData());
 			preparador.execute();
 
 			return true;
@@ -110,9 +110,9 @@ public class LogDAO {
 				Log log = new Log();
 				log.setId(resultado.getInt("id"));
 				log.setNome(resultado.getString("nome"));
-				log.setHistorico(resultado.getString("historico"));
+				log.setPreHistorico(resultado.getString("historico"));
 				log.setAcesso(resultado.getInt("acesso"));
-				log.setDate_Time(resultado.getDate("date_time"));
+				log.setData(resultado.getDate("date_time"));
 				lista.add(log);
 							
 			}

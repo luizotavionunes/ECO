@@ -150,7 +150,7 @@ public class PatrimonioDAO {
 	}
 	
 	public List<Patrimonio> listaBusca(String descricao_fabricante_modelo, String status, String numero_serie, String localizacao) throws SQLException{
-		System.out.println("statusFRomServ " + status);
+		//System.out.println("statusFRomServ " + status);
 		String sql = null;
 		int status_ok;
 		if(status.equals("0")){

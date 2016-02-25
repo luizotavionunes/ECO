@@ -55,9 +55,10 @@ public class PatrimonioController extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 			//if(removido==1)
-			resp.getWriter().print("<script> window.alert('Item removido!');</script>");
-			resp.sendRedirect("patrimonio.do?acao=buscarefinada");
+			//resp.getWriter().print("<script> window.alert('Item removido!');</script>");
+			resp.sendRedirect("patrimonio.do?acao=listar");
 			
 		} else if (acao.equals("listar")) {
 			PatrimonioDAO patDAO = new PatrimonioDAO();
@@ -98,7 +99,7 @@ public class PatrimonioController extends HttpServlet {
 				e.printStackTrace();
 			}
 			
-			System.out.println("Id do produto alt: " + pat.getId());
+			//System.out.println("Id do produto alt: " + pat.getId());
 			
 			req.setAttribute("patrimonioEdit", pat);
 			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/registraPatrimonio.jsp");
