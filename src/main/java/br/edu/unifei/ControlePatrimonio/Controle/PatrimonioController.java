@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.SingleSelectionModel;
 
 import br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Patrimonio;
 import br.edu.unifei.ControlePatrimonio.Modelo.Persistencia.PatrimonioDAO;
@@ -306,16 +307,25 @@ public class PatrimonioController extends HttpServlet {
 				System.out.println("Erro na inserção de patrimônio.");
 				e.printStackTrace();
 			}
-			resp.sendRedirect("patrimonio.do?acao=listar");
+			resp.sendRedirect("patrimonio.do?acao=listar");		
 			
+		}else if(acao.equals("exportarArquivos")){
+			String descricao_fabricante_modelo = req.getParameter("descricao");
+			String status = req.getParameter("status");
+			String numero_serie = req.getParameter("numero_serie");
+			String localizacao = req.getParameter("localizacao");
+			PatrimonioDAO patDao = new PatrimonioDAO();
+			try {
+				patDao.exportarArquivos(descricao_fabricante_modelo, status, numero_serie, localizacao);
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
-			
-			
+			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/buscaPatrimonio.jsp");
+			dispatcher.forward(req, resp);
 		}
-		
-		
-		
-		
 	}
 	
 	

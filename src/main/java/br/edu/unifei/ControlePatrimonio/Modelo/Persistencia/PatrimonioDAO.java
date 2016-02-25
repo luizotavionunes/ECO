@@ -254,7 +254,6 @@ public class PatrimonioDAO {
 		
 		String sql = "SELECT * FROM patrimonio WHERE numero_serie='"+serial+"'";
 		PreparedStatement preparador = con.prepareStatement(sql);
-		System.out.println("Query "+ sql);
 		try {
 			ResultSet resultado = preparador.executeQuery();
 			if (resultado.next()) {
@@ -282,11 +281,88 @@ public class PatrimonioDAO {
 		}
 		
 		return null;
-		
-		
 	}
 	
-	
+	public void exportarArquivos(String descricao_fabricante_modelo, String status, String numero_serie, String localizacao) throws SQLException{
+			
+		String sql = null;
+		int status_ok;
+		if(status.equals("0")){
+			status_ok = 0;
+			status=null;
+		}else
+			status_ok = Integer.parseInt(status);
+		
+		if(descricao_fabricante_modelo.equals(""))
+			descricao_fabricante_modelo=null;
+		if(numero_serie.equals(""))
+			numero_serie=null;
+		if(localizacao.equals(""))
+			localizacao=null;
+		
+		
+		System.out.println("descricao "+ descricao_fabricante_modelo + " status " + status + " numero serie " + numero_serie + " localizacao " + localizacao);
+		
+		if( descricao_fabricante_modelo == null && status == null && numero_serie == null && localizacao != null){
+			sql = "SELECT * from patrimonio WHERE localizacao LIKE'%"+localizacao+"%' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
+			
+		}else if(descricao_fabricante_modelo == null && status == null && numero_serie != null && localizacao == null){
+			sql  = "SELECT * from patrimonio WHERE numero_serie LIKE '%"+numero_serie+"%' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
+			
+		}else if(descricao_fabricante_modelo == null && status != null && numero_serie == null && localizacao == null){
+			sql = "SELECT * from patrimonio WHERE status='"+status_ok+"' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
+			
+		}else if(descricao_fabricante_modelo != null && status == null && numero_serie == null && localizacao == null){
+			sql = "SELECT * from patrimonio WHERE descricao_fabricante_modelo LIKE '%"+descricao_fabricante_modelo+"%' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
+			
+		}else if(descricao_fabricante_modelo == null && status == null && numero_serie != null && localizacao != null){
+			sql = "SELECT * from patrimonio WHERE localizacao LIKE '%"+localizacao+"%' AND numero_serie LIKE '%"+numero_serie+"%' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
+			
+		}else if(descricao_fabricante_modelo == null && status != null && numero_serie == null && localizacao != null){
+			sql = "SELECT * from patrimonio WHERE localizacao LIKE '%"+localizacao+"%' AND status='"+status_ok+"' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
+			
+		}else if(descricao_fabricante_modelo != null && status == null && numero_serie == null && localizacao != null){
+			sql = "SELECT * from patrimonio WHERE localizacao LIKE '%"+localizacao+"%' AND descricao_fabricante_modelo LIKE '%"+descricao_fabricante_modelo+"%' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
+			
+		}else if(descricao_fabricante_modelo == null && status != null && numero_serie != null && localizacao == null){
+			sql = "SELECT * from patrimonio WHERE numero_serie LIKE '%"+numero_serie+"%' AND status='"+status_ok+"' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
+			
+		}else if(descricao_fabricante_modelo != null && status == null && numero_serie != null && localizacao == null){
+			sql = "SELECT * from patrimonio WHERE numero_serie LIKE '%"+numero_serie+"%' AND descricao_fabricante_modelo LIKE '%"+descricao_fabricante_modelo+"%' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
+			
+		}else if(descricao_fabricante_modelo != null && status != null && numero_serie == null && localizacao == null){
+			sql = "SELECT * from patrimonio WHERE descricao_fabricante_modelo LIKE '%"+descricao_fabricante_modelo+"%' AND status='"+status_ok+"' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
+			
+		}else if(descricao_fabricante_modelo == null && status != null && numero_serie != null && localizacao != null){
+			sql = "SELECT * from patrimonio WHERE localizacao LIKE '%"+localizacao+"%' AND numero_serie LIKE '%"+numero_serie+"%' AND status='"+status_ok+"' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
+			
+		}else if(descricao_fabricante_modelo != null && status == null && numero_serie != null && localizacao != null){
+			sql = "SELECT * from patrimonio WHERE localizacao LIKE '%"+localizacao+"%' AND numero_serie LIKE '%"+numero_serie+"%' AND descricao_fabricante_modelo LIKE'%"+descricao_fabricante_modelo+"%' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
+
+		}else if(descricao_fabricante_modelo != null && status != null && numero_serie != null && localizacao == null){
+			sql = "SELECT * from patrimonio WHERE status='"+status_ok+"' AND numero_serie LIKE '%"+numero_serie+"%' AND descricao_fabricante_modelo LIKE '%"+descricao_fabricante_modelo+"%' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
+			
+		}else if(descricao_fabricante_modelo != null && status != null && numero_serie == null && localizacao != null){
+			sql = "SELECT * from patrimonio WHERE localizacao LIKE '%"+localizacao+"%' AND status='"+status_ok+"' AND descricao_fabricante_modelo LIKE '%"+descricao_fabricante_modelo+"%' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
+			
+		}else if(descricao_fabricante_modelo != null && status != null && numero_serie != null && localizacao != null){
+			sql = "SELECT * from patrimonio WHERE localizacao LIKE '%"+localizacao+"%' AND numero_serie LIKE '%"+numero_serie+"%' AND descricao_fabricante_modelo LIKE '%"+descricao_fabricante_modelo+"%' AND status='"+status_ok+"' INTO OUTFILE 'C:\\Users\\PC-03\\workspace\\Arquivos_BD\\arquivo.CSV' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
+		}
+
+		PreparedStatement preparador = con.prepareStatement(sql);
+		try {
+			preparador.executeQuery();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				preparador.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}	
+	}
 	
 
 }
