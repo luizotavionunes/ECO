@@ -3,6 +3,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 	
+<%@page
+	import="br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Consumo"%>
+	
 	<%@page
 	import="br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Usuario"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -29,6 +32,10 @@
 		<%@include file="menu.jsp"%>
 		<% } %>
 	</div>
+	
+<% 	Consumo Con = (Consumo) request.getAttribute("consumoEdit"); %>
+<% 
+	out.print("Nomep: " + Con.getNome());%>
 
 	<div id="section">
 
@@ -37,16 +44,23 @@
 	<form action="consumo.do?acao=cad" method="post">
 		<fieldset>
 
+			<div class="formLab">Id:</div>
+			<div class="form">
+				<input type="text" name="id" readonly="readonly" value="<%= Con.getId() %>" />
+			</div>
+			<br />
+			<br />
+			
 			<div class="formLab">Nome:</div>
 			<div class="form">
-				<input type="text" name="nome" />
+				<input type="text" name="nome" value="<%= Con.getNome() %>" />
 			</div>
 			<br />
 			<br />
 
 			<div class="formLab">Localização:</div>
 			<div class="form">
-				<input type="text" name="localizacao" />
+				<input type="text" name="localizacao" value="<%= Con.getLocalizacao() %>" />
 			</div>
 			<br />
 			<br />
@@ -68,7 +82,7 @@
 			<div class="formLab">Observação:</div>
 			<div class="form">
 				<textarea style="overflow: auto; resize: none" name="observacao"
-					cols=35 rows=3>
+					cols=35 rows=3 value="<%= Con.getObservacao() %>">
 
 			</textarea>
 			</div>

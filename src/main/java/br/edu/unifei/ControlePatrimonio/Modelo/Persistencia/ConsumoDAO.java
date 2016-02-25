@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Consumo;
+import br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Patrimonio;
 
 
 public class ConsumoDAO {
@@ -43,12 +44,12 @@ public class ConsumoDAO {
 
 	}
 
-	public boolean remove(String nome) throws SQLException {
-		String sql = "DELETE FROM consumo WHERE nome=?";
+	public boolean remove(int ide) throws SQLException {
+		String sql = "DELETE FROM consumo WHERE id=?";
 		PreparedStatement preparador = con.prepareStatement(sql);
 
 		try {
-			preparador.setString(1, nome);
+			preparador.setInt(1, ide);
 			preparador.execute();
 
 			return true;
@@ -69,7 +70,7 @@ public class ConsumoDAO {
 	}
 	
 	public boolean alterar(Consumo consumo) throws SQLException{
-		String sql = "UPDATE consumo set nome=?, status=?, localizacao=?, observacao=?";
+		String sql = "UPDATE consumo set nome=?, status=?, localizacao=?, observacao=? WHERE id=" + consumo.getId();
 		PreparedStatement preparador = con.prepareStatement(sql);
 
 		try {
@@ -130,7 +131,16 @@ public class ConsumoDAO {
 		}
 		return null;	
 	}
+	
+	public void salvar(Consumo consumo) throws SQLException{
+		System.out.println("Id do consumougig: " + consumo.getId());
+		if(consumo.getId() !=0 && consumo !=null)
+			alterar(consumo);
+		else
+			inserir(consumo);		
 		
+	}
+	
 	public List<Consumo> listaBusca(String nome, String status,  String localizacao) throws SQLException{
 		System.out.println("statusFRomServ " + status);
 		String sql = null;
@@ -200,5 +210,37 @@ public class ConsumoDAO {
 			}
 		}
 		return null;
+	}
+	
+	public Consumo buscaId(String id) throws SQLException{
+		Consumo consumo = new Consumo();
+		
+		String sql = "SELECT * FROM consumo WHERE id='"+id+"'";
+		PreparedStatement preparador = con.prepareStatement(sql);
+		System.out.println("Query "+ sql);
+		try {
+			ResultSet resultado = preparador.executeQuery();
+			if (resultado.next()) {
+			
+				consumo.setId(resultado.getInt("id"));
+				consumo.setStatus(resultado.getInt("status"));
+				consumo.setLocalizacao(resultado.getString("localizacao"));
+				consumo.setObservacao(resultado.getString("observacao"));
+				consumo.setNome(resultado.getString("nome"));
+			}
+			return consumo;
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				preparador.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return null;	
 	}
 }

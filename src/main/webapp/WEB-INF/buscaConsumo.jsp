@@ -17,6 +17,24 @@
 <%@ include file="../css/style.css"%>
 </style>
 <title>Insert title here</title>
+
+<script type="text/javascript">
+	function Exclusao(id) {
+		if (window.confirm('Tem certeza que deseja excluir?')) {
+			location.href = "consumo.do?acao=remover&id=" + id;
+		}
+	}
+	/*function confirmaExclusao(id) {
+		if (window.confirm('ATENÇAO!!Após a exlusão deste item, não será possível recupera-lo. Você tem certeza disso?')) {
+			location.href="patrimonio.do?acao=remover&serial=" + id;
+			
+		}
+	}*/
+	
+	
+	
+</script>
+
 </head>
 <body>
 
@@ -108,6 +126,11 @@ if(listaCon!=null){ %>
 			</td>
 			<td><%=f.getLocalizacao() %></td>
 			<td><%=f.getObservacao() %></td>
+			
+		    <% if(usu.getTipo()==3){ %>
+			<td><a href="consumo.do?acao=alterar&id=<%=f.getId() %>" >Editar</a></td>
+			<td><a href="javascript:Exclusao(<%= f.getId() %>)" >Excluir</a></td>
+			<%} %>
 
 		</tr>
 		<%

@@ -12,9 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Consumo;
-import br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Patrimonio;
 import br.edu.unifei.ControlePatrimonio.Modelo.Persistencia.ConsumoDAO;
-import br.edu.unifei.ControlePatrimonio.Modelo.Persistencia.PatrimonioDAO;;
+import br.edu.unifei.ControlePatrimonio.Modelo.Persistencia.PatrimonioDAO;
 
 @WebServlet("/consumo.do")
 public class ConsumoController extends HttpServlet {
@@ -25,6 +24,14 @@ public class ConsumoController extends HttpServlet {
 		String acao = req.getParameter("acao");
 
 		if (acao.equals("cad")) {
+			Consumo con=null;
+			con= new Consumo();
+			con.setNome("");
+			con.setLocalizacao("");
+			con.setObservacao("");
+			con.setId(0);
+			con.setStatus(0);
+			req.setAttribute("consumoEdit", con);
 			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/registraConsumo.jsp");
 			dispatcher.forward(req, resp);
 
@@ -49,6 +56,40 @@ public class ConsumoController extends HttpServlet {
 			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/listaConsumo.jsp");
 			dispatcher.forward(req, resp);
 		}
+		else if(acao.equals("alterar")){
+			String id= req.getParameter("id");
+			Consumo con=null;;
+			ConsumoDAO conDAO = new ConsumoDAO();
+			try {
+				 con = conDAO.buscaId(id);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			System.out.println("Id do produto alt: " + con.getId());
+			
+			req.setAttribute("consumoEdit", con);
+			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/registraConsumo.jsp");
+			dispatcher.forward(req, resp);
+		}
+		else if(acao.equals("remover")){
+			String id= req.getParameter("id");
+			int removido=0;
+			ConsumoDAO conDAO = new ConsumoDAO();
+			try {
+				if(conDAO.remove(Integer.parseInt(id)))
+						System.out.println("Consumo removido com sucesso.");
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//if(removido==1)
+			resp.getWriter().print("<script> window.alert('Item removido!');</script>");
+			resp.sendRedirect("consumo.do?acao=listar");
+			
+		}
 	}
 
 	@Override
@@ -65,7 +106,7 @@ public class ConsumoController extends HttpServlet {
 			
 			Consumo con = new Consumo();
 
-			con.setId(0);
+			con.setId(Integer.parseInt(id));
 			
 			if (status.equals("Ativo")) {
 				con.setStatus(1);
@@ -79,7 +120,7 @@ public class ConsumoController extends HttpServlet {
 			ConsumoDAO conDAO = new ConsumoDAO();
 
 			try {
-				conDAO.inserir(con);
+				conDAO.salvar(con);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				System.out.println("Erro na inserção de consu,o.");
