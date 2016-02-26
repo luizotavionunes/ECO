@@ -35,6 +35,8 @@
 			}
 			function exportar(){
 				document.formulario_busca.action = "patrimonio.do?acao=exportarArquivos";
+				
+				document.formulario_busca.action = "dados/arquivo.csv";
 				document.forms.formulario_busca.submit();
 			}
 		</script>
