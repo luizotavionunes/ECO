@@ -51,13 +51,27 @@
 			<br />
 			<br />
 			
+			<% if (usu.getTipo() == 3) { %>
 			<div class="formLab">Nome:</div>
 			<div class="form">
 				<input type="text" name="nome" value="<%= Con.getNome() %>" />
 			</div>
 			<br />
 			<br />
-
+			
+			<%
+			}
+			else{
+			%>
+			
+			<div class="formLab">Nome:</div>
+			<div class="form">
+				<input type="text" name="nome" readonly="readonly" value="<%= Con.getNome() %>" />
+			</div>
+			<br />
+			<br />
+			<%} %>
+			
 			<div class="formLab">Localização:</div>
 			<div class="form">
 				<input type="text" name="localizacao" value="<%= Con.getLocalizacao() %>" />

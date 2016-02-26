@@ -130,7 +130,9 @@ if(listaCon!=null){ %>
 		    <% if(usu.getTipo()==3){ %>
 			<td><a href="consumo.do?acao=alterar&id=<%=f.getId() %>" >Editar</a></td>
 			<td><a href="javascript:Exclusao(<%= f.getId() %>)" >Excluir</a></td>
-			<%} %>
+			<%} else { %>
+			<td><a href="consumo.do?acao=alterar&id=<%=f.getId() %>" >Editar</a></td>
+			<%} %> 
 
 		</tr>
 		<%

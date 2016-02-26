@@ -5,6 +5,8 @@
 	import="br.edu.unifei.ControlePatrimonio.Modelo.Persistencia.ConsumoDAO"%>
 <%@page
 	import="br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Consumo"%>
+<%@page
+	import="br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Usuario"%>
 
 <%@page import="java.util.List"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -15,6 +17,25 @@
 <%@ include file="../css/style.css"%>
 </style>
 <title>Lista de Consumo</title>
+
+<script type="text/javascript">
+	function Exclusao(id) {
+		if (window.confirm('Tem certeza que deseja excluir?')) {
+			location.href = "consumo.do?acao=remover&id=" + id;
+		}
+	}
+	/*function confirmaExclusao(id) {
+		if (window.confirm('ATENÇAO!!Após a exlusão deste item, não será possível recupera-lo. Você tem certeza disso?')) {
+			location.href="patrimonio.do?acao=remover&serial=" + id;
+			
+		}
+	}*/
+	
+	
+	
+</script>
+
+
 </head>
 <body>
 
@@ -23,6 +44,7 @@
 	</div>
 
 	<div id="nav">
+		<%Usuario usu = (Usuario) request.getSession().getAttribute("usuAUT");%>
 		<%@include file="menu.jsp"%>
 	</div>
 
@@ -50,9 +72,6 @@
 				%>
 			</td>
 			<td><%=f.getNome() %></td>
-			<td><%=f.getStatus() %></td>
-			<td><%=f.getObservacao() %></td>
-			<td><%=f.getLocalizacao() %></td>
 			<td>
 			<% if(f.getStatus()==1){
 				out.print("Ativo");
@@ -61,6 +80,16 @@
 			}
 				%>
 			</td>
+			<td><%=f.getObservacao() %></td>
+			<td><%=f.getLocalizacao() %></td>
+
+			
+			<% if(usu.getTipo()==3){ %>
+			<td><a href="consumo.do?acao=alterar&id=<%=f.getId() %>" >Editar</a></td>
+			<td><a href="javascript:Exclusao(<%= f.getId() %>)" >Excluir</a></td>
+			<%} else {%>
+			<td><a href="consumo.do?acao=alterar&id=<%=f.getId() %>" >Editar</a></td>
+			<% } %>
 
 		</tr>
 		<%
