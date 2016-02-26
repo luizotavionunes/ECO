@@ -49,14 +49,14 @@
 
 			<div class="formLab">Número de Série:</div>
 			<div class="form">
-				<input type="text" name="numero_serie" value="<%= Pat.getNumero_serie() %>" />
+				<input type="text" name="numero_serie" <% if(usu.getTipo()!=3){ %> readonly="readonly" <%} %> value="<%= Pat.getNumero_serie() %>" />
 			</div>
 			<br />
 			<br />
 
 			<div class="formLab">Descrição / Fabricante / Modelo:</div>
 			<div class="form">
-				<input type="text" name="descricao" value="<%= Pat.getDescricao_fabricante_modelo() %>"/>
+				<input type="text" name="descricao" <% if(usu.getTipo()!=3){ %> readonly="readonly" <%} %> value="<%= Pat.getDescricao_fabricante_modelo() %>"/>
 			</div>
 			<br />
 			<br />
@@ -91,7 +91,7 @@
 			<div class="formLab">Observação:</div>
 			<div class="form">
 				<textarea style="overflow: auto; resize: none" name="observacao"
-					cols=35 rows=3 value="<%= Pat.getObservacao() %>">
+					cols=35 rows=3><%= Pat.getObservacao() %>
 
 			</textarea>
 			</div>

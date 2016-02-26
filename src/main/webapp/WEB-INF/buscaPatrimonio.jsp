@@ -147,15 +147,12 @@
 					</td>
 					<td><%=f.getObservacao()%></td>
 
-					<%
-						if (usu.getTipo() == 3) {
-					%>
-					<td><a
-						href="patrimonio.do?acao=alterar&serial=<%=f.getNumero_serie()%>">Editar</a>
-						<td><a href="javascript:Exclusao(<%=f.getId()%>)">Excluir</a>
-							<%
-								}
-							%>
+			  <% if(usu.getTipo()==3){ %>
+			<td><a href="patrimonio.do?acao=alterar&serial=<%= f.getNumero_serie() %>" >Editar</a></td>
+			<td><a href="javascript:Exclusao(<%= f.getId() %>)" >Excluir</a></td>
+			<%} else { %>
+			<td><a href="patrimonio.do?acao=alterar&serial=<%= f.getNumero_serie() %>" >Editar</a></td>
+			<%} %> 
 				</tr>
 				<%
 					}

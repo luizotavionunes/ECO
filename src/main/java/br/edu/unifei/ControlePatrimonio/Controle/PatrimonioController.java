@@ -112,6 +112,7 @@ public class PatrimonioController extends HttpServlet {
 			
 			
 		}
+		/*
 	else if(acao.equals("atualiza")){
 		/*String serial = req.getParameter("serial");
 		Patrimonio pat = new Patrimonio();
@@ -135,7 +136,7 @@ public class PatrimonioController extends HttpServlet {
 	
 	//System.out.println("Id do produto alt: " + usu.getId());
 	
-	req.setAttribute("patrimonioEdit", pat);*/
+	req.setAttribute("patrimonioEdit", pat);
 	RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/atualizarPatrimonio.jsp");
 	dispatcher.forward(req, resp);
 	
@@ -160,7 +161,7 @@ public class PatrimonioController extends HttpServlet {
 	dispatcher.forward(req, resp);
 	
 	
-}
+}*/
 		
 		
 		
@@ -242,7 +243,7 @@ public class PatrimonioController extends HttpServlet {
 			//resp.sendRedirect("patrimonio.do?acao=buscarefinada");
 			
 		
-		}else if(acao.equals("atualizapat")){
+		}/*else if(acao.equals("atualizapat")){
 			List<Patrimonio> lista;
 			String descricao_fabricante_modelo = req.getParameter("descricao");
 			String status = req.getParameter("status");
@@ -267,7 +268,7 @@ public class PatrimonioController extends HttpServlet {
 			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/atualizarPatrimonio.jsp");
 			dispatcher.forward(req, resp);
 			
-		} else if(acao.equals("formatualiza")){
+		}/* else if(acao.equals("formatualiza")){
 			String id = req.getParameter("id");
 			String descricao_fabricante_modelo = req.getParameter("descricao");
 			String status = req.getParameter("status");
@@ -309,7 +310,7 @@ public class PatrimonioController extends HttpServlet {
 			}
 			resp.sendRedirect("patrimonio.do?acao=listar");		
 			
-		}else if(acao.equals("exportarArquivos")){
+		}*/else if(acao.equals("exportarArquivos")){
 			String descricao_fabricante_modelo = req.getParameter("descricao");
 			String status = req.getParameter("status");
 			String numero_serie = req.getParameter("numero_serie");
