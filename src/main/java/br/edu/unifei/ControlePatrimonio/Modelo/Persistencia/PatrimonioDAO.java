@@ -14,7 +14,7 @@ public class PatrimonioDAO {
 	private Connection con = ConexaoFactory.getConnection();
 
 	public boolean inserir(Patrimonio patrimonio) throws SQLException {
-		String sql = "INSERT INTO patrimonio (id, numero_serie, descricao_fabricante_modelo, locacao, localizacao, observacao, status) VALUES (null, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO patrimonio (id, numero_serie, descricao_fabricante_modelo, locacao, localizacao, observacao, status, tag_patrimonio) VALUES (null, ?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement preparador = con.prepareStatement(sql);
 
 		try {
@@ -25,6 +25,7 @@ public class PatrimonioDAO {
 			preparador.setString(4, patrimonio.getLocalizacao());
 			preparador.setString(5, patrimonio.getObservacao());
 			preparador.setInt(6, patrimonio.getStatus());
+			preparador.setString(7, patrimonio.getTag_patrimonio());
 			preparador.execute();
 
 			return true;
@@ -70,7 +71,7 @@ public class PatrimonioDAO {
 	}
 	
 	public boolean alterar(Patrimonio patrimonio) throws SQLException{
-		String sql = "UPDATE patrimonio set numero_serie=?, descricao_fabricante_modelo=?, locacao=?, localizacao=?, observacao=?, status=? WHERE id=?";
+		String sql = "UPDATE patrimonio set numero_serie=?, descricao_fabricante_modelo=?, locacao=?, localizacao=?, observacao=?, status=?, tag_patrimonio=? WHERE id=?";
 		PreparedStatement preparador = con.prepareStatement(sql);
 
 		try {
@@ -80,7 +81,8 @@ public class PatrimonioDAO {
 			preparador.setString(4, patrimonio.getLocalizacao());
 			preparador.setString(5, patrimonio.getObservacao());
 			preparador.setInt(6, patrimonio.getStatus());
-			preparador.setInt(7, patrimonio.getId());
+			preparador.setString(7, patrimonio.getTag_patrimonio());
+			preparador.setInt(8, patrimonio.getId());
 			preparador.execute();
 
 			return true;
@@ -128,6 +130,7 @@ public class PatrimonioDAO {
 				patrimonio.setObservacao(resultado.getString("observacao"));
 				patrimonio.setNumero_serie(resultado.getString("numero_serie"));
 				patrimonio.setStatus(resultado.getInt("status"));
+				patrimonio.setTag_patrimonio(resultado.getString("tag_patrimonio"));
 				lista.add(patrimonio);
 							
 			}
@@ -230,6 +233,7 @@ public class PatrimonioDAO {
 				patrimonio.setObservacao(resultado.getString("observacao"));
 				patrimonio.setNumero_serie(resultado.getString("numero_serie"));
 				patrimonio.setLocacao(resultado.getString("locacao"));
+				patrimonio.setTag_patrimonio(resultado.getString("tag_patrimonio"));
 				lista.add(patrimonio);
 				
 			}
@@ -265,6 +269,7 @@ public class PatrimonioDAO {
 				patrimonio.setObservacao(resultado.getString("observacao"));
 				patrimonio.setNumero_serie(resultado.getString("numero_serie"));
 				patrimonio.setLocacao(resultado.getString("locacao"));
+				patrimonio.setTag_patrimonio(resultado.getString("tag_patrimonio"));
 				
 			}
 			return patrimonio;
@@ -307,7 +312,7 @@ public class PatrimonioDAO {
 			sql = "SELECT * from patrimonio WHERE localizacao LIKE'%"+localizacao+"%' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
 			
 		}else if(descricao_fabricante_modelo == null && status == null && numero_serie != null && localizacao == null){
-			sql  = "SELECT * from patrimonio WHERE numero_serie LIKE '%"+numero_serie+"%' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivo"+1+".csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
+			sql  = "SELECT * from patrimonio WHERE numero_serie LIKE '%"+numero_serie+"%' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
 			
 		}else if(descricao_fabricante_modelo == null && status != null && numero_serie == null && localizacao == null){
 			sql = "SELECT * from patrimonio WHERE status='"+status_ok+"' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";

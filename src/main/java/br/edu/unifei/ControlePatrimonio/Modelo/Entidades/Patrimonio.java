@@ -9,13 +9,14 @@ public class Patrimonio {
 	private String numero_serie;
 	private String locacao;
 	private String localizacao;
+	private String tag_patrimonio;
 	
 	
 	public Patrimonio(){}
 
 
 	public Patrimonio(int id, String descricao_fabricante_modelo, int status, String observacao, String numero_serie,
-			String locacao, String localizacao) {
+			String locacao, String localizacao, String tag_patrimonio) {
 		super();
 		this.id = id;
 		this.descricao_fabricante_modelo = descricao_fabricante_modelo;
@@ -24,6 +25,17 @@ public class Patrimonio {
 		this.numero_serie = numero_serie;
 		this.locacao = locacao;
 		this.localizacao = localizacao;
+		this.tag_patrimonio = tag_patrimonio;
+	}
+
+
+	public String getTag_patrimonio() {
+		return tag_patrimonio;
+	}
+
+
+	public void setTag_patrimonio(String tag_patrimonio) {
+		this.tag_patrimonio = tag_patrimonio;
 	}
 
 
@@ -101,8 +113,10 @@ public class Patrimonio {
 	public String toString() {
 		return "Patrimonio [id=" + id + ", descricao_fabricante_modelo=" + descricao_fabricante_modelo + ", status="
 				+ status + ", observacao=" + observacao + ", numero_serie=" + numero_serie + ", locacao=" + locacao
-				+ ", localizacao=" + localizacao + "]";
+				+ ", localizacao=" + localizacao + ", tag_patrimonio=" + tag_patrimonio + "]";
 	}
+
+
 
 
 	
