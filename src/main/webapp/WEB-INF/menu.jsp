@@ -47,14 +47,7 @@
         <li><a href="patrimonio.do?acao=listar">Patrimônio</a></li>
       </ul>
     </li>
-
     
-    <li><a href="#">Atualizar Patrimônio</a>
-      <ul>
-        <li><a href="#">Consumo</a></li>
-        <li><a href="patrimonio.do?acao=atualiza">Patrimônio</a></li>
-      </ul>
-    </li>    
     
      <li><a href="#">Exportar Arquivos</a>
       <ul>
