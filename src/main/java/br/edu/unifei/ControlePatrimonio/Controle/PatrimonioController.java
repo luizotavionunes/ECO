@@ -1,5 +1,6 @@
 package br.edu.unifei.ControlePatrimonio.Controle;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import javax.swing.SingleSelectionModel;
 
 import br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Patrimonio;
 import br.edu.unifei.ControlePatrimonio.Modelo.Persistencia.PatrimonioDAO;
+import br.edu.unifei.ControlePatrimonio.util.CopiaArquivo;
 
 
 
@@ -317,7 +319,21 @@ public class PatrimonioController extends HttpServlet {
 			String localizacao = req.getParameter("localizacao");
 			PatrimonioDAO patDao = new PatrimonioDAO();
 			try {
+				File fileOrigem = new File("C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/");
+				File fileDestino = new File("C:/Users/Estagio/workspace/ControlePatrimonio/src/main/webapp/dados/");
+				File auxFile = new File(fileOrigem+"arquivo.csv");
+				if(auxFile.exists()){
+					auxFile.delete();
+					
+				}
 				patDao.exportarArquivos(descricao_fabricante_modelo, status, numero_serie, localizacao);
+				CopiaArquivo aux = new CopiaArquivo();
+				
+				
+				
+				aux.copyFiles(fileOrigem, fileDestino);
+				//req.getRequestURL("http://localhost:8080/eco/");
+				//resp.sendRedirect("dados/arquivo.csv");
 				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block

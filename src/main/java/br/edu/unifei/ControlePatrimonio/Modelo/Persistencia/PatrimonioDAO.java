@@ -340,10 +340,10 @@ public class PatrimonioDAO {
 		}
 				
 		if( descricao_fabricante_modelo == null && status == null && numero_serie == null && localizacao != null){
-			sql = "SELECT * from patrimonio WHERE localizacao LIKE'%"+localizacao+"%' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivo"+nome_arquivo+".csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
+			sql = "SELECT * from patrimonio WHERE localizacao LIKE'%"+localizacao+"%' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
 			
 		}else if(descricao_fabricante_modelo == null && status == null && numero_serie != null && localizacao == null){
-			sql  = "SELECT * from patrimonio WHERE numero_serie LIKE '%"+numero_serie+"%' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivo"+nome_arquivo+".csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
+			sql  = "SELECT * from patrimonio WHERE numero_serie LIKE '%"+numero_serie+"%' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
 			
 		}else if(descricao_fabricante_modelo == null && status != null && numero_serie == null && localizacao == null){
 			sql = "SELECT * from patrimonio WHERE status='"+status_ok+"' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivo"+nome_arquivo+".csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
