@@ -160,7 +160,17 @@ public class PatrimonioController extends HttpServlet {
 			PatrimonioDAO patDao = new PatrimonioDAO();
 			try {
 				lista = patDao.listaBusca(descricao_fabricante_modelo, status, numero_serie, localizacao);
+				File fileOrigem = new File("C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/");
+				File fileDestino = new File("C:/Users/Estagio/workspace/ControlePatrimonio/src/main/webapp/dados/");
+				File auxFile = new File("C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivoPatrimonio.csv");
+				if (auxFile.exists()) {
+					auxFile.delete();
+					System.out.println("Teste Delete OK");
+				}
+				patDao.exportarArquivos(descricao_fabricante_modelo, status, numero_serie, localizacao);
+				CopiaArquivo aux = new CopiaArquivo();
 
+				aux.copyFiles(fileOrigem, fileDestino);
 				for (int i = 0; i < lista.size(); i++) {
 					System.out.println("Numero de serie: " + lista.get(i).getNumero_serie() + " Descricao: "
 							+ lista.get(i).getDescricao_fabricante_modelo());
@@ -176,40 +186,6 @@ public class PatrimonioController extends HttpServlet {
 			dispatcher.forward(req, resp);
 
 		}
-
-		else if (acao.equals("exportarArquivos")) {
-			String descricao_fabricante_modelo = req.getParameter("descricao");
-			String status = req.getParameter("status");
-			String numero_serie = req.getParameter("numero_serie");
-			String localizacao = req.getParameter("localizacao");
-			PatrimonioDAO patDao = new PatrimonioDAO();
-			try {
-				File fileOrigem = new File("C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/");
-				File fileDestino = new File("C:/Users/Estagio/workspace/ControlePatrimonio/src/main/webapp/dados/");
-				File auxFile = new File(fileOrigem + "arquivo.csv");
-				if (auxFile.exists()) {
-					auxFile.delete();
-
-				}
-				patDao.exportarArquivos(descricao_fabricante_modelo, status, numero_serie, localizacao);
-				CopiaArquivo aux = new CopiaArquivo();
-
-				aux.copyFiles(fileOrigem, fileDestino);
-
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/buscaPatrimonio.jsp");
-			dispatcher.forward(req, resp);
-		}
-	}
-
-	@Override
-	public void destroy() {
-		// TODO Auto-generated method stub
-		super.destroy();
 	}
 
 }

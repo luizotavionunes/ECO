@@ -1,3 +1,10 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+body{
+	width: 1024px;
+	font-family: 'Roboto',serif;
+	
+}
+
 #principal {
     width: 200px;
     height: 200px;

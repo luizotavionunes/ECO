@@ -12,20 +12,8 @@
 </style>
 </head>
 <body>
-		<div id="footer">
-			<h1>SISTEMA DE CONTROLE DE PATRIMÔNIO ECO</h1>
-		</div>
-
-		<div id="nav">
-
-			<%@include file="menuADM.jsp"%>
-
-		</div>
-
-		<div id="section"></div>
-		
-		</div>
-
-		<div id="footer">Copyright © Unifei ECO</div>
+		<div id="dialog" title="Basic dialog">
+    		Teste
+    	</div>
 </body>
 </html>

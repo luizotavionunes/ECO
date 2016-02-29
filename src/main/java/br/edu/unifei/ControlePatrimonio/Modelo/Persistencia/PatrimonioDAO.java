@@ -333,87 +333,87 @@ public class PatrimonioDAO {
 
 		if (descricao_fabricante_modelo == null && status == null && numero_serie == null && localizacao != null) {
 			sql = "SELECT * from patrimonio WHERE localizacao LIKE'%" + localizacao
-					+ "%' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
+					+ "%' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivoPatrimonio.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
 
 		} else if (descricao_fabricante_modelo == null && status == null && numero_serie != null
 				&& localizacao == null) {
 			sql = "SELECT * from patrimonio WHERE numero_serie LIKE '%" + numero_serie
-					+ "%' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
+					+ "%' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivoPatrimonio.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
 
 		} else if (descricao_fabricante_modelo == null && status != null && numero_serie == null
 				&& localizacao == null) {
 			sql = "SELECT * from patrimonio WHERE status='" + status_ok
-					+ "' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
+					+ "' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivoPatrimonio.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
 
 		} else if (descricao_fabricante_modelo != null && status == null && numero_serie == null
 				&& localizacao == null) {
 			sql = "SELECT * from patrimonio WHERE descricao_fabricante_modelo LIKE '%" + descricao_fabricante_modelo
-					+ "%' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
+					+ "%' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivoPatrimonio.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
 
 		} else if (descricao_fabricante_modelo == null && status == null && numero_serie != null
 				&& localizacao != null) {
 			sql = "SELECT * from patrimonio WHERE localizacao LIKE '%" + localizacao + "%' AND numero_serie LIKE '%"
 					+ numero_serie
-					+ "%' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
+					+ "%' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivoPatrimonio.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
 
 		} else if (descricao_fabricante_modelo == null && status != null && numero_serie == null
 				&& localizacao != null) {
 			sql = "SELECT * from patrimonio WHERE localizacao LIKE '%" + localizacao + "%' AND status='" + status_ok
-					+ "' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
+					+ "' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivoPatrimonio.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
 
 		} else if (descricao_fabricante_modelo != null && status == null && numero_serie == null
 				&& localizacao != null) {
 			sql = "SELECT * from patrimonio WHERE localizacao LIKE '%" + localizacao
 					+ "%' AND descricao_fabricante_modelo LIKE '%" + descricao_fabricante_modelo
-					+ "%' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
+					+ "%' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivoPatrimonio.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
 
 		} else if (descricao_fabricante_modelo == null && status != null && numero_serie != null
 				&& localizacao == null) {
 			sql = "SELECT * from patrimonio WHERE numero_serie LIKE '%" + numero_serie + "%' AND status='" + status_ok
-					+ "' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
+					+ "' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivoPatrimonio.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
 
 		} else if (descricao_fabricante_modelo != null && status == null && numero_serie != null
 				&& localizacao == null) {
 			sql = "SELECT * from patrimonio WHERE numero_serie LIKE '%" + numero_serie
 					+ "%' AND descricao_fabricante_modelo LIKE '%" + descricao_fabricante_modelo
-					+ "%' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
+					+ "%' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivoPatrimonio.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
 
 		} else if (descricao_fabricante_modelo != null && status != null && numero_serie == null
 				&& localizacao == null) {
 			sql = "SELECT * from patrimonio WHERE descricao_fabricante_modelo LIKE '%" + descricao_fabricante_modelo
 					+ "%' AND status='" + status_ok
-					+ "' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
+					+ "' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivoPatrimonio.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
 
 		} else if (descricao_fabricante_modelo == null && status != null && numero_serie != null
 				&& localizacao != null) {
 			sql = "SELECT * from patrimonio WHERE localizacao LIKE '%" + localizacao + "%' AND numero_serie LIKE '%"
 					+ numero_serie + "%' AND status='" + status_ok
-					+ "' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
+					+ "' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivoPatrimonio.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
 
 		} else if (descricao_fabricante_modelo != null && status == null && numero_serie != null
 				&& localizacao != null) {
 			sql = "SELECT * from patrimonio WHERE localizacao LIKE '%" + localizacao + "%' AND numero_serie LIKE '%"
 					+ numero_serie + "%' AND descricao_fabricante_modelo LIKE'%" + descricao_fabricante_modelo
-					+ "%' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
+					+ "%' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivoPatrimonio.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
 
 		} else if (descricao_fabricante_modelo != null && status != null && numero_serie != null
 				&& localizacao == null) {
 			sql = "SELECT * from patrimonio WHERE status='" + status_ok + "' AND numero_serie LIKE '%" + numero_serie
 					+ "%' AND descricao_fabricante_modelo LIKE '%" + descricao_fabricante_modelo
-					+ "%' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
+					+ "%' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivoPatrimonio.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
 
 		} else if (descricao_fabricante_modelo != null && status != null && numero_serie == null
 				&& localizacao != null) {
 			sql = "SELECT * from patrimonio WHERE localizacao LIKE '%" + localizacao + "%' AND status='" + status_ok
 					+ "' AND descricao_fabricante_modelo LIKE '%" + descricao_fabricante_modelo
-					+ "%' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
+					+ "%' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivoPatrimonio.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
 
 		} else if (descricao_fabricante_modelo != null && status != null && numero_serie != null
 				&& localizacao != null) {
 			sql = "SELECT * from patrimonio WHERE localizacao LIKE '%" + localizacao + "%' AND numero_serie LIKE '%"
 					+ numero_serie + "%' AND descricao_fabricante_modelo LIKE '%" + descricao_fabricante_modelo
 					+ "%' AND status='" + status_ok
-					+ "' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
+					+ "' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivoPatrimonio.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
 		}
 
 		System.out.println(sql);

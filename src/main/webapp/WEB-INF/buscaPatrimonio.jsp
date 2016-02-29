@@ -33,11 +33,9 @@
 				document.formulario_busca.action = "patrimonio.do?acao=buscarefinada";
 				document.forms.formulario_busca.submit();
 			}
-			function exportar(){
-				document.formulario_busca.action = "patrimonio.do?acao=exportarArquivos";
-				
-				document.formulario_busca.action = "dados/arquivo.csv";
-				document.forms.formulario_busca.submit();
+			function download(){
+				document.formulario_busca.action = "dados/arquivoPatrimonio.csv";
+				document.forms.formulario_busca.submit();		
 			}
 		</script>
 </head>
@@ -64,9 +62,9 @@
 	</div>
 
 	<div id="section">
-		<h1>Formulário para Busca de Patrimônio</h1>
+		<h2>Consultar - Patrimônio</h2>
 
-		<form name=formulario_busca method="post">
+		<form name="formulario_busca" method="post">
 			<fieldset id="patrimonio">
 
 				<div class="formLab">Número de Série:</div>
@@ -75,9 +73,9 @@
 				</div>
 				<br /> <br />
 
-				<div class="formLab">Descrição / Fabricante / Modelo:</div>
+				<div class="formLab">Descrição/Fabricante/Modelo:</div>
 				<div class="form">
-					<input type="text" name="descricao" />
+					<input type="text" name="descricao" size="64px"/>
 				</div>
 				<br /> <br />
 
@@ -99,8 +97,10 @@
 				</div>
 				<br /> <br /> <br />
 				<div class="formLab">
-					<input type="button" maxlenght="100" value="Buscar" onclick=busca()></input>
-					<input type="button" maxlenght="100" value="Exportar" onclick=exportar()></input>
+					<a href="javascript:busca()">
+					<img src="<%=request.getContextPath()%>/imagens/icone_buscar_lupa.png"></img></a>
+					<a href="javascript:download()">
+					<img src="<%=request.getContextPath()%>/imagens/export_icon.png"></img></a>
 				</div>
 			</fieldset>
 
@@ -150,9 +150,13 @@
 					<td><%=f.getObservacao()%></td>
 
 			  <% if(usu.getTipo()==3){ %>
-			<td><a href="patrimonio.do?acao=alterar&serial=<%= f.getNumero_serie() %>" >Editar</a></td>
-			<td><a href="javascript:Exclusao(<%= f.getId() %>)" >Excluir</a></td>
-			<%} else { %>
+					<td><a href="patrimonio.do?acao=alterar&serial=<%=f.getNumero_serie()%>">
+							<img src="<%=request.getContextPath()%>/imagens/file_edit.png"></img>
+					</a></td>
+					<td><a href="javascript:Exclusao(<%=f.getId()%>)"> <img
+							src="<%=request.getContextPath()%>/imagens/file_delete.png"></img>
+					</a></td>
+					<%} else { %>
 			<td><a href="patrimonio.do?acao=alterar&serial=<%= f.getNumero_serie() %>" >Editar</a></td>
 			<%} %> 
 				</tr>

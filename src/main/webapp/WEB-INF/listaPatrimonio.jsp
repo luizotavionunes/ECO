@@ -54,7 +54,7 @@
 	</div>
 
 	<div id="section">
-				<h2>Lista de Patrimonio</h2>
+				<h2>Lista de Patrimônio</h2>
 		<p><table border="1">
 		<tr>
 			<th>ID</th>

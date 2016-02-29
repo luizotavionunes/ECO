@@ -1,5 +1,6 @@
 package br.edu.unifei.ControlePatrimonio.Controle;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Consumo;
 import br.edu.unifei.ControlePatrimonio.Modelo.Persistencia.ConsumoDAO;
 import br.edu.unifei.ControlePatrimonio.Modelo.Persistencia.PatrimonioDAO;
+import br.edu.unifei.ControlePatrimonio.util.CopiaArquivo;
 
 @WebServlet("/consumo.do")
 public class ConsumoController extends HttpServlet {
@@ -144,6 +146,31 @@ public class ConsumoController extends HttpServlet {
 				e.printStackTrace();
 			}
 			
+			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/buscaConsumo.jsp");
+			dispatcher.forward(req, resp);
+			
+		}else if (acao.equals("exportarConsumo")) {
+			String nome = req.getParameter("nome");
+			String status = req.getParameter("status");
+			String localizacao = req.getParameter("localizacao");
+			ConsumoDAO conDao = new ConsumoDAO();
+			try {
+				File fileOrigem = new File("C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/");
+				File fileDestino = new File("C:/Users/Estagio/workspace/ControlePatrimonio/src/main/webapp/dados/");
+				File auxFile = new File(fileOrigem + "arquivoConsumo.csv");
+				if (auxFile.exists()) {
+					auxFile.delete();
+				}
+				conDao.exportarItens(nome, status, localizacao);
+				CopiaArquivo aux = new CopiaArquivo();
+
+				aux.copyFiles(fileOrigem, fileDestino);
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/buscaConsumo.jsp");
 			dispatcher.forward(req, resp);
 		}

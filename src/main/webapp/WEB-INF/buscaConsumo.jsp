@@ -31,6 +31,17 @@
 		}
 	}*/
 	
+	function busca() {
+		document.formulario_busca.action = "consumo.do?acao=buscarefinada";
+		document.forms.formulario_busca.submit();
+	}
+	function exportar(){
+		document.formulario_busca.action = "consumo.do?acao=exportarConsumos";
+		
+		//document.formulario_busca.action = "dados/arquivoConsumo.csv";
+		document.forms.formulario_busca.submit();
+	}
+	
 	
 	
 </script>
@@ -55,9 +66,9 @@
 
 	<div id="section">
 
-<h1>Formulário para Busca de Ítens de Consumo</h1>
+<h1>Consultar Patrimônio - Consumo</h1>
 
-	<form action="consumo.do?acao=busca" method="post">
+	<form name="formulario_busca" method="post">
 		<fieldset>
 
 			<div class="formLab">Nome:</div>
@@ -86,8 +97,12 @@
 			</div>
 			<br />
 			<br />
-			<br /> <div class="formLab"><input type="submit" maxlenght="100" value="Buscar"></div>
-		</fieldset>
+			<br />
+				<div class="formLab">
+					<input type="button" maxlenght="100" value="Buscar"	onclick="busca()"></input> 
+					<input type="button" maxlenght="100" value="Exportar" onclick="exportar()"></input>
+				</div>
+			</fieldset>
 
 	</form>
 <%

@@ -1,33 +1,56 @@
-
+@import url(https://fonts.googleapis.com/css?family=Roboto);
 body{
-	
-
+	width: 1024px;
+	font-family: 'Roboto',serif;
+	float: center;
+	left:50%;
+	margin-left:-512px; /* metade da largura fictícia */
+	position:absolute;
 }
+}
+
+h2{
+	font-size: medium;
+}
+
+img{
+	width:32px;
+	height:32px;
+	float: right;
+	padding-right:10px;
+	padding-left:10px;
+}
+
+tr:nth-child(even) {background: #FFF}
+tr:nth-child(odd) {background: #58ACFA}
+
+th{
+	color: white;	
+}
+
 #header {
     background-color:#58ACFA;
     color:white;
     clear:both;
     text-align:center;
     padding:5px;
-     overflow:auto;
+    overflow:auto;
 }
 #nav {
-	background-color:#babdb6;
     line-height:30px;
     height:100%;
     width:150px;
     float:left;
-    padding:5px;
 }
 #section {
-    width:800px;
+    width:70%;
     float:left;
     padding-left:40px;
     padding-top:0px;
     padding-right:10px;
     padding-bottom:10px;
 }
-#footer {
+#footer{
     background-color:#58ACFA;
     color:white;
     clear:both;
@@ -35,9 +58,18 @@ body{
     padding:5px;
 }
 
+
 #patrimonio{
-	
-	
+	width:100%;
+	float: ;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table, th, td {
+	border: 1px solid black
 }
 
 ul {
@@ -63,11 +95,10 @@ ul li a {
     padding: 5px;
     border: 1px solid #ccc;
 }
-/* Fix IE. Hide from IE Mac \*/
+
 * html ul li { float: left; }
 * html ul li a { height: 1%; }
-/* End */
 li:hover ul { display: block; }
 
-.formLab { display:block; width:220px; float:left; }
-.form { display:block; width:500px; float:left; }
+.formLab { display:block; width:100%; float:left; padding-top: 10px; }
+.form { display:block; width:64px; float:left; }
