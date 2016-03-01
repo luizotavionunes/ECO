@@ -10,6 +10,7 @@
 <style type="text/css">
 <%@include file="../css/style.css"%>
 </style>
+<title>Home</title> 
 </head>
 <body>
 		<div id="footer">
