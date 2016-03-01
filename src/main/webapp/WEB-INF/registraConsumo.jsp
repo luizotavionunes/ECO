@@ -15,6 +15,13 @@
 <style>
 <%@ include file="../css/style.css"%>
 </style>
+<title>Insere - Consumo</title>
+<script>
+function salva() {
+	document.formulario_cadastro.action = "consumo.do?acao=cad";
+	document.forms.formulario_cadastro.submit();
+}
+</script>
 </head>
 <body>
 
@@ -39,9 +46,9 @@
 
 	<div id="section">
 
-	<h1>Formulário para Cadastro de Iténs de Consumo</h1>
+	<h2>Insere - Consumo</h2>
 
-	<form action="consumo.do?acao=cad" method="post">
+	<form name="formulario_cadastro" method="post">
 		<fieldset>
 
 			<div class="formLab">Id:</div>
@@ -99,7 +106,11 @@
 			</textarea>
 			</div>
 			<br />
-			<br /> <div class="formLab"><input type="submit" maxlenght="100" value="Salvar"></div>
+			<br /> 
+			<div class="formLab">
+				<a href="javascript:salva()">
+					<img src="<%=request.getContextPath()%>/imagens/save_icon.png"></img></a>
+			</div>
 		</fieldset>
 
 	</form>

@@ -65,12 +65,6 @@
     
       <li><a href="#">Log do Sistema</a></li>
       
-        <li><a href="#">Exportar Arquivos</a>
-      <ul>
-        <li><a href="usuario.do?acao=cad">Exportar Consumo</a></li>
-        <li><a href="usuario.do?acao=listar">Exportar Patrimonio</a></li>
-      </ul>
-    </li>
     
     <li><a href="logincontroller.do">Sair</a></li> 
      

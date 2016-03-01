@@ -15,7 +15,15 @@
 <style>
 <%@ include file="../css/style.css"%>
 </style>
-<title>Insert title here</title>
+<title>Insere - Patrimônio</title>
+
+<script>
+function salva() {
+	document.formulario_cadastro.action = "patrimonio.do?acao=cad";
+	document.forms.formulario_cadastro.submit();
+}
+</script>
+
 </head>
 <body>
 <div id="footer">
@@ -35,9 +43,9 @@
 <% Patrimonio Pat = (Patrimonio) request.getAttribute("patrimonioEdit"); %>
 
 <div id="section">
-	<h1>Formulário para Cadastro de Patrimônio</h1>
+	<h2>Insere - Patrimônio</h2>
 
-	<form action="patrimonio.do?acao=cad" method="post">
+	<form name="formulario_cadastro" method="post">
 		<fieldset>
 		
 		<div class="formLab">Id:</div>
@@ -96,8 +104,12 @@
 			</textarea>
 			</div>
 			<br />
-			<br /> <div class="formLab"><input type="submit" maxlenght="100" value="Salvar"></div>
-		</fieldset>
+			<br />
+				<div class="formLab">
+					<a href="javascript:salva()"> <img
+						src="<%=request.getContextPath()%>/imagens/save_icon.png"></img></a>
+				</div>
+			</fieldset>
 
 	</form>
 	</div>

@@ -152,7 +152,6 @@ public class PatrimonioDAO {
 
 	public List<Patrimonio> listaBusca(String descricao_fabricante_modelo, String status, String numero_serie,
 			String localizacao) throws SQLException {
-		// System.out.println("statusFRomServ " + status);
 		String sql = null;
 		int status_ok;
 		if (status.equals("0")) {
@@ -167,9 +166,6 @@ public class PatrimonioDAO {
 			numero_serie = null;
 		if (localizacao.equals(""))
 			localizacao = null;
-
-		System.out.println("descricao " + descricao_fabricante_modelo + " status " + status + " numero serie "
-				+ numero_serie + " localizacao " + localizacao);
 
 		if (descricao_fabricante_modelo == null && status == null && numero_serie == null && localizacao != null) {
 			sql = "SELECT * from patrimonio WHERE localizacao LIKE'%" + localizacao + "%'";
@@ -246,7 +242,6 @@ public class PatrimonioDAO {
 		}
 
 		PreparedStatement preparador = con.prepareStatement(sql);
-		System.out.println("Query " + sql);
 		List<Patrimonio> lista = new ArrayList<Patrimonio>();
 		try {
 			ResultSet resultado = preparador.executeQuery();
@@ -416,7 +411,6 @@ public class PatrimonioDAO {
 					+ "' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivoPatrimonio.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
 		}
 
-		System.out.println(sql);
 		PreparedStatement preparador = con.prepareStatement(sql);
 		try {
 			preparador.executeQuery();

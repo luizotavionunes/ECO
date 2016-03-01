@@ -16,7 +16,7 @@
 	<style>
 <%@ include file="../css/style.css"%>
 </style>
-	<title>Insert title here</title> 
+	<title>Busca - Patrimônio</title> 
 	<script type="text/javascript">
 		function Exclusao(id) {
 			if (window.confirm('Tem certeza que deseja excluir?')) {
@@ -149,16 +149,24 @@
 					</td>
 					<td><%=f.getObservacao()%></td>
 
-			  <% if(usu.getTipo()==3){ %>
-					<td><a href="patrimonio.do?acao=alterar&serial=<%=f.getNumero_serie()%>">
+					<%
+						if (usu.getTipo() == 3) {
+					%>
+					<td><a
+						href="patrimonio.do?acao=alterar&serial=<%=f.getNumero_serie()%>">
 							<img src="<%=request.getContextPath()%>/imagens/file_edit.png"></img>
 					</a></td>
 					<td><a href="javascript:Exclusao(<%=f.getId()%>)"> <img
 							src="<%=request.getContextPath()%>/imagens/file_delete.png"></img>
 					</a></td>
-					<%} else { %>
-			<td><a href="patrimonio.do?acao=alterar&serial=<%= f.getNumero_serie() %>" >Editar</a></td>
-			<%} %> 
+					<%
+						} else {
+					%>
+					<td><a
+						href="patrimonio.do?acao=alterar&serial=<%=f.getNumero_serie()%>">
+							<img src="<%=request.getContextPath()%>/imagens/file_edit.png"></img>
+					</a></td>
+					<%} %>
 				</tr>
 				<%
 					}

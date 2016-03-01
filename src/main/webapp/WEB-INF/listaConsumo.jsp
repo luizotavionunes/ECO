@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@page
 	import="br.edu.unifei.ControlePatrimonio.Modelo.Persistencia.ConsumoDAO"%>
 <%@page
@@ -14,28 +14,21 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <style>
-<%@ include file="../css/style.css"%>
+	<%@ include file="../css/style.css"%>
 </style>
-<title>Lista de Consumo</title>
-
-<script type="text/javascript">
-	function Exclusao(id) {
-		if (window.confirm('Tem certeza que deseja excluir?')) {
-			location.href = "consumo.do?acao=remover&id=" + id;
+	<title>Lista - Consumo</title> <script type="text/javascript">
+		function Exclusao(id) {
+			if (window.confirm('Tem certeza que deseja excluir?')) {
+				location.href = "consumo.do?acao=remover&id=" + id;
+			}
 		}
-	}
-	/*function confirmaExclusao(id) {
-		if (window.confirm('ATENÇAO!!Após a exlusão deste item, não será possível recupera-lo. Você tem certeza disso?')) {
-			location.href="patrimonio.do?acao=remover&serial=" + id;
-			
-		}
-	}*/
-	
-	
-	
-</script>
-
-
+		/*function confirmaExclusao(id) {
+			if (window.confirm('ATENÇAO!!Após a exlusão deste item, não será possível recupera-lo. Você tem certeza disso?')) {
+				location.href="patrimonio.do?acao=remover&serial=" + id;
+				
+			}
+		}*/
+	</script>
 </head>
 <body>
 
@@ -44,64 +37,83 @@
 	</div>
 
 	<div id="nav">
-		<%Usuario usu = (Usuario) request.getSession().getAttribute("usuAUT");%>
-		<%@include file="menu.jsp"%>
+		<%
+			Usuario usu = (Usuario) request.getSession().getAttribute("usuAUT");
+		%>
+		<%@include file="menuADM.jsp"%>
 	</div>
 
 	<div id="section">
-				<h2>Lista de Consumo</h2>
-		<p><table border="1">
-		<tr>
-			<th>ID</th>
-			<th>NOME</th>
-			<th>STATUS</th>
-			<th>OBSERVACAO</th>
-			<th>LOCALIZACAO</th>
-		</tr>
-		<%
-			List<Consumo> listaCon = (List<Consumo>) request.getAttribute("listaCon");
-		%>
-
-		<%
-			for (Consumo f : listaCon) {
-		%>
-		<tr>
-			<td>
+		<h2>Listar - Consumo</h2>
+		<p>
+			<table border="1">
+				<tr>
+					<th>ID</th>
+					<th>NOME</th>
+					<th>STATUS</th>
+					<th>OBSERVACAO</th>
+					<th>LOCALIZACAO</th>
+				</tr>
 				<%
-					out.print(f.getId());
+					List<Consumo> listaCon = (List<Consumo>) request.getAttribute("listaCon");
 				%>
-			</td>
-			<td><%=f.getNome() %></td>
-			<td>
-			<% if(f.getStatus()==1){
-				out.print("Ativo");
-			} else{
-				out.print("Inativo");
-			}
+
+				<%
+					for (Consumo f : listaCon) {
 				%>
-			</td>
-			<td><%=f.getObservacao() %></td>
-			<td><%=f.getLocalizacao() %></td>
+				<tr>
+					<td>
+						<%
+							out.print(f.getId());
+						%>
+					</td>
+					<td><%=f.getNome()%></td>
+					<td>
+						<%
+							if (f.getStatus() == 1) {
+									out.print("Ativo");
+								} else {
+									out.print("Inativo");
+								}
+						%>
+					</td>
+					<td><%=f.getObservacao()%></td>
+					<td><%=f.getLocalizacao()%></td>
 
-			
-			<% if(usu.getTipo()==3){ %>
-			<td><a href="consumo.do?acao=alterar&id=<%=f.getId() %>" >Editar</a></td>
-			<td><a href="javascript:Exclusao(<%= f.getId() %>)" >Excluir</a></td>
-			<%} else {%>
-			<td><a href="consumo.do?acao=alterar&id=<%=f.getId() %>" >Editar</a></td>
-			<% } %>
 
-		</tr>
-		<%
-			}
-		%>
+					<%
+						if (usu.getTipo() == 3) {
+					%>
+					<td><a
+						href="patrimonio.do?acao=alterar&serial=<%=f.getId()%>"> <img
+							src="<%=request.getContextPath()%>/imagens/file_edit.png"></img>
+					</a></td>
+					<td><a href="javascript:Exclusao(<%=f.getId()%>)"> <img
+							src="<%=request.getContextPath()%>/imagens/file_delete.png"></img>
+					</a></td>
+					<%
+						} else {
+					%>
+					<td><a
+						href="patrimonio.do?acao=alterar&serial=<%=f.getId()%>"> <img
+							src="<%=request.getContextPath()%>/imagens/file_edit.png"></img>
+					</a></td>
+					<%
+						}
+					%>
+
+				</tr>
+				<%
+					}
+				%>
 
 
-	</table></p>
+			</table>
+		</p>
 	</div>
 
 	<div id="footer">Copyright © Unifei ECO</div>
-		
+
 
 
 </body>

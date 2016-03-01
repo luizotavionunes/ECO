@@ -165,7 +165,6 @@ public class PatrimonioController extends HttpServlet {
 				File auxFile = new File("C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivoPatrimonio.csv");
 				if (auxFile.exists()) {
 					auxFile.delete();
-					System.out.println("Teste Delete OK");
 				}
 				patDao.exportarArquivos(descricao_fabricante_modelo, status, numero_serie, localizacao);
 				CopiaArquivo aux = new CopiaArquivo();

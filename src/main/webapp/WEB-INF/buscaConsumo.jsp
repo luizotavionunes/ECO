@@ -16,7 +16,7 @@
 <style>
 <%@ include file="../css/style.css"%>
 </style>
-<title>Insert title here</title>
+<title>Busca - Consumo</title>
 
 <script type="text/javascript">
 	function Exclusao(id) {
@@ -32,17 +32,13 @@
 	}*/
 	
 	function busca() {
-		document.formulario_busca.action = "consumo.do?acao=buscarefinada";
+		document.formulario_busca.action = "consumo.do?acao=busca";
 		document.forms.formulario_busca.submit();
 	}
-	function exportar(){
-		document.formulario_busca.action = "consumo.do?acao=exportarConsumos";
-		
-		//document.formulario_busca.action = "dados/arquivoConsumo.csv";
-		document.forms.formulario_busca.submit();
+	function download(){
+		document.formulario_busca.action = "dados/arquivoConsumo.csv";
+		document.forms.formulario_busca.submit();		
 	}
-	
-	
 	
 </script>
 
@@ -66,7 +62,7 @@
 
 	<div id="section">
 
-<h1>Consultar Patrimônio - Consumo</h1>
+<h2>Consultar - Consumo</h2>
 
 	<form name="formulario_busca" method="post">
 		<fieldset>
@@ -99,8 +95,10 @@
 			<br />
 			<br />
 				<div class="formLab">
-					<input type="button" maxlenght="100" value="Buscar"	onclick="busca()"></input> 
-					<input type="button" maxlenght="100" value="Exportar" onclick="exportar()"></input>
+					<a href="javascript:busca()">
+					<img src="<%=request.getContextPath()%>/imagens/icone_buscar_lupa.png"></img></a>
+					<a href="javascript:download()">
+					<img src="<%=request.getContextPath()%>/imagens/export_icon.png"></img></a>
 				</div>
 			</fieldset>
 
@@ -143,10 +141,16 @@ if(listaCon!=null){ %>
 			<td><%=f.getObservacao() %></td>
 			
 		    <% if(usu.getTipo()==3){ %>
-			<td><a href="consumo.do?acao=alterar&id=<%=f.getId() %>" >Editar</a></td>
-			<td><a href="javascript:Exclusao(<%= f.getId() %>)" >Excluir</a></td>
+			<td><a href="consumo.do?acao=alterar&serial=<%=f.getId()%>">
+							<img src="<%=request.getContextPath()%>/imagens/file_edit.png"></img>
+					</a></td>
+					<td><a href="javascript:Exclusao(<%=f.getId()%>)"> <img
+							src="<%=request.getContextPath()%>/imagens/file_delete.png"></img>
+					</a></td>
 			<%} else { %>
-			<td><a href="consumo.do?acao=alterar&id=<%=f.getId() %>" >Editar</a></td>
+			<td><a href="consumo.do?acao=alterar&serial=<%=f.getId()%>">
+				<img src="<%=request.getContextPath()%>/imagens/file_edit.png"></img>
+			</a></td>
 			<%} %> 
 
 		</tr>

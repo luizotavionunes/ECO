@@ -27,7 +27,6 @@ public class CopiaArquivo {
 		                while ((len = in.read(buf)) > 0) {
 		                    out.write(buf, 0, len);
 		                }
-		                System.out.println("teste " + out);
 		                in.close();
 		                out.close();
 		            }            

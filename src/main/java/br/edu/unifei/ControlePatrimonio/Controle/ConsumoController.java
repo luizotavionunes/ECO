@@ -139,7 +139,17 @@ public class ConsumoController extends HttpServlet {
 			
 			ConsumoDAO conDao = new ConsumoDAO();
 			try {
-				 lista = conDao.listaBusca(nome, status,  localizacao);
+				lista = conDao.listaBusca(nome, status, localizacao);
+				File fileOrigem = new File("C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/");
+				File fileDestino = new File("C:/Users/Estagio/workspace/ControlePatrimonio/src/main/webapp/dados/");
+				File auxFile = new File("C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivoConsumo.csv");
+				if (auxFile.exists()) {
+					auxFile.delete();
+				}
+				conDao.exportarItens(nome, status, localizacao);
+				CopiaArquivo aux = new CopiaArquivo();
+
+				aux.copyFiles(fileOrigem, fileDestino);
 				req.setAttribute("listaConRefinada", lista);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -149,30 +159,6 @@ public class ConsumoController extends HttpServlet {
 			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/buscaConsumo.jsp");
 			dispatcher.forward(req, resp);
 			
-		}else if (acao.equals("exportarConsumo")) {
-			String nome = req.getParameter("nome");
-			String status = req.getParameter("status");
-			String localizacao = req.getParameter("localizacao");
-			ConsumoDAO conDao = new ConsumoDAO();
-			try {
-				File fileOrigem = new File("C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/");
-				File fileDestino = new File("C:/Users/Estagio/workspace/ControlePatrimonio/src/main/webapp/dados/");
-				File auxFile = new File(fileOrigem + "arquivoConsumo.csv");
-				if (auxFile.exists()) {
-					auxFile.delete();
-				}
-				conDao.exportarItens(nome, status, localizacao);
-				CopiaArquivo aux = new CopiaArquivo();
-
-				aux.copyFiles(fileOrigem, fileDestino);
-
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/buscaConsumo.jsp");
-			dispatcher.forward(req, resp);
 		}
 	}
 

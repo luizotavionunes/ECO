@@ -17,7 +17,7 @@
 <style>
 <%@ include file="../css/style.css"%>
 </style>
-<title>Insert title here</title>
+<title>Lista - Usuário</title>
 
 <script type="text/javascript">
 	function Exclusao(id) {
@@ -56,7 +56,7 @@
 	</div>
 
 	<div id="section">
-				<h2>Lista de Usuários</h2>
+				<h2>Lista - Usuários</h2>
 		<p><table border="1">
 		<tr>
 			<th>ID</th>
@@ -84,10 +84,15 @@
 			
 			<%
 			if(usu.getId()!=f.getId()){%>
-			<td><a href="usuario.do?acao=alterar&id=<%= f.getId() %>" >Editar</a>
-			<td><a href="javascript:Exclusao(<%= f.getId() %>)" >Excluir</a>
+					<td><a
+						href="patrimonio.do?acao=alterar&serial=<%=f.getId()%>"> <img
+							src="<%=request.getContextPath()%>/imagens/file_edit.png"></img>
+					</a></td>
+					<td><a href="javascript:Exclusao(<%=f.getId()%>)"> <img
+							src="<%=request.getContextPath()%>/imagens/file_delete.png"></img>
+					</a></td>
 
-<%} %>
+					<%} %>
 
 		</tr>
 		<%

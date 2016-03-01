@@ -15,7 +15,13 @@
 <style>
 <%@ include file="../css/style.css"%>
 </style>
-<title>Insert title here</title>
+<title>Insere - Usuários</title>
+<script>
+function salva() {
+	document.formulario_cadastro.action = "usuario.do";
+	document.forms.formulario_cadastro.submit();
+}
+</script>
 </head>
 <body>
 <div id="footer">
@@ -35,9 +41,9 @@
 <% Usuario usuAux = (Usuario) request.getAttribute("usuEdit"); %>
 
 <div id="section">
-	<h1>Formulário para Cadastro de Patrimônio</h1>
+	<h2>Insere - Usuário</h2>
 
-	<form action="usuario.do" method="post">
+	<form name="formulario_cadastro" method="post">
 		<fieldset>
 		
 		<div class="formLab">Id:</div>
@@ -60,7 +66,11 @@
 			</div>
 			<br />
 			<br />
-			<br /> <div class="formLab"><input type="submit" maxlenght="100" value="Salvar"></div>
+			<br /> 
+			<div class="formLab">
+				<a href="javascript:salva()"> <img
+						src="<%=request.getContextPath()%>/imagens/save_icon.png"></img></a>
+			</div>
 		</fieldset>
 
 	</form>
