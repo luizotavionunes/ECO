@@ -7,7 +7,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.management.StringValueExp;
+
 import br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Consumo;
+import br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Log;
 
 
 public class ConsumoDAO {
@@ -132,11 +135,15 @@ public class ConsumoDAO {
 	}
 	
 	public void salvar(Consumo consumo) throws SQLException{
-		System.out.println("Id do consumougig: " + consumo.getId());
-		if(consumo.getId() !=0 && consumo !=null)
+		//System.out.println("Id do consumougig: " + consumo.getId());
+		if(consumo.getId() !=0 && consumo !=null){
 			alterar(consumo);
-		else
-			inserir(consumo);		
+			
+		}
+		else{
+			
+			inserir(consumo);
+		}
 		
 	}
 	

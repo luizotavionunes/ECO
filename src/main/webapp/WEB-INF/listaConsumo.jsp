@@ -39,8 +39,16 @@
 	<div id="nav">
 		<%
 			Usuario usu = (Usuario) request.getSession().getAttribute("usuAUT");
+			if (usu.getTipo() == 3) {
 		%>
 		<%@include file="menuADM.jsp"%>
+		<%
+			} else {
+		%>
+		<%@include file="menu.jsp"%>
+		<%
+			}
+		%>
 	</div>
 
 	<div id="section">
@@ -85,7 +93,7 @@
 						if (usu.getTipo() == 3) {
 					%>
 					<td><a
-						href="patrimonio.do?acao=alterar&serial=<%=f.getId()%>"> <img
+						href="consumo.do?acao=alterar&serial=<%=f.getId()%>"> <img
 							src="<%=request.getContextPath()%>/imagens/file_edit.png"></img>
 					</a></td>
 					<td><a href="javascript:Exclusao(<%=f.getId()%>)"> <img
@@ -95,7 +103,7 @@
 						} else {
 					%>
 					<td><a
-						href="patrimonio.do?acao=alterar&serial=<%=f.getId()%>"> <img
+						href="consumo.do?acao=alterar&serial=<%=f.getId()%>"> <img
 							src="<%=request.getContextPath()%>/imagens/file_edit.png"></img>
 					</a></td>
 					<%

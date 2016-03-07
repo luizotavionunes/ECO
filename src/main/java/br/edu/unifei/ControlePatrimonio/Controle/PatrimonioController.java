@@ -84,7 +84,7 @@ public class PatrimonioController extends HttpServlet {
 		} else if (acao.equals("alterar")) {
 			String serial = req.getParameter("serial");
 			Patrimonio pat = null;
-			;
+			
 			PatrimonioDAO ptDAO = new PatrimonioDAO();
 			try {
 				pat = ptDAO.buscaSerial(serial);

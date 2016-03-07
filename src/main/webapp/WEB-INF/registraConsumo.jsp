@@ -41,8 +41,7 @@ function salva() {
 	</div>
 	
 <% 	Consumo Con = (Consumo) request.getAttribute("consumoEdit"); %>
-<% 
-	out.print("Nomep: " + Con.getNome());%>
+
 
 	<div id="section">
 
@@ -50,6 +49,8 @@ function salva() {
 
 	<form name="formulario_cadastro" method="post">
 		<fieldset>
+		<!--   <% 
+	out.print("Nome: " + Con.getNome());%>-->
 
 			<div class="formLab">Id:</div>
 			<div class="form">
@@ -90,7 +91,7 @@ function salva() {
 			<div class="formLab">Status:</div>
 			<div class="form">
 				<select name="status" size="1">
-					<option value="#">Sistema Ativo ou Inativo?
+					<option value="0">Sistema Ativo ou Inativo?
 
 						<option value="1">Ativo
 

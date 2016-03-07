@@ -53,6 +53,7 @@ public class LoginController extends HttpServlet {
 		if (usuAUT != null) {
 			HttpSession sessao = req.getSession();
 			sessao.setAttribute("usuAUT", usuAUT);
+			sessao.setAttribute("nomeUsu", nome);
 			  sessao.setMaxInactiveInterval(60*5);
 			if(usuAUT.getTipo()==3){
 			  req.getRequestDispatcher("WEB-INF/homeADM.jsp").forward(req,

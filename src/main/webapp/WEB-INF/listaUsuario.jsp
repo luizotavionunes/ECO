@@ -85,7 +85,7 @@
 			<%
 			if(usu.getId()!=f.getId()){%>
 					<td><a
-						href="patrimonio.do?acao=alterar&serial=<%=f.getId()%>"> <img
+						href="usuario.do?acao=alterar&id=<%=f.getId()%>"> <img
 							src="<%=request.getContextPath()%>/imagens/file_edit.png"></img>
 					</a></td>
 					<td><a href="javascript:Exclusao(<%=f.getId()%>)"> <img

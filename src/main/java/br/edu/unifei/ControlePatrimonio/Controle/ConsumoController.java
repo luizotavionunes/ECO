@@ -11,9 +11,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Consumo;
+import br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Log;
+import br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Usuario;
 import br.edu.unifei.ControlePatrimonio.Modelo.Persistencia.ConsumoDAO;
+import br.edu.unifei.ControlePatrimonio.Modelo.Persistencia.LogDAO;
 import br.edu.unifei.ControlePatrimonio.Modelo.Persistencia.PatrimonioDAO;
 import br.edu.unifei.ControlePatrimonio.util.CopiaArquivo;
 
@@ -59,27 +63,50 @@ public class ConsumoController extends HttpServlet {
 			dispatcher.forward(req, resp);
 		}
 		else if(acao.equals("alterar")){
-			String id= req.getParameter("id");
+			String id= req.getParameter("serial");
+			//System.out.println("id: " + id);
+			LogDAO logDao = new LogDAO();
+			Log log = new Log();
+		
+			
 			Consumo con=null;;
 			ConsumoDAO conDAO = new ConsumoDAO();
 			try {
 				 con = conDAO.buscaId(id);
+				 
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
-			System.out.println("Id do produto alt: " + con.getId());
+			HttpSession sessao = req.getSession();
+			Usuario usu = (Usuario) sessao.getAttribute("usuAUT");
+			log.setAcesso(usu.getTipo());
+			String historico = "Id: " + con.getId() + " Nome: " + con.getNome() + " Status: " + con.getStatus() + " Localização: " + con.getLocalizacao() + " Observacao: " + con.getObservacao() ;
+			log.setPreHistorico(historico);
+			String nome = (String) sessao.getAttribute("nomeUsu");
+			log.setNome(nome);
+			//log.setId(id_log);
+		
 			
+			
+
+			//System.out.println("Id do produto alt: " + con.getId());
+			//req.setAttribute("logEdit", log);
+			sessao.setAttribute("logEdit", log);
 			req.setAttribute("consumoEdit", con);
 			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/registraConsumo.jsp");
 			dispatcher.forward(req, resp);
 		}
 		else if(acao.equals("remover")){
 			String id= req.getParameter("id");
-			int removido=0;
+			LogDAO logDao = new LogDAO();
+			Log log = new Log();
+			Consumo con = new Consumo();
+			
 			ConsumoDAO conDAO = new ConsumoDAO();
 			try {
+				con = conDAO.buscaId(id);
 				if(conDAO.remove(Integer.parseInt(id)))
 						System.out.println("Consumo removido com sucesso.");
 				
@@ -87,7 +114,26 @@ public class ConsumoController extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			//if(removido==1)
+			HttpSession sessao = req.getSession();
+			Usuario usu = (Usuario) sessao.getAttribute("usuAUT");
+			log.setAcesso(usu.getTipo());
+			String historico = "Id: " + con.getId() + " Nome: " + con.getNome() + " Status: " + con.getStatus() + " Localização: " + con.getLocalizacao() + " Observacao: " + con.getObservacao() ;
+			log.setPreHistorico(historico);
+			String nome = (String) sessao.getAttribute("nomeUsu");
+			log.setNome(nome);
+			log.setPosHistorico("Objeto excluído.");
+			
+			try {
+				if(logDao.inserir(log)){
+					System.out.println("Log Registrado com sucesso.");
+					
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+
 			resp.getWriter().print("<script> window.alert('Item removido!');</script>");
 			resp.sendRedirect("consumo.do?acao=listar");
 			
@@ -107,7 +153,16 @@ public class ConsumoController extends HttpServlet {
 			String localizacao = req.getParameter("localizacao");
 			
 			Consumo con = new Consumo();
+			HttpSession sessao = req.getSession();
+/*
+			if (!status.equals("1") || !status.equals("2")) {
+				resp.getWriter()
+						.print("<script> window.alert('Selecione o Status!'); location.href='consumo.do?acao=alterar&serial="
+								+ id + "'; </script>");
 
+			}
+			*/
+			
 			con.setId(Integer.parseInt(id));
 			
 			if (status.equals("Ativo")) {
@@ -118,14 +173,39 @@ public class ConsumoController extends HttpServlet {
 			con.setNome(nome);
 			con.setObservacao(observacao);
 			con.setLocalizacao(localizacao);
-
+			String historicoPos = "Nome: " + con.getNome() + " Status: " + con.getStatus() + " Localização: " + con.getLocalizacao() + " Observacao: " + con.getObservacao() ;
+			
+			System.out.println("");
+			
+			System.out.println(historicoPos);
 			ConsumoDAO conDAO = new ConsumoDAO();
+			Log log = new Log();
+			if(con.getId()!=0)
+			log = (Log) sessao.getAttribute("logEdit");
+			else{
+				Usuario usu = (Usuario) sessao.getAttribute("usuAUT");
+				String nomeU = (String) sessao.getAttribute("nomeUsu");
+				log.setNome(nomeU);
+				log.setAcesso(usu.getTipo());				
+			}
+			log.setPosHistorico(historicoPos);
+			//System.out.println("id "+ log.getId());
+			LogDAO logDao = new LogDAO();
+			
+			if(con.getId()==0){
+				log.setPreHistorico("Não existem informações prévias sobre este objeto. Provavelmente é um novo objeto.");				
+			}
 
 			try {
 				conDAO.salvar(con);
+		
+				if(logDao.inserir(log))
+					System.out.println("Log registrado com sucesso!");
+				else System.out.println("Erro ao registrar log!");
+				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				System.out.println("Erro na inserção de consu,o.");
+				System.out.println("Erro na inserção de consumo.");
 				e.printStackTrace();
 			}
 			resp.sendRedirect("consumo.do?acao=listar");
