@@ -43,26 +43,28 @@ function salva() {
 <div id="section">
 	<h2>Insere - Usuário</h2>
 
-	<form name="formulario_cadastro" method="post">
+	<form id="formulario_usuario" name="formulario_cadastro" method="post">
 		<fieldset>
 		
-		<div class="formLab">Id:</div>
-			<div class="form">
-				<input type="text" name="id" readonly="readonly" value="<%= usuAux.getId() %>" />
+		
+		<div id = "title_form"> Inserir - Usuário</div>
+			<div class="row">
+				<label class="col1">Id:&nbsp;&nbsp;</label> 
+				<span class="col2"> 
+					<input tabindex="1" type="text" name="id" readonly="readonly" value="<%= usuAux.getId() %>" />
+				</span>
 			</div>
-			<br />
-			<br />
-
-			<div class="formLab">Tipo:</div>
-			<div class="form">
-				<input type="text" name="tipo" value="<%= usuAux.getTipo() %>" />
+			<div class="row">
+				<label class="col1">Acesso:&nbsp;&nbsp;</label> 
+				<span class="col2"> 
+					<input tabindex="1" type="text" name="tipo" value="<%= usuAux.getTipo() %>" />
+				</span>
 			</div>
-			<br />
-			<br />
-
-			<div class="formLab">Senha:</div>
-			<div class="form">
-				<input type="text" name="senha" value="<%= usuAux.getSenha() %>"/>
+			<div class="row">
+				<label class="col1">Senha:&nbsp;&nbsp;</label> 
+				<span class="col2"> 
+					<input tabindex="1" type="password" name="senha" value="<%= usuAux.getSenha() %>"/>
+				</span>
 			</div>
 			<br />
 			<br />

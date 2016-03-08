@@ -62,46 +62,38 @@
 
 	<div id="section">
 
-<h2>Consultar - Consumo</h2>
-
-	<form name="formulario_busca" method="post">
-		<fieldset>
-
-			<div class="formLab">Nome:</div>
-			<div class="form">
-				<input type="text" name="nome" />
+	<form id="formulario_busca" name="formulario_busca" method="post">
+		
+			<div id = "title_form"> Busca - Consumo</div>
+			<div class="row">
+				<label class="col1">Nome:&nbsp;&nbsp;</label> 
+				<span class="col2"> 
+					<input class="input" type="text" id="nome" tabindex="1" name="nome"/>
+				</span>
 			</div>
-			<br />
-			<br />
-
-			<div class="formLab">Localização:</div>
-			<div class="form">
-				<input type="text" name="localizacao" />
+			<div class="row">
+				<label class="col1">Localização:&nbsp;&nbsp;</label> 
+				<span class="col2"> 
+					<input class="input" type="text" id="localizacao" tabindex="1" name="localizacao"/>
+				</span>
 			</div>
-			<br />
-			<br />
-
-			<div class="formLab">Status:</div>
-			<div class="form">
-				<select name="status" size="1">
-					<option value="0">Sistema Ativo ou Inativo?
-
-						<option value="1">Ativo
-
-						<option value="2">Inativo
-				</select>
+			<div class="row">
+				<label class="col1">Status:&nbsp;&nbsp;</label>
+				<span class="col2">
+					<select name="status" size="1" class="input" tabindex="4" id="status">
+						<option value="0">Sistema Ativo ou Inativo?</option>
+						<option value="1">Ativo</option>
+						<option value="2">Inativo</option>
+					</select>
+				</span>
 			</div>
-			<br />
-			<br />
-			<br />
-				<div class="formLab">
-					<a href="javascript:busca()">
-					<img src="<%=request.getContextPath()%>/imagens/icone_buscar_lupa.png"></img></a>
-					<a href="javascript:download()">
-					<img src="<%=request.getContextPath()%>/imagens/export_icon.png"></img></a>
-				</div>
-			</fieldset>
-
+			<div align="center" id="botao">
+				<a href="javascript:busca()">
+				<img src="<%=request.getContextPath()%>/imagens/icone_buscar_lupa.png"></img></a>
+				<a href="javascript:download()">
+				<img src="<%=request.getContextPath()%>/imagens/export_icon.png"></img></a>
+			</div>
+			
 	</form>
 <%
 			List<Consumo> listaCon = (List<Consumo>) request.getAttribute("listaConRefinada");

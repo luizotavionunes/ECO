@@ -64,7 +64,6 @@ public class ConsumoController extends HttpServlet {
 		}
 		else if(acao.equals("alterar")){
 			String id= req.getParameter("serial");
-			//System.out.println("id: " + id);
 			LogDAO logDao = new LogDAO();
 			Log log = new Log();
 		
@@ -175,9 +174,9 @@ public class ConsumoController extends HttpServlet {
 			con.setLocalizacao(localizacao);
 			String historicoPos = "Nome: " + con.getNome() + " Status: " + con.getStatus() + " Localização: " + con.getLocalizacao() + " Observacao: " + con.getObservacao() ;
 			
-			System.out.println("");
+			//System.out.println("");
 			
-			System.out.println(historicoPos);
+			//System.out.println(historicoPos);
 			ConsumoDAO conDAO = new ConsumoDAO();
 			Log log = new Log();
 			if(con.getId()!=0)
@@ -186,15 +185,12 @@ public class ConsumoController extends HttpServlet {
 				Usuario usu = (Usuario) sessao.getAttribute("usuAUT");
 				String nomeU = (String) sessao.getAttribute("nomeUsu");
 				log.setNome(nomeU);
-				log.setAcesso(usu.getTipo());				
+				log.setAcesso(usu.getTipo());	
+				log.setPreHistorico("Não existem informações prévias sobre este objeto. Provavelmente é um novo objeto.");			
 			}
 			log.setPosHistorico(historicoPos);
 			//System.out.println("id "+ log.getId());
 			LogDAO logDao = new LogDAO();
-			
-			if(con.getId()==0){
-				log.setPreHistorico("Não existem informações prévias sobre este objeto. Provavelmente é um novo objeto.");				
-			}
 
 			try {
 				conDAO.salvar(con);

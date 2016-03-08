@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Log;
+import br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Patrimonio;
 
 public class LogDAO {
 
@@ -111,9 +112,10 @@ public class LogDAO {
 				Log log = new Log();
 				log.setId(resultado.getInt("id"));
 				log.setNome(resultado.getString("nome"));
-				log.setPreHistorico(resultado.getString("historico"));
+				log.setPreHistorico(resultado.getString("preHistorico"));
+				log.setPosHistorico(resultado.getString("posHistorico"));
 				log.setAcesso(resultado.getInt("acesso"));
-				log.setData(resultado.getDate("date_time"));
+				log.setData(resultado.getDate("data"));
 				lista.add(log);
 
 			}
@@ -131,4 +133,43 @@ public class LogDAO {
 		}
 		return null;
 	}
+	
+	public List<Log> buscaLog(String serial) throws SQLException{
+			List<Log> lista = new ArrayList<Log>();
+		
+			String sql ="SELECT * FROM log WHERE preHistorico LIKE '%" + serial + "%' OR posHistorico LIKE '%" + serial + "%'";
+			PreparedStatement preparador = con.prepareStatement(sql);
+			
+			try {
+				ResultSet resultado = preparador.executeQuery();
+				while (resultado.next()) {
+					Log log = new Log();
+					log.setId(resultado.getInt("id"));
+					log.setNome(resultado.getString("nome"));
+					log.setPreHistorico(resultado.getString("preHistorico"));
+					log.setPosHistorico(resultado.getString("posHistorico"));
+					log.setAcesso(resultado.getInt("acesso"));
+					log.setData(resultado.getDate("data"));
+					lista.add(log);
+
+				}
+				for (int i = 0; i < lista.size(); i++) {
+					System.out.println("Numero de serie: " + lista.get(i).getPreHistorico()+ " Descricao: ");
+							//+ lista.get(i).getDescricao_fabricante_modelo());
+
+				}
+				
+				return lista;
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+			} finally {
+				preparador.close();
+				
+			}
+			
+		return null;
+		
+	}
+	
 }

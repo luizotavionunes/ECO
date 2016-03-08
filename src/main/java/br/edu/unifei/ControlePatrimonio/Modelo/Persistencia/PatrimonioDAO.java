@@ -47,6 +47,42 @@ public class PatrimonioDAO {
 
 	}
 
+	public Patrimonio buscaId(int serial) throws SQLException {
+		Patrimonio patrimonio = new Patrimonio();
+
+		String sql = "SELECT * FROM patrimonio WHERE id='" + serial + "'";
+		PreparedStatement preparador = con.prepareStatement(sql);
+		try {
+			ResultSet resultado = preparador.executeQuery();
+			if (resultado.next()) {
+
+				patrimonio.setId(resultado.getInt("id"));
+				patrimonio.setStatus(resultado.getInt("status"));
+				patrimonio.setDescricao_fabricante_modelo(resultado.getString("descricao_fabricante_modelo"));
+				patrimonio.setLocalizacao(resultado.getString("localizacao"));
+				patrimonio.setObservacao(resultado.getString("observacao"));
+				patrimonio.setNumero_serie(resultado.getString("numero_serie"));
+				patrimonio.setLocacao(resultado.getString("locacao"));
+				patrimonio.setTag_patrimonio(resultado.getString("tag_patrimonio"));
+
+			}
+			return patrimonio;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				preparador.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return null;
+	}
+	
+	
 	public boolean remove(int id) throws SQLException {
 		String sql = "DELETE FROM patrimonio WHERE id=?";
 		PreparedStatement preparador = con.prepareStatement(sql);

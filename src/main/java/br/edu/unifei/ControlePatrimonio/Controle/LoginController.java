@@ -64,7 +64,7 @@ public class LoginController extends HttpServlet {
 				
 			}
 			
-			System.out.println("tipo " + usu.getTipo());
+			
 			/*
 			 * if(usuAUT.getAcesso()==1){ sessao.setAttribute("funAUT", funAUT);
 			 * sessao.setMaxInactiveInterval(60*5);

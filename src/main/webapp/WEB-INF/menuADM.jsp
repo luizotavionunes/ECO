@@ -63,7 +63,7 @@
       </ul>
     </li>
     
-      <li><a href="#">Log do Sistema</a></li>
+      <li><a href="logcontroller.do?acao=listar">Log do Sistema</a></li>
       
     
     <li><a href="logincontroller.do">Sair</a></li> 

@@ -72,7 +72,7 @@
 				</span>
 			</div>
 			<div class="row">
-				<label class="col1">Descrição/Fabricante/Modelo: &nbsp;&nbsp;</label>
+				<label class="col1">Descrição: &nbsp;&nbsp;</label>
 				<span class="col2">
 					<input name="descricao" class="input" type="text" id="descricao" tabindex="2"/>
 				</span>

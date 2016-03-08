@@ -43,65 +43,63 @@ function salva() {
 <% Patrimonio Pat = (Patrimonio) request.getAttribute("patrimonioEdit"); %>
 
 <div id="section">
-	<h2>Insere - Patrimônio</h2>
 
-	<form name="formulario_cadastro" method="post">
+	<form id="formulario_patrimonio" name="formulario_cadastro" method="post">
+	
 		<fieldset>
-		
-		<div class="formLab">Id:</div>
-			<div class="form">
-				<input type="text" name="id" readonly="readonly" value="<%= Pat.getId() %>" />
+		<div id = "title_form"> Inserir - Patrimônio</div>
+		<div class="row">
+				<label class="col1">Id:&nbsp;&nbsp;</label> 
+				<span class="col2"> 
+					<input class="input" type="text" tabindex="1" name="id" readonly="readonly" value="<%= Pat.getId() %>" />
+				</span>
 			</div>
-			<br />
-			<br />
+	
 
-			<div class="formLab">Número de Série:</div>
-			<div class="form">
-				<input type="text" name="numero_serie" <% if(usu.getTipo()!=3){ %> readonly="readonly" <%} %> value="<%= Pat.getNumero_serie() %>" />
+			<div class="row">
+				<label class="col1">Número de série:&nbsp;&nbsp;</label> 
+				<span class="col2"> 
+					<input class="input" type="text" tabindex="1" name="numero_serie" value="<%= Pat.getNumero_serie() %>"/>
+				</span>
 			</div>
-			<br />
-			<br />
 
-			<div class="formLab">Descrição / Fabricante / Modelo:</div>
-			<div class="form">
-				<input type="text" name="descricao" <% if(usu.getTipo()!=3){ %> readonly="readonly" <%} %> value="<%= Pat.getDescricao_fabricante_modelo() %>"/>
+			<div class="row">
+				<label class="col1">Descrição:&nbsp;&nbsp;</label> 
+				<span class="col2"> 
+					<input class="input" type="text" tabindex="1" name="descricao" value="<%= Pat.getDescricao_fabricante_modelo() %>"/>
+				</span>
 			</div>
-			<br />
-			<br />
 
-			<div class="formLab">Localização:</div>
-			<div class="form">
-				<input type="text" name="localizacao" value="<%= Pat.getLocalizacao() %>" />
+			<div class="row">
+				<label class="col1">Localização:&nbsp;&nbsp;</label> 
+				<span class="col2"> 
+					<input class="input" type="text" id="localizacao" tabindex="1" name="localizacao" value="<%= Pat.getLocalizacao() %>" />
+				</span>
 			</div>
-			<br />
-			<br />
-
-			<div class="formLab">Locação:</div>
-			<div class="form">
-				<input type="text" name="locacao" value="<%= Pat.getLocacao() %>" />
+			<div class="row">
+				<label class="col1">Locação:&nbsp;&nbsp;</label> 
+				<span class="col2"> 
+					<input class="input" type="text" id="locacao" tabindex="1" name="locacao" value="<%= Pat.getLocacao()%>" />
+				</span>
 			</div>
-			<br />
-			<br />
 
-			<div class="formLab">Status:</div>
-			<div class="form">
-				<select name="status" size="1">
-					<option value="#">Sistema Ativo ou Inativo?
 
-						<option value="1">Ativo
-
-						<option value="2">Inativo
-				</select>
+				<div class="row">
+				<label class="col1">Status:&nbsp;&nbsp;</label>
+				<span class="col2">
+					<select name="status" size="1" class="input" tabindex="4" id="status">
+						<option value="0">Sistema Ativo ou Inativo?</option>
+						<option value="1">Ativo</option>
+						<option value="2">Inativo</option>
+					</select>
+				</span>
 			</div>
-			<br />
-			<br />
-
-			<div class="formLab">Observação:</div>
-			<div class="form">
-				<textarea style="overflow: auto; resize: none" name="observacao"
-					cols=35 rows=3><%= Pat.getObservacao() %>
-
-			</textarea>
+			<div class="row">
+				<label class="col1">Observação:&nbsp;&nbsp;</label> 
+				<span class="col2"> 
+					<textarea style="overflow: auto; resize: none" cols=35 rows=3 name="observacao"><%= Pat.getObservacao() %>
+					</textarea>
+				</span>
 			</div>
 			<br />
 			<br />

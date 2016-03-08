@@ -25,7 +25,7 @@
 
 		<div id="section"></div>
 		
-		</div>
+	
 
 		<div id="footer">Copyright © Unifei ECO</div>
 </body>
