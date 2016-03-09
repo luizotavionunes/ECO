@@ -1,4 +1,5 @@
 package br.edu.unifei.ControlePatrimonio.Controle;
+
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -11,7 +12,6 @@ import javax.servlet.http.HttpSession;
 
 import br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Usuario;
 import br.edu.unifei.ControlePatrimonio.Modelo.Persistencia.UsuarioDAO;
-
 
 @WebServlet("/logincontroller.do")
 public class LoginController extends HttpServlet {
@@ -32,64 +32,53 @@ public class LoginController extends HttpServlet {
 		String nome = req.getParameter("nome");
 		String senha = req.getParameter("senha");
 
-		//System.out.println("Tipo: " + tipo + " Nome: " + nome + " Senha: " + senha);
+		// System.out.println("Tipo: " + tipo + " Nome: " + nome + " Senha: " +
+		// senha);
 
 		Usuario usu = new Usuario();
 		UsuarioDAO usuDAO = new UsuarioDAO();
 
 		usu.setTipo(tipo);
-		//System.out.println("tipo usuario " + usu.getTipo());
+		// System.out.println("tipo usuario " + usu.getTipo());
 		usu.setSenha(senha);
-		
 
-		Usuario usuAUT=null;
-		try {
-			usuAUT = usuDAO.autenticar(usu);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		if (!nome.equals("") && (tipo == 1 || tipo == 2 || tipo == 3)) {
 
-		if (usuAUT != null) {
-			HttpSession sessao = req.getSession();
-			sessao.setAttribute("usuAUT", usuAUT);
-			sessao.setAttribute("nomeUsu", nome);
-			  sessao.setMaxInactiveInterval(60*5);
-			if(usuAUT.getTipo()==3){
-			  req.getRequestDispatcher("WEB-INF/homeADM.jsp").forward(req,
-			  resp);
-			} else {
-				req.getRequestDispatcher("WEB-INF/home.jsp").forward(req,
-						  resp);
-				
+			Usuario usuAUT = null;
+			try {
+				usuAUT = usuDAO.autenticar(usu);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			
-			
-			/*
-			 * if(usuAUT.getAcesso()==1){ sessao.setAttribute("funAUT", funAUT);
-			 * sessao.setMaxInactiveInterval(60*5);
-			 * req.getRequestDispatcher("WEB-INF/menufunc.jsp").forward(req,
-			 * resp); } else if(funAUT.getAcesso()==2){
-			 * sessao.setAttribute("funAUT", funAUT);
-			 * sessao.setMaxInactiveInterval(60*5);
-			 * req.getRequestDispatcher("WEB-INF/menuadm.jsp").forward(req,
-			 * resp);
-			 * 
-			 * }
-			 */
 
+			if (usuAUT != null) {
+				HttpSession sessao = req.getSession();
+				sessao.setAttribute("usuAUT", usuAUT);
+				sessao.setAttribute("nomeUsu", nome);
+				sessao.setMaxInactiveInterval(60 * 20);
+				if (usuAUT.getTipo() == 3) {
+					req.getRequestDispatcher("WEB-INF/homeADM.jsp").forward(req, resp);
+				} else {
+					req.getRequestDispatcher("WEB-INF/home.jsp").forward(req, resp);
+
+				}
+
+			} else {
+				resp.getWriter().print(
+						"<script> window.alert('Usuario não encontrado!'); location.href='login.html'; </script>");
+
+			}
 		} else {
-			resp.getWriter()
-					.print("<script> window.alert('Usuario não encontrado!'); location.href='login.html'; </script>");
-
+			resp.getWriter().print(
+					"<script> window.alert('Voce precisa informar todos os campos!'); location.href='login.html'; </script>");
 		}
 	}
 
-	
 	@Override
 	public void destroy() {
 		// TODO Auto-generated method stub
 		super.destroy();
 	}
-	
+
 }

@@ -14,7 +14,6 @@ public class ConexaoFactory {
 			DriverManager.registerDriver(new com.mysql.jdbc.Driver());
 			return DriverManager.getConnection("jdbc:mysql://localhost:3306/controle_lab_eco_bd", "root", "root");
 
-
 		} catch (SQLException e) {
 			System.out.println("Erro ao conectar ao banco.");
 			throw new RuntimeException(e);

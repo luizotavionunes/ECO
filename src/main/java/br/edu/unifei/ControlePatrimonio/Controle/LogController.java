@@ -11,10 +11,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Consumo;
 import br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Log;
 import br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Patrimonio;
+import br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Usuario;
 import br.edu.unifei.ControlePatrimonio.Modelo.Persistencia.ConsumoDAO;
 import br.edu.unifei.ControlePatrimonio.Modelo.Persistencia.LogDAO;
 import br.edu.unifei.ControlePatrimonio.Modelo.Persistencia.PatrimonioDAO;
@@ -27,60 +29,68 @@ public class LogController extends HttpServlet {
 		// TODO Auto-generated method stub
 		super.destroy();
 	}
-	
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String acao = req.getParameter("acao");
+
+		Usuario usuAUT = new Usuario();
+		HttpSession sessao = req.getSession();
+		if (sessao != null)
+			usuAUT = (Usuario) sessao.getAttribute("usuAUT");
+
 		if (acao.equals("listar")) {
-			LogDAO logDAO = new LogDAO();
-			List<Log> lista= null;
-			try {
-				lista = logDAO.listarTodos();
-			} catch (SQLException e) {
-				System.out.println("Erro ao carregar lista de logs.");
-				e.printStackTrace();
+			if (usuAUT.getTipo() == 3) {
+				LogDAO logDAO = new LogDAO();
+				List<Log> lista = null;
+				try {
+					lista = logDAO.listarTodos();
+				} catch (SQLException e) {
+					System.out.println("Erro ao carregar lista de logs.");
+					e.printStackTrace();
+				}
+
+				req.setAttribute("listaLog", lista);
+				RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/buscaLog.jsp");
+				dispatcher.forward(req, resp);
+			} else {
+				resp.getWriter().print(
+						"<script> window.alert('Voce não possui permissão para acessar essa pagina!'); location.href='login.html'; </script>");
 			}
-			
-		
-			req.setAttribute("listaLog", lista);
-			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/buscaLog.jsp");
-			dispatcher.forward(req, resp);
 		}
 
-
 	}
-	
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String acao = req.getParameter("acao");
-		
-		if(acao.equals("busca")){
-			String numero_serie = req.getParameter("serial");
-			LogDAO logDao = new LogDAO();
-			List<Log> lista = null;
-			try {
-				lista=logDao.buscaLog("numero_serie");
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+
+		Usuario usuAUT = new Usuario();
+		HttpSession sessao = req.getSession();
+		if (sessao != null)
+			usuAUT = (Usuario) sessao.getAttribute("usuAUT");
+
+		if (acao.equals("busca")) {
+			if (usuAUT.getTipo() == 3) {
+				String numero_serie = req.getParameter("serial");
+				LogDAO logDao = new LogDAO();
+				List<Log> lista = null;
+				try {
+					lista = logDao.buscaLog(numero_serie);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				req.setAttribute("listaLog", lista);
+				RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/buscaLog.jsp");
+				dispatcher.forward(req, resp);
+			} else {
+				resp.getWriter().print(
+						"<script> window.alert('Voce não possui permissão para acessar essa pagina!'); location.href='login.html'; </script>");
 			}
-			
-			req.setAttribute("listaLog", lista);
-			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/buscaLog.jsp");
-			dispatcher.forward(req, resp);
-			
 		}
-		
 
-
-
-
-}
-	
-
-	
-	
-
-	
+	}
 
 }

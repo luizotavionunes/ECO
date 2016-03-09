@@ -5,8 +5,9 @@ public class Usuario {
 	private int id;
 	private int Tipo;
 	private String Senha;
-	
-	public Usuario(){}
+
+	public Usuario() {
+	}
 
 	public Usuario(int id, int tipo, String senha) {
 		super();
@@ -43,6 +44,5 @@ public class Usuario {
 	public String toString() {
 		return "Usuario [id=" + id + ", Tipo=" + Tipo + ", Senha=" + Senha + "]";
 	}
-	
-	
+
 }

@@ -32,61 +32,77 @@ public class PatrimonioController extends HttpServlet {
 		// Obtendo ação desejada da URL acessada
 		String acao = req.getParameter("acao");
 
+		Usuario usuAUT = new Usuario();
+		HttpSession sessao = req.getSession();
+		if (sessao != null)
+			usuAUT = (Usuario) sessao.getAttribute("usuAUT");
+
 		if (acao.equals("cad")) {
-			Patrimonio pat = new Patrimonio();
-			pat.setId(0);
-			pat.setDescricao_fabricante_modelo("");
-			pat.setLocacao("");
-			pat.setLocalizacao("");
-			pat.setNumero_serie("");
-			pat.setObservacao("");
-			pat.setStatus(0);
+			if (usuAUT.getTipo() == 3) {
+				Patrimonio pat = new Patrimonio();
+				pat.setId(0);
+				pat.setDescricao_fabricante_modelo("");
+				pat.setLocacao("");
+				pat.setLocalizacao("");
+				pat.setNumero_serie("");
+				pat.setObservacao("");
+				pat.setStatus(0);
 
-			req.setAttribute("patrimonioEdit", pat);
+				req.setAttribute("patrimonioEdit", pat);
 
-			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/registraPatrimonio.jsp");
-			dispatcher.forward(req, resp);
+				RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/registraPatrimonio.jsp");
+				dispatcher.forward(req, resp);
+			} else {
+				resp.getWriter().print(
+						"<script> window.alert('Voce não possui permissão para acessar essa pagina!'); location.href='login.html'; </script>");
+			}
 
 		} else if (acao.equals("remover")) {
-			String id = req.getParameter("id");
-			int removido = 0;
-			PatrimonioDAO patDAO = new PatrimonioDAO();
-			Patrimonio pat = new Patrimonio();
-			LogDAO logDao = new LogDAO();
-			Log log = new Log();
-			try {
-				pat=patDAO.buscaId(Integer.parseInt(id));
-				if (patDAO.remove(Integer.parseInt(id)))
-					System.out.println("Patrimonio removido com sucesso.");
+			if (usuAUT.getTipo() == 3) {
+				String id = req.getParameter("id");
+				int removido = 0;
+				PatrimonioDAO patDAO = new PatrimonioDAO();
+				Patrimonio pat = new Patrimonio();
+				LogDAO logDao = new LogDAO();
+				Log log = new Log();
+				try {
+					pat = patDAO.buscaId(Integer.parseInt(id));
+					if (patDAO.remove(Integer.parseInt(id)))
+						System.out.println("Patrimonio removido com sucesso.");
 
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			HttpSession sessao = req.getSession();
-			Usuario usu = (Usuario) sessao.getAttribute("usuAUT");
-			log.setAcesso(usu.getTipo());
-			String historico = "Id: " + pat.getId() +" Numero de serie: " + pat.getNumero_serie() +  " Descrição: " + pat.getDescricao_fabricante_modelo() + " Status: " + pat.getStatus() + " Localização: " + pat.getLocalizacao() + " Observacao: " + pat.getObservacao() ;
-			log.setPreHistorico(historico);
-			String nome = (String) sessao.getAttribute("nomeUsu");
-			log.setNome(nome);
-			log.setPosHistorico("Objeto excluído.");
-			
-			try {
-				if(logDao.inserir(log)){
-					System.out.println("Log Registrado com sucesso.");
-					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
 
-			// if(removido==1)
-			// resp.getWriter().print("<script> window.alert('Item
-			// removido!');</script>");
-			resp.sendRedirect("patrimonio.do?acao=listar");
+				Usuario usu = (Usuario) sessao.getAttribute("usuAUT");
+				log.setAcesso(usu.getTipo());
+				String historico = "Id: " + pat.getId() + " Numero de serie: " + pat.getNumero_serie() + " Descrição: "
+						+ pat.getDescricao_fabricante_modelo() + " Status: " + pat.getStatus() + " Localização: "
+						+ pat.getLocalizacao() + " Observacao: " + pat.getObservacao();
+				log.setPreHistorico(historico);
+				String nome = (String) sessao.getAttribute("nomeUsu");
+				log.setNome(nome);
+				log.setPosHistorico("Objeto excluído.");
+
+				try {
+					if (logDao.inserir(log)) {
+						System.out.println("Log Registrado com sucesso.");
+
+					}
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				// if(removido==1)
+				// resp.getWriter().print("<script> window.alert('Item
+				// removido!');</script>");
+				resp.sendRedirect("patrimonio.do?acao=listar");
+			} else {
+				resp.getWriter().print(
+						"<script> window.alert('Voce não possui permissão para acessar essa pagina!'); location.href='login.html'; </script>");
+			}
 
 		} else if (acao.equals("listar")) {
 			PatrimonioDAO patDAO = new PatrimonioDAO();
@@ -112,9 +128,9 @@ public class PatrimonioController extends HttpServlet {
 			String serial = req.getParameter("serial");
 			LogDAO logDao = new LogDAO();
 			Log log = new Log();
-		
+
 			Patrimonio pat = null;
-			
+
 			PatrimonioDAO ptDAO = new PatrimonioDAO();
 			try {
 				pat = ptDAO.buscaSerial(serial);
@@ -124,17 +140,18 @@ public class PatrimonioController extends HttpServlet {
 			}
 
 			// System.out.println("Id do produto alt: " + pat.getId());
-			
-			HttpSession sessao = req.getSession();
+
 			Usuario usu = (Usuario) sessao.getAttribute("usuAUT");
 			log.setAcesso(usu.getTipo());
-			String historico = "Id: " + pat.getId() +" Numero de serie: " + pat.getNumero_serie() +  " Descrição: " + pat.getDescricao_fabricante_modelo() + " Status: " + pat.getStatus() + " Localização: " + pat.getLocalizacao() + " Observacao: " + pat.getObservacao() ;
+			String historico = "Id: " + pat.getId() + " Numero de serie: " + pat.getNumero_serie() + " Descrição: "
+					+ pat.getDescricao_fabricante_modelo() + " Status: " + pat.getStatus() + " Localização: "
+					+ pat.getLocalizacao() + " Observacao: " + pat.getObservacao();
 			log.setPreHistorico(historico);
 			String nome = (String) sessao.getAttribute("nomeUsu");
 			log.setNome(nome);
-			
-			sessao.setAttribute("logEditP", log);		
-			
+
+			sessao.setAttribute("logEditP", log);
+
 			req.setAttribute("patrimonioEdit", pat);
 			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/registraPatrimonio.jsp");
 			dispatcher.forward(req, resp);
@@ -147,6 +164,11 @@ public class PatrimonioController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String acao = req.getParameter("acao");
 
+		Usuario usuAUT = new Usuario();
+		HttpSession sessao = req.getSession();
+		if (sessao != null)
+			usuAUT = (Usuario) sessao.getAttribute("usuAUT");
+
 		if (acao.equals("cad")) {
 
 			String id = req.getParameter("id");
@@ -156,58 +178,67 @@ public class PatrimonioController extends HttpServlet {
 			String numero_serie = req.getParameter("numero_serie");
 			String locacao = req.getParameter("locacao");
 			String localizacao = req.getParameter("localizacao");
-			
-			HttpSession sessao = req.getSession();
+			if (usuAUT.getTipo() == 3
+					|| (((usuAUT.getTipo() == 2 || usuAUT.getTipo() == 1)) && Integer.parseInt(id) != 0)) {
 
-			Patrimonio pat = new Patrimonio();
+				Patrimonio pat = new Patrimonio();
 
-			// patAux=(Patrimonio)req.getAttribute("patrimonioEdit");
-/*
-			if (!status.equals("1") || !status.equals("2")) {
-				resp.getWriter()
-						.print("<script> window.alert('Selecione o Status!'); location.href='patrimonio.do?acao=alterar&serial="
-								+ numero_serie + "'; </script>");
+				// patAux=(Patrimonio)req.getAttribute("patrimonioEdit");
+				/*
+				 * if (!status.equals("1") || !status.equals("2")) {
+				 * resp.getWriter() .print(
+				 * "<script> window.alert('Selecione o Status!'); location.href='patrimonio.do?acao=alterar&serial="
+				 * + numero_serie + "'; </script>");
+				 * 
+				 * }
+				 */
 
-			}*/
+				// System.out.println("Id do produto: " + patAux.getId());
+				if (id != null)
+					pat.setId(Integer.parseInt(id));
 
-			// System.out.println("Id do produto: " + patAux.getId());
-			if (id != null)
-				pat.setId(Integer.parseInt(id));
-
-			pat.setDescricao_fabricante_modelo(descricao_fabricante_modelo);
-			pat.setStatus(Integer.parseInt(status));
-			pat.setLocacao(locacao);
-			pat.setLocalizacao(localizacao);
-			pat.setNumero_serie(numero_serie);
-			pat.setObservacao(observacao);
-			String historicoPos = "Id: " + pat.getId() +" Numero de serie: " + pat.getNumero_serie() +  " Descrição: " + pat.getDescricao_fabricante_modelo() + " Status: " + pat.getStatus() + " Localização: " + pat.getLocalizacao() + " Observacao: " + pat.getObservacao() ;
-			Log log = new Log();
-			if(pat.getId()!=0)
-				log = (Log) sessao.getAttribute("logEditP");
-				else{
+				pat.setDescricao_fabricante_modelo(descricao_fabricante_modelo);
+				pat.setStatus(Integer.parseInt(status));
+				pat.setLocacao(locacao);
+				pat.setLocalizacao(localizacao);
+				pat.setNumero_serie(numero_serie);
+				pat.setObservacao(observacao);
+				String historicoPos = "Id: " + pat.getId() + " Numero de serie: " + pat.getNumero_serie()
+						+ " Descrição: " + pat.getDescricao_fabricante_modelo() + " Status: " + pat.getStatus()
+						+ " Localização: " + pat.getLocalizacao() + " Observacao: " + pat.getObservacao();
+				Log log = new Log();
+				if (pat.getId() != 0)
+					log = (Log) sessao.getAttribute("logEditP");
+				else {
 					Usuario usu = (Usuario) sessao.getAttribute("usuAUT");
 					String nomeU = (String) sessao.getAttribute("nomeUsu");
 					log.setNome(nomeU);
-					log.setAcesso(usu.getTipo());	
-					log.setPreHistorico("Não existem informações prévias sobre este objeto. Provavelmente é um novo objeto.");			
+					log.setAcesso(usu.getTipo());
+					log.setPreHistorico(
+							"Não existem informações prévias sobre este objeto. Provavelmente é um novo objeto.");
 				}
 				log.setPosHistorico(historicoPos);
 
-			PatrimonioDAO patDAO = new PatrimonioDAO();
+				PatrimonioDAO patDAO = new PatrimonioDAO();
 
-			LogDAO logDao = new LogDAO();
-			
-			try {
-				patDAO.salvar(pat);
-				if(logDao.inserir(log))
-					System.out.println("Log registrado com sucesso!");
-				else System.out.println("Erro ao registrar log!");
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				System.out.println("Erro na inserção de patrimônio.");
-				e.printStackTrace();
+				LogDAO logDao = new LogDAO();
+
+				try {
+					patDAO.salvar(pat);
+					if (logDao.inserir(log))
+						System.out.println("Log registrado com sucesso!");
+					else
+						System.out.println("Erro ao registrar log!");
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					System.out.println("Erro na inserção de patrimônio.");
+					e.printStackTrace();
+				}
+				resp.sendRedirect("patrimonio.do?acao=listar");
+			} else {
+				resp.getWriter().print(
+						"<script> window.alert('Voce não possui permissão para acessar essa pagina!'); location.href='login.html'; </script>");
 			}
-			resp.sendRedirect("patrimonio.do?acao=listar");
 
 		} else if (acao.equals("buscarefinada")) {
 			List<Patrimonio> lista;
@@ -229,11 +260,12 @@ public class PatrimonioController extends HttpServlet {
 				CopiaArquivo aux = new CopiaArquivo();
 
 				aux.copyFiles(fileOrigem, fileDestino);
-				for (int i = 0; i < lista.size(); i++) {
-					//System.out.println("Numero de serie: " + lista.get(i).getNumero_serie() + " Descricao: "
-							//+ lista.get(i).getDescricao_fabricante_modelo());
+				// for (int i = 0; i < lista.size(); i++) {
+				// System.out.println("Numero de serie: " +
+				// lista.get(i).getNumero_serie() + " Descricao: "
+				// + lista.get(i).getDescricao_fabricante_modelo());
 
-				}
+				// }
 				req.setAttribute("listaPatRefinada", lista);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block

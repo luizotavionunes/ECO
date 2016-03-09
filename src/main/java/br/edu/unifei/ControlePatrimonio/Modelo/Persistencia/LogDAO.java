@@ -16,7 +16,7 @@ public class LogDAO {
 	private Connection con = ConexaoFactory.getConnection();
 
 	public boolean inserir(Log log) throws SQLException {
-		int id=0;
+		int id = 0;
 		String sql = "INSERT INTO log (id, nome, data, preHistorico, posHistorico, acesso) VALUES (null, ?, CURRENT_TIMESTAMP, ? , ? , ?)";
 		PreparedStatement preparador = con.prepareStatement(sql);
 
@@ -32,7 +32,6 @@ public class LogDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 
 		finally {
 			try {
@@ -133,43 +132,44 @@ public class LogDAO {
 		}
 		return null;
 	}
-	
-	public List<Log> buscaLog(String serial) throws SQLException{
-			List<Log> lista = new ArrayList<Log>();
-		
-			String sql ="SELECT * FROM log WHERE preHistorico LIKE '%" + serial + "%' OR posHistorico LIKE '%" + serial + "%'";
-			PreparedStatement preparador = con.prepareStatement(sql);
-			
-			try {
-				ResultSet resultado = preparador.executeQuery();
-				while (resultado.next()) {
-					Log log = new Log();
-					log.setId(resultado.getInt("id"));
-					log.setNome(resultado.getString("nome"));
-					log.setPreHistorico(resultado.getString("preHistorico"));
-					log.setPosHistorico(resultado.getString("posHistorico"));
-					log.setAcesso(resultado.getInt("acesso"));
-					log.setData(resultado.getDate("data"));
-					lista.add(log);
 
-				}
-				for (int i = 0; i < lista.size(); i++) {
-					System.out.println("Numero de serie: " + lista.get(i).getPreHistorico()+ " Descricao: ");
-							//+ lista.get(i).getDescricao_fabricante_modelo());
+	public List<Log> buscaLog(String serial) throws SQLException {
+		List<Log> lista = new ArrayList<Log>();
 
-				}
-				
-				return lista;
-				
-			} catch (Exception e) {
-				// TODO: handle exception
-			} finally {
-				preparador.close();
-				
+		String sql = "SELECT * FROM log WHERE preHistorico LIKE '%" + serial + "%' OR posHistorico LIKE '%" + serial
+				+ "%'";
+		PreparedStatement preparador = con.prepareStatement(sql);
+		System.out.println("sql: " + sql);
+		try {
+			ResultSet resultado = preparador.executeQuery();
+			while (resultado.next()) {
+				Log log = new Log();
+				log.setId(resultado.getInt("id"));
+				log.setNome(resultado.getString("nome"));
+				log.setPreHistorico(resultado.getString("preHistorico"));
+				log.setPosHistorico(resultado.getString("posHistorico"));
+				log.setAcesso(resultado.getInt("acesso"));
+				log.setData(resultado.getDate("data"));
+				lista.add(log);
+
 			}
-			
+			for (int i = 0; i < lista.size(); i++) {
+				System.out.println("Numero de serie: " + lista.get(i).getPreHistorico() + " Descricao: ");
+				// + lista.get(i).getDescricao_fabricante_modelo());
+
+			}
+
+			return lista;
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		} finally {
+			preparador.close();
+
+		}
+
 		return null;
-		
+
 	}
-	
+
 }

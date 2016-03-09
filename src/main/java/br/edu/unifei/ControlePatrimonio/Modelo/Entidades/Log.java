@@ -10,8 +10,9 @@ public class Log {
 	private String preHistorico;
 	private String posHistorico;
 	private int Acesso;
-	
-	public Log(){}
+
+	public Log() {
+	}
 
 	public Log(int id, String nome, Date data, String preHistorico, String posHistorico, int acesso) {
 		super();
@@ -70,10 +71,5 @@ public class Log {
 	public void setAcesso(int acesso) {
 		Acesso = acesso;
 	}
-	
-	
-	
 
-	}
-
-
+}

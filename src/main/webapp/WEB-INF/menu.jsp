@@ -34,27 +34,20 @@
 
 
 <ul id="nav">
-    <li><a href="#">Consultar Patrimônio</a>
+    <li><a href="#">Consultar</a>
       <ul>
         <li><a href="consumo.do?acao=buscarefinada">Consumo</a></li>
         <li><a href="patrimonio.do?acao=buscarefinada">Patrimônio</a></li>
       </ul>
     </li>
     
-     <li><a href="#">Listar Patrimônio</a>
+     <li><a href="#">Listar</a>
       <ul>
         <li><a href="consumo.do?acao=listar">Consumo</a></li>
         <li><a href="patrimonio.do?acao=listar">Patrimônio</a></li>
       </ul>
     </li>
-    
-    
-     <li><a href="#">Exportar Arquivos</a>
-      <ul>
-        <li><a href="usuario.do?acao=cad">Exportar Consumo</a></li>
-        <li><a href="usuario.do?acao=listar">Exportar Patrimonio</a></li>
-      </ul>
-     </li>
+
      
      <li><a href="logincontroller.do">Sair</a></li> 
     

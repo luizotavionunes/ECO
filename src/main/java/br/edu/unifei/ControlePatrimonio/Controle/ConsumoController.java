@@ -29,113 +29,116 @@ public class ConsumoController extends HttpServlet {
 
 		String acao = req.getParameter("acao");
 
-		if (acao.equals("cad")) {
-			Consumo con=null;
-			con= new Consumo();
-			con.setNome("");
-			con.setLocalizacao("");
-			con.setObservacao("");
-			con.setId(0);
-			con.setStatus(0);
-			req.setAttribute("consumoEdit", con);
-			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/registraConsumo.jsp");
-			dispatcher.forward(req, resp);
+		Usuario usuAUT = new Usuario();
+		HttpSession sessao = req.getSession();
+		if (sessao != null)
+			usuAUT = (Usuario) sessao.getAttribute("usuAUT");
 
-		}
-		else if(acao.equals("buscarefinada")) {
+		if (acao.equals("cad")) {
+			if (usuAUT.getTipo() == 3) {
+				Consumo con = null;
+				con = new Consumo();
+				con.setNome("");
+				con.setLocalizacao("");
+				con.setObservacao("");
+				con.setId(0);
+				con.setStatus(0);
+				req.setAttribute("consumoEdit", con);
+				RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/registraConsumo.jsp");
+				dispatcher.forward(req, resp);
+			} else {
+				resp.getWriter().print(
+						"<script> window.alert('Voce não possui permissão para acessar essa pagina!'); location.href='login.html'; </script>");
+			}
+
+		} else if (acao.equals("buscarefinada")) {
 			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/buscaConsumo.jsp");
-			dispatcher.forward(req, resp);	
-		}
-		else if (acao.equals("listar")) {
+			dispatcher.forward(req, resp);
+		} else if (acao.equals("listar")) {
 			ConsumoDAO conDAO = new ConsumoDAO();
-			List<Consumo> lista= null;
-			
+			List<Consumo> lista = null;
+
 			try {
 				lista = conDAO.listarTodos();
 			} catch (SQLException e) {
 				System.out.println("Erro ao carregar lista de patrimonio.");
 				e.printStackTrace();
 			}
-			
-		
+
 			req.setAttribute("listaCon", lista);
 			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/listaConsumo.jsp");
 			dispatcher.forward(req, resp);
-		}
-		else if(acao.equals("alterar")){
-			String id= req.getParameter("serial");
+		} else if (acao.equals("alterar")) {
+			String id = req.getParameter("serial");
 			LogDAO logDao = new LogDAO();
 			Log log = new Log();
-		
-			
-			Consumo con=null;;
+
+			Consumo con = null;
+			;
 			ConsumoDAO conDAO = new ConsumoDAO();
 			try {
-				 con = conDAO.buscaId(id);
-				 
+				con = conDAO.buscaId(id);
+
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			HttpSession sessao = req.getSession();
+
 			Usuario usu = (Usuario) sessao.getAttribute("usuAUT");
 			log.setAcesso(usu.getTipo());
-			String historico = "Id: " + con.getId() + " Nome: " + con.getNome() + " Status: " + con.getStatus() + " Localização: " + con.getLocalizacao() + " Observacao: " + con.getObservacao() ;
+			String historico = "Id: " + con.getId() + " Nome: " + con.getNome() + " Status: " + con.getStatus()
+					+ " Localização: " + con.getLocalizacao() + " Observacao: " + con.getObservacao();
 			log.setPreHistorico(historico);
 			String nome = (String) sessao.getAttribute("nomeUsu");
 			log.setNome(nome);
-			//log.setId(id_log);
-		
-			
-			
 
-			//System.out.println("Id do produto alt: " + con.getId());
-			//req.setAttribute("logEdit", log);
 			sessao.setAttribute("logEdit", log);
 			req.setAttribute("consumoEdit", con);
 			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/registraConsumo.jsp");
 			dispatcher.forward(req, resp);
-		}
-		else if(acao.equals("remover")){
-			String id= req.getParameter("id");
-			LogDAO logDao = new LogDAO();
-			Log log = new Log();
-			Consumo con = new Consumo();
-			
-			ConsumoDAO conDAO = new ConsumoDAO();
-			try {
-				con = conDAO.buscaId(id);
-				if(conDAO.remove(Integer.parseInt(id)))
-						System.out.println("Consumo removido com sucesso.");
-				
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			HttpSession sessao = req.getSession();
-			Usuario usu = (Usuario) sessao.getAttribute("usuAUT");
-			log.setAcesso(usu.getTipo());
-			String historico = "Id: " + con.getId() + " Nome: " + con.getNome() + " Status: " + con.getStatus() + " Localização: " + con.getLocalizacao() + " Observacao: " + con.getObservacao() ;
-			log.setPreHistorico(historico);
-			String nome = (String) sessao.getAttribute("nomeUsu");
-			log.setNome(nome);
-			log.setPosHistorico("Objeto excluído.");
-			
-			try {
-				if(logDao.inserir(log)){
-					System.out.println("Log Registrado com sucesso.");
-					
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
+		} else if (acao.equals("remover")) {
+			if (usuAUT.getTipo() == 3) {
+				String id = req.getParameter("id");
+				LogDAO logDao = new LogDAO();
+				Log log = new Log();
+				Consumo con = new Consumo();
 
-			resp.getWriter().print("<script> window.alert('Item removido!');</script>");
-			resp.sendRedirect("consumo.do?acao=listar");
-			
+				ConsumoDAO conDAO = new ConsumoDAO();
+				try {
+					con = conDAO.buscaId(id);
+					if (conDAO.remove(Integer.parseInt(id)))
+						System.out.println("Consumo removido com sucesso.");
+
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				Usuario usu = (Usuario) sessao.getAttribute("usuAUT");
+				log.setAcesso(usu.getTipo());
+				String historico = "Id: " + con.getId() + " Nome: " + con.getNome() + " Status: " + con.getStatus()
+						+ " Localização: " + con.getLocalizacao() + " Observacao: " + con.getObservacao();
+				log.setPreHistorico(historico);
+				String nome = (String) sessao.getAttribute("nomeUsu");
+				log.setNome(nome);
+				log.setPosHistorico("Objeto excluído.");
+
+				try {
+					if (logDao.inserir(log)) {
+						System.out.println("Log Registrado com sucesso.");
+
+					}
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				resp.getWriter().print("<script> window.alert('Item removido!');</script>");
+				resp.sendRedirect("consumo.do?acao=listar");
+			} else {
+				resp.getWriter().print(
+						"<script> window.alert('Voce não possui permissão para acessar essa pagina!'); location.href='login.html'; </script>");
+			}
 		}
 	}
 
@@ -143,76 +146,90 @@ public class ConsumoController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		String acao = req.getParameter("acao");
-		
-		if (acao.equals("cad")) {		
+
+		Usuario usuAUT = new Usuario();
+		HttpSession sessao = req.getSession();
+		if (sessao != null)
+			usuAUT = (Usuario) sessao.getAttribute("usuAUT");
+
+		if (acao.equals("cad")) {
+
 			String id = req.getParameter("id");
 			String nome = req.getParameter("nome");
 			String status = req.getParameter("status");
 			String observacao = req.getParameter("observacao");
 			String localizacao = req.getParameter("localizacao");
-			
-			Consumo con = new Consumo();
-			HttpSession sessao = req.getSession();
-/*
-			if (!status.equals("1") || !status.equals("2")) {
-				resp.getWriter()
-						.print("<script> window.alert('Selecione o Status!'); location.href='consumo.do?acao=alterar&serial="
-								+ id + "'; </script>");
+			if (usuAUT.getTipo() == 3
+					|| (((usuAUT.getTipo() == 2 || usuAUT.getTipo() == 1)) && Integer.parseInt(id) != 0)) {
+				Consumo con = new Consumo();
 
-			}
-			*/
-			
-			con.setId(Integer.parseInt(id));
-			
-			if (status.equals("Ativo")) {
-				con.setStatus(1);
-			} else
-				con.setStatus(0);
-			con.setStatus(Integer.parseInt(status));
-			con.setNome(nome);
-			con.setObservacao(observacao);
-			con.setLocalizacao(localizacao);
-			String historicoPos = "Nome: " + con.getNome() + " Status: " + con.getStatus() + " Localização: " + con.getLocalizacao() + " Observacao: " + con.getObservacao() ;
-			
-			//System.out.println("");
-			
-			//System.out.println(historicoPos);
-			ConsumoDAO conDAO = new ConsumoDAO();
-			Log log = new Log();
-			if(con.getId()!=0)
-			log = (Log) sessao.getAttribute("logEdit");
-			else{
-				Usuario usu = (Usuario) sessao.getAttribute("usuAUT");
-				String nomeU = (String) sessao.getAttribute("nomeUsu");
-				log.setNome(nomeU);
-				log.setAcesso(usu.getTipo());	
-				log.setPreHistorico("Não existem informações prévias sobre este objeto. Provavelmente é um novo objeto.");			
-			}
-			log.setPosHistorico(historicoPos);
-			//System.out.println("id "+ log.getId());
-			LogDAO logDao = new LogDAO();
+				/*
+				 * if (!status.equals("1") || !status.equals("2")) {
+				 * resp.getWriter() .print(
+				 * "<script> window.alert('Selecione o Status!'); location.href='consumo.do?acao=alterar&serial="
+				 * + id + "'; </script>");
+				 * 
+				 * }
+				 */
 
-			try {
-				conDAO.salvar(con);
-		
-				if(logDao.inserir(log))
-					System.out.println("Log registrado com sucesso!");
-				else System.out.println("Erro ao registrar log!");
-				
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				System.out.println("Erro na inserção de consumo.");
-				e.printStackTrace();
+				con.setId(Integer.parseInt(id));
+
+				if (status.equals("Ativo")) {
+					con.setStatus(1);
+				} else
+					con.setStatus(0);
+				con.setStatus(Integer.parseInt(status));
+				con.setNome(nome);
+				con.setObservacao(observacao);
+				con.setLocalizacao(localizacao);
+				String historicoPos = "Nome: " + con.getNome() + " Status: " + con.getStatus() + " Localização: "
+						+ con.getLocalizacao() + " Observacao: " + con.getObservacao();
+
+				// System.out.println("");
+
+				// System.out.println(historicoPos);
+				ConsumoDAO conDAO = new ConsumoDAO();
+				Log log = new Log();
+				if (con.getId() != 0)
+					log = (Log) sessao.getAttribute("logEdit");
+				else {
+					Usuario usu = (Usuario) sessao.getAttribute("usuAUT");
+					String nomeU = (String) sessao.getAttribute("nomeUsu");
+					log.setNome(nomeU);
+					log.setAcesso(usu.getTipo());
+					log.setPreHistorico(
+							"Não existem informações prévias sobre este objeto. Provavelmente é um novo objeto.");
+				}
+				log.setPosHistorico(historicoPos);
+				// System.out.println("id "+ log.getId());
+				LogDAO logDao = new LogDAO();
+
+				try {
+					conDAO.salvar(con);
+
+					if (logDao.inserir(log))
+						System.out.println("Log registrado com sucesso!");
+					else
+						System.out.println("Erro ao registrar log!");
+
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					System.out.println("Erro na inserção de consumo.");
+					e.printStackTrace();
+				}
+				resp.sendRedirect("consumo.do?acao=listar");
+			} else {
+				resp.getWriter().print(
+						"<script> window.alert('Voce não possui permissão para acessar essa pagina!'); location.href='login.html'; </script>");
 			}
-			resp.sendRedirect("consumo.do?acao=listar");
 		}
-		
-		else if(acao.equals("busca")){
+
+		else if (acao.equals("busca")) {
 			List<Consumo> lista;
 			String nome = req.getParameter("nome");
 			String status = req.getParameter("status");
 			String localizacao = req.getParameter("localizacao");
-			
+
 			ConsumoDAO conDao = new ConsumoDAO();
 			try {
 				lista = conDao.listaBusca(nome, status, localizacao);
@@ -231,10 +248,10 @@ public class ConsumoController extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/buscaConsumo.jsp");
 			dispatcher.forward(req, resp);
-			
+
 		}
 	}
 

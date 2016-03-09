@@ -81,8 +81,7 @@ public class PatrimonioDAO {
 
 		return null;
 	}
-	
-	
+
 	public boolean remove(int id) throws SQLException {
 		String sql = "DELETE FROM patrimonio WHERE id=?";
 		PreparedStatement preparador = con.prepareStatement(sql);

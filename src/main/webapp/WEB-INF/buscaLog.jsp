@@ -74,7 +74,7 @@ if(listaLog!=null){ %>
 		<tr>
 			<th>ID</th>
 			<th>NOME</th>
-			<th>DATA</th>
+			<th>DATA DA OPERAÇÃO</th>
 			<th>VALOR ANTERIOR</th>
 			<th>VALOR ATUAL</th>
 			<th>ACESSO</th>

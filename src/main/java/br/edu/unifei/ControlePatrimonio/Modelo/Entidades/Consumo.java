@@ -1,17 +1,15 @@
 package br.edu.unifei.ControlePatrimonio.Modelo.Entidades;
 
 public class Consumo {
-	
+
 	private int id;
 	private String Nome;
 	private int Status;
 	private String Observacao;
 	private String Localizacao;
-	
-	
-	public Consumo(){}
-	
-	
+
+	public Consumo() {
+	}
 
 	public Consumo(int id, String nome, int status, String observacao, String localizacao) {
 		super();
@@ -22,18 +20,13 @@ public class Consumo {
 		Localizacao = localizacao;
 	}
 
-	
 	public String getLocalizacao() {
 		return Localizacao;
 	}
 
-
-
 	public void setLocalizacao(String localizacao) {
 		Localizacao = localizacao;
 	}
-
-
 
 	public int getId() {
 		return id;
@@ -67,12 +60,10 @@ public class Consumo {
 		Observacao = observacao;
 	}
 
-
-
 	@Override
 	public String toString() {
 		return "Consumo [id=" + id + ", Nome=" + Nome + ", Status=" + Status + ", Observacao=" + Observacao
 				+ ", Localizacao=" + Localizacao + "]";
 	}
-		
+
 }
