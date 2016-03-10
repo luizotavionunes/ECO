@@ -41,7 +41,6 @@ function salva() {
 <% Usuario usuAux = (Usuario) request.getAttribute("usuEdit"); %>
 
 <div id="section">
-	<h2>Insere - Usuário</h2>
 
 	<form id="formulario_usuario" name="formulario_cadastro" method="post">
 		<fieldset>

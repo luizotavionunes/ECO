@@ -56,7 +56,7 @@
       </ul>
     </li>
     
-      <li><a href="#">Gerenciar Usuarios</a>
+      <li><a href="#">Usuarios</a>
       <ul>
         <li><a href="usuario.do?acao=cad">Inserir</a></li>
         <li><a href="usuario.do?acao=listar">Listar</a></li>

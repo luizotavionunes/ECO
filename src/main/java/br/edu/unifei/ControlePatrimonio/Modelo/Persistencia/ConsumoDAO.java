@@ -12,10 +12,25 @@ import javax.management.StringValueExp;
 import br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Consumo;
 import br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Log;
 
+/**
+ * Classe de acesso aos dados da tabela consumo
+ * 
+ * @author Estagio
+ *
+ */
 public class ConsumoDAO {
 
 	private Connection con = ConexaoFactory.getConnection();
 
+	/**
+	 * Método para inserção de registros na tabela consumo
+	 * 
+	 * @param Objeto
+	 *            do tipo consumo
+	 * @return Verdadeiro caso a inserção seja bem sucedida e falso caso
+	 *         contrário
+	 * @throws SQLException
+	 */
 	public boolean inserir(Consumo consumo) throws SQLException {
 		String sql = "INSERT INTO consumo (id, nome, status, observacao, localizacao) VALUES (null, ?, ?, ?, ?)";
 		PreparedStatement preparador = con.prepareStatement(sql);
@@ -45,6 +60,16 @@ public class ConsumoDAO {
 
 	}
 
+	/**
+	 * Este método é responsável por realizar a exclusão de um determinado
+	 * registro da tabela consumo
+	 * 
+	 * @param Numero
+	 *            de identificação do registro a ser excluido (id)
+	 * @return Verdadeiro caso a remoçao seja bem sucedida e falso caso
+	 *         contrário
+	 * @throws SQLException
+	 */
 	public boolean remove(int ide) throws SQLException {
 		String sql = "DELETE FROM consumo WHERE id=?";
 		PreparedStatement preparador = con.prepareStatement(sql);
@@ -70,6 +95,14 @@ public class ConsumoDAO {
 
 	}
 
+	/**
+	 * Método responsável por fazer o update de dados da tabela consumo
+	 * 
+	 * @param Objeto
+	 *            do tipo consumo
+	 * @return Verdadeiro caso a edição seja bem sucedida e falso caso contrário
+	 * @throws SQLException
+	 */
 	public boolean alterar(Consumo consumo) throws SQLException {
 		String sql = "UPDATE consumo set nome=?, status=?, localizacao=?, observacao=? WHERE id=" + consumo.getId();
 		PreparedStatement preparador = con.prepareStatement(sql);
@@ -99,6 +132,12 @@ public class ConsumoDAO {
 
 	}
 
+	/**
+	 * Método responsável por listar todos registros da tabela consumo
+	 * 
+	 * @return Lista de objetos do tipo consumo
+	 * @throws SQLException
+	 */
 	public List<Consumo> listarTodos() throws SQLException {
 		String sql = "SELECT * FROM consumo";
 		PreparedStatement preparador = con.prepareStatement(sql);
@@ -131,6 +170,13 @@ public class ConsumoDAO {
 		return null;
 	}
 
+	/**
+	 * Método utilizado para editar ou inserir registros na tabela consumo
+	 * 
+	 * @param Objeto
+	 *            do tipo consumo
+	 * @throws SQLException
+	 */
 	public void salvar(Consumo consumo) throws SQLException {
 		// System.out.println("Id do consumougig: " + consumo.getId());
 		if (consumo.getId() != 0 && consumo != null) {
@@ -143,6 +189,18 @@ public class ConsumoDAO {
 
 	}
 
+	/**
+	 * Método responsável por realizar buscas nos registros da tabela consumo
+	 * 
+	 * @param String
+	 *            nome do obeto a ser pesquisado
+	 * @param String
+	 *            status do objeto a ser pesquisado
+	 * @param String
+	 *            Localização do objeto a ser pesquisdado
+	 * @return Lista de objetos do tipo consumo
+	 * @throws SQLException
+	 */
 	public List<Consumo> listaBusca(String nome, String status, String localizacao) throws SQLException {
 		System.out.println("statusFRomServ " + status);
 		String sql = null;
@@ -202,6 +260,17 @@ public class ConsumoDAO {
 		return null;
 	}
 
+	/**
+	 * Método utilizado para exportação de registros em csv da tabela consumo
+	 * 
+	 * @param String
+	 *            nome do obeto a ser pesquisado
+	 * @param String
+	 *            status do objeto a ser pesquisado
+	 * @param String
+	 *            Localização do objeto a ser pesquisdado
+	 * @throws SQLException
+	 */
 	public void exportarItens(String nome, String status, String localizacao) throws SQLException {
 
 		System.out.println("statusFRomServ " + status);
@@ -255,6 +324,15 @@ public class ConsumoDAO {
 		}
 	}
 
+	/**
+	 * Método responsável por realizar a busca de um determinado registro na
+	 * tabela consumo
+	 * 
+	 * @param Numero
+	 *            de identificação do objeto a ser buscado em string (id)
+	 * @return Objeto do tipo consumo
+	 * @throws SQLException
+	 */
 	public Consumo buscaId(String id) throws SQLException {
 		Consumo consumo = new Consumo();
 

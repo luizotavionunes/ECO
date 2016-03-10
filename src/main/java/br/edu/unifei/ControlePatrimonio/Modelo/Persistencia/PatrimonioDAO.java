@@ -11,10 +11,25 @@ import java.util.List;
 
 import br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Patrimonio;
 
+/**
+ * Classe de acesso aos dados da tabela patrimonio
+ * 
+ * @author Estagio
+ *
+ */
 public class PatrimonioDAO {
 
 	private Connection con = ConexaoFactory.getConnection();
 
+	/**
+	 * Método para inserção de registros na tabela patrimonio
+	 * 
+	 * @param Objeto
+	 *            do tipo patrimonio
+	 * @return Verdadeiro caso a inserção seja bem sucedida e falso caso
+	 *         contrário
+	 * @throws SQLException
+	 */
 	public boolean inserir(Patrimonio patrimonio) throws SQLException {
 		String sql = "INSERT INTO patrimonio (id, numero_serie, descricao_fabricante_modelo, locacao, localizacao, observacao, status, tag_patrimonio) VALUES (null, ?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement preparador = con.prepareStatement(sql);
@@ -47,6 +62,13 @@ public class PatrimonioDAO {
 
 	}
 
+	/**
+	 * Método utilizado
+	 * 
+	 * @param serial
+	 * @return
+	 * @throws SQLException
+	 */
 	public Patrimonio buscaId(int serial) throws SQLException {
 		Patrimonio patrimonio = new Patrimonio();
 
@@ -82,6 +104,15 @@ public class PatrimonioDAO {
 		return null;
 	}
 
+	/**
+	 * Método utilizado para exclusão de um registro da tabela patrimonio
+	 * 
+	 * @param Numero
+	 *            de identifcaçã odo registro a ser excluido (id)
+	 * @return Verdadeiro caso a remoçao seja bem sucedida e falso caso
+	 *         contrário
+	 * @throws SQLException
+	 */
 	public boolean remove(int id) throws SQLException {
 		String sql = "DELETE FROM patrimonio WHERE id=?";
 		PreparedStatement preparador = con.prepareStatement(sql);
@@ -107,6 +138,15 @@ public class PatrimonioDAO {
 
 	}
 
+	/**
+	 * Método utilizado para alterar registros da tabela patrimonio
+	 * 
+	 * @param Objeto
+	 *            do tipo patrimonio
+	 * @return Verdadeiro caso a inserção seja bem sucedida e falso caso
+	 *         contrário
+	 * @throws SQLException
+	 */
 	public boolean alterar(Patrimonio patrimonio) throws SQLException {
 		String sql = "UPDATE patrimonio set numero_serie=?, descricao_fabricante_modelo=?, locacao=?, localizacao=?, observacao=?, status=?, tag_patrimonio=? WHERE id=?";
 		PreparedStatement preparador = con.prepareStatement(sql);
@@ -140,6 +180,13 @@ public class PatrimonioDAO {
 
 	}
 
+	/**
+	 * Método utilizado para salvar ou inserir registros da tabela patrimonio
+	 * 
+	 * @param Objeto
+	 *            do tipo patrimonio
+	 * @throws SQLException
+	 */
 	public void salvar(Patrimonio pat) throws SQLException {
 		if (pat.getId() != 0 && pat != null)
 			alterar(pat);
@@ -148,6 +195,12 @@ public class PatrimonioDAO {
 
 	}
 
+	/**
+	 * Método utilizado para listar todos os registros da tabela patrimonio
+	 * 
+	 * @return Lista de objetos do tipo patrimonio
+	 * @throws SQLException
+	 */
 	public List<Patrimonio> listarTodos() throws SQLException {
 		String sql = "SELECT * FROM patrimonio";
 		PreparedStatement preparador = con.prepareStatement(sql);
@@ -185,6 +238,20 @@ public class PatrimonioDAO {
 
 	}
 
+	/**
+	 * Método utilizado para filtrar registros da tabela patrimonio
+	 * 
+	 * @param String
+	 *            descricao/fabricante/modelo
+	 * @param String
+	 *            status
+	 * @param String
+	 *            numero serie
+	 * @param String
+	 *            localizacao
+	 * @return Lista com objetos do tipo patrimonio
+	 * @throws SQLException
+	 */
 	public List<Patrimonio> listaBusca(String descricao_fabricante_modelo, String status, String numero_serie,
 			String localizacao) throws SQLException {
 		String sql = null;
@@ -308,6 +375,14 @@ public class PatrimonioDAO {
 
 	}
 
+	/**
+	 * Método utilizado para buscar um registro especifico da tabela patrimonio
+	 * 
+	 * @param String
+	 *            serial do objeto pesquisado
+	 * @return Objeto do tipo patrimonio
+	 * @throws SQLException
+	 */
 	public Patrimonio buscaSerial(String serial) throws SQLException {
 		Patrimonio patrimonio = new Patrimonio();
 
@@ -343,6 +418,19 @@ public class PatrimonioDAO {
 		return null;
 	}
 
+	/**
+	 * Método utilizado para exportar registros buscados na tabela patrimonio
+	 * 
+	 * @param String
+	 *            descricao/fabricante/modelo
+	 * @param String
+	 *            status
+	 * @param String
+	 *            numero serie
+	 * @param String
+	 *            localizacao
+	 * @throws SQLException
+	 */
 	public void exportarArquivos(String descricao_fabricante_modelo, String status, String numero_serie,
 			String localizacao) throws SQLException {
 

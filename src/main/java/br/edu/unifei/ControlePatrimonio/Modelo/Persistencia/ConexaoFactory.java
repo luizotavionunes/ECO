@@ -4,7 +4,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import com.mysql.jdbc.Driver;
-
+/**
+ * Classe utilizada para conectar-se com o banco de dados
+ * @author Estagio
+ *
+ */
 public class ConexaoFactory {
 
 	public static Connection getConnection() {

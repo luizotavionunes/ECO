@@ -22,6 +22,14 @@ import br.edu.unifei.ControlePatrimonio.Modelo.Persistencia.LogDAO;
 import br.edu.unifei.ControlePatrimonio.Modelo.Persistencia.PatrimonioDAO;
 import br.edu.unifei.ControlePatrimonio.util.CopiaArquivo;
 
+
+
+/**
+ * Servlet responsável por todas operações ligadas aos logs do sistema
+ * opções disponiveis: listagem e busca.
+ * @author Estagio
+ *
+ */
 @WebServlet("/logcontroller.do")
 public class LogController extends HttpServlet {
 	@Override
@@ -30,6 +38,13 @@ public class LogController extends HttpServlet {
 		super.destroy();
 	}
 
+	
+	/*
+	 * 
+	 * Método responsável por redirecionar as requisições dos usuarios ações
+	 * disponiveis: Listagem e Busca(non-Javadoc)
+	 * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	 */
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String acao = req.getParameter("acao");
@@ -39,6 +54,7 @@ public class LogController extends HttpServlet {
 		if (sessao != null)
 			usuAUT = (Usuario) sessao.getAttribute("usuAUT");
 
+		// Ação realizada para apresentar a listagem de todos os logs do sistema
 		if (acao.equals("listar")) {
 			if (usuAUT.getTipo() == 3) {
 				LogDAO logDAO = new LogDAO();
@@ -70,6 +86,7 @@ public class LogController extends HttpServlet {
 		if (sessao != null)
 			usuAUT = (Usuario) sessao.getAttribute("usuAUT");
 
+		//// Ação realizada para apresentar a listagem de logs filtrados do sistema
 		if (acao.equals("busca")) {
 			if (usuAUT.getTipo() == 3) {
 				String numero_serie = req.getParameter("serial");

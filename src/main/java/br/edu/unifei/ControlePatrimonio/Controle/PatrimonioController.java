@@ -24,9 +24,21 @@ import br.edu.unifei.ControlePatrimonio.Modelo.Persistencia.LogDAO;
 import br.edu.unifei.ControlePatrimonio.Modelo.Persistencia.PatrimonioDAO;
 import br.edu.unifei.ControlePatrimonio.util.CopiaArquivo;
 
+/**
+ * Servlet responsável por todas operações referentes ao controle de patrimonios
+ * funções diponiveis: Inserção, edição, listagem, busca e remoção
+ * @author Estagio
+ *
+ */
 @WebServlet("/patrimonio.do")
 public class PatrimonioController extends HttpServlet {
 
+	/*
+	 * 
+	 * * Método responsável por redirecionar as requisições dos usuarios ações
+	 * disponiveis: Cadastro, Edição, Remoção, Listagem e Busca (non-Javadoc)
+	 * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	 */
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// Obtendo ação desejada da URL acessada
@@ -37,6 +49,8 @@ public class PatrimonioController extends HttpServlet {
 		if (sessao != null)
 			usuAUT = (Usuario) sessao.getAttribute("usuAUT");
 
+		//Acao que redireciona para o método POST para realizar o cadastro de
+		// um item de consumo.
 		if (acao.equals("cad")) {
 			if (usuAUT.getTipo() == 3) {
 				Patrimonio pat = new Patrimonio();
@@ -56,7 +70,8 @@ public class PatrimonioController extends HttpServlet {
 				resp.getWriter().print(
 						"<script> window.alert('Voce não possui permissão para acessar essa pagina!'); location.href='login.html'; </script>");
 			}
-
+		// Ação responsável por remover um item de patrimonio de acordo com o
+		// seu serial
 		} else if (acao.equals("remover")) {
 			if (usuAUT.getTipo() == 3) {
 				String id = req.getParameter("id");
@@ -103,7 +118,7 @@ public class PatrimonioController extends HttpServlet {
 				resp.getWriter().print(
 						"<script> window.alert('Voce não possui permissão para acessar essa pagina!'); location.href='login.html'; </script>");
 			}
-
+		// Ação responsável por apresentar todos os itens de patrimonio
 		} else if (acao.equals("listar")) {
 			PatrimonioDAO patDAO = new PatrimonioDAO();
 			List<Patrimonio> lista = null;
@@ -119,11 +134,13 @@ public class PatrimonioController extends HttpServlet {
 			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/listaPatrimonio.jsp");
 			dispatcher.forward(req, resp);
 
+		// Ação que redireciona para o método POST para filtragem dos dados
 		} else if (acao.equals("buscarefinada")) {
 
 			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/buscaPatrimonio.jsp");
 			dispatcher.forward(req, resp);
-
+		// Acao que redireciona para o método POST para realizar a edição de
+		// um item de patrimonio de acordo com seu serial.
 		} else if (acao.equals("alterar")) {
 			String serial = req.getParameter("serial");
 			LogDAO logDao = new LogDAO();
@@ -160,6 +177,11 @@ public class PatrimonioController extends HttpServlet {
 
 	}
 
+	/*
+	 * 
+	 * Método responsável por realizar postagens no servidor, seja pra buscar ou inserir dados(non-Javadoc)
+	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	 */
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String acao = req.getParameter("acao");
@@ -168,7 +190,8 @@ public class PatrimonioController extends HttpServlet {
 		HttpSession sessao = req.getSession();
 		if (sessao != null)
 			usuAUT = (Usuario) sessao.getAttribute("usuAUT");
-
+		// Açao que realiza o cadastro e a edição de um item de patrimonio. Em caso
+		// de cadastro de um novo item id=0, caso contrario será uma edição
 		if (acao.equals("cad")) {
 
 			String id = req.getParameter("id");
@@ -239,7 +262,8 @@ public class PatrimonioController extends HttpServlet {
 				resp.getWriter().print(
 						"<script> window.alert('Voce não possui permissão para acessar essa pagina!'); location.href='login.html'; </script>");
 			}
-
+		// Açao que realiza a busca de um item de patrimonio de acordo com seu
+		// nome, status ou localizacao
 		} else if (acao.equals("buscarefinada")) {
 			List<Patrimonio> lista;
 			String descricao_fabricante_modelo = req.getParameter("descricao");

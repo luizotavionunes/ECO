@@ -14,6 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.DispatcherType;
 
+/**
+ * Servlet responsável por filtrar todas as requisoções do sistema.
+ * Apenas usuarios logados com sessão ativa podem acessar as funcionalidades do sistema
+ * @author Estagio
+ *
+ */
 @WebFilter(dispatcherTypes = { DispatcherType.REQUEST }, urlPatterns = "/*")
 public class GerenciaAutenticacao implements Filter {
 

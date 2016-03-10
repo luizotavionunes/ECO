@@ -16,10 +16,22 @@ import br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Patrimonio;
 import br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Usuario;
 import br.edu.unifei.ControlePatrimonio.Modelo.Persistencia.PatrimonioDAO;
 import br.edu.unifei.ControlePatrimonio.Modelo.Persistencia.UsuarioDAO;
-
+/**
+ * Servlet responsável por todas operações referentes ao controle de usuarios
+ * funções diponiveis: Inserção, edição, listagem, e remoção
+ * @author Estagio
+ *
+ */
 @WebServlet("/usuario.do")
 public class UsuarioController extends HttpServlet {
 
+	
+	/*
+	 * 
+	 * Método responsável por redirecionar as requisições dos usuarios ações
+	 * disponiveis: Cadastro, Edição, Remoção, Listagem (non-Javadoc)
+	 * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	 */
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String acao = req.getParameter("acao");
@@ -28,7 +40,8 @@ public class UsuarioController extends HttpServlet {
 		HttpSession sessao = req.getSession();
 		if (sessao != null)
 			usuAUT = (Usuario) sessao.getAttribute("usuAUT");
-
+		// Acao que redireciona para o método POST para realizar o cadastro de
+		// usuarios
 		if (acao.equals("cad")) {
 			if (usuAUT.getTipo() == 3) {
 				Usuario usu = new Usuario();
@@ -45,6 +58,8 @@ public class UsuarioController extends HttpServlet {
 				resp.getWriter().print(
 						"<script> window.alert('Voce não possui permissão para acessar essa pagina!'); location.href='login.html'; </script>");
 			}
+		// Ação responsável por remover usuarios de acordo com o
+		// seu id
 		} else if (acao.equals("remover")) {
 			if (usuAUT.getTipo() == 3) {
 				String id = req.getParameter("id");
@@ -63,7 +78,7 @@ public class UsuarioController extends HttpServlet {
 				resp.getWriter().print(
 						"<script> window.alert('Voce não possui permissão para acessar essa pagina!'); location.href='login.html'; </script>");
 			}
-
+		// Ação responsável por apresentar todos os usuarios
 		} else if (acao.equals("listar")) {
 			if (usuAUT.getTipo() == 3) {
 				UsuarioDAO usuDAO = new UsuarioDAO();
@@ -77,14 +92,6 @@ public class UsuarioController extends HttpServlet {
 					e.printStackTrace();
 				}
 
-				/*
-				 * for (int i = 0; i < lista.size(); i++) { System.out.println(
-				 * "Numero de serie: " + lista.get(i).getNumero_serie() +
-				 * " Descricao: " +
-				 * lista.get(i).getDescricao_fabricante_modelo());
-				 * 
-				 * }
-				 */
 
 				req.setAttribute("listaUsu", lista);
 				RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/listaUsuario.jsp");
@@ -93,7 +100,8 @@ public class UsuarioController extends HttpServlet {
 				resp.getWriter().print(
 						"<script> window.alert('Voce não possui permissão para acessar essa pagina!'); location.href='login.html'; </script>");
 			}
-
+		// Acao que redireciona para o método POST para realizar a edição de
+		// um item de consumo de acordo com seu id.
 		} else if (acao.equals("alterar")) {
 			if (usuAUT.getTipo() == 3) {
 				String id = req.getParameter("id");
@@ -131,6 +139,11 @@ public class UsuarioController extends HttpServlet {
 
 	}
 
+	/*
+	 * 
+	 * Método responsável por realizar postagens no servidor para inserir dados(n(non-Javadoc)
+	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	 */
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String id = req.getParameter("id");
@@ -142,10 +155,10 @@ public class UsuarioController extends HttpServlet {
 		if (sessao != null)
 			usuAUT = (Usuario) sessao.getAttribute("usuAUT");
 
-		// Usuario usu = (Usuario) req.getAttribute("usuEdit");
+
 		Usuario usu = new Usuario();
 
-		// System.out.println("Id do produto: " + patAux.getId());
+		
 		if (id != null)
 			usu.setId(Integer.parseInt(id));
 

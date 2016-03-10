@@ -1,12 +1,13 @@
 package br.edu.unifei.ControlePatrimonio.Modelo.Entidades;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Log {
 
 	private int id;
 	private String nome;
-	private Date data;
+	private Timestamp data;
 	private String preHistorico;
 	private String posHistorico;
 	private int Acesso;
@@ -14,7 +15,7 @@ public class Log {
 	public Log() {
 	}
 
-	public Log(int id, String nome, Date data, String preHistorico, String posHistorico, int acesso) {
+	public Log(int id, String nome, Timestamp data, String preHistorico, String posHistorico, int acesso) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -40,11 +41,11 @@ public class Log {
 		this.nome = nome;
 	}
 
-	public Date getData() {
+	public Timestamp getData() {
 		return data;
 	}
 
-	public void setData(Date data) {
+	public void setData(Timestamp data) {
 		this.data = data;
 	}
 

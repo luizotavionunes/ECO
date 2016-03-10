@@ -21,9 +21,23 @@ import br.edu.unifei.ControlePatrimonio.Modelo.Persistencia.LogDAO;
 import br.edu.unifei.ControlePatrimonio.Modelo.Persistencia.PatrimonioDAO;
 import br.edu.unifei.ControlePatrimonio.util.CopiaArquivo;
 
+
+/**
+ * Servlet responsável por todas operações ligadas a bens de consumo.
+ * opções disponiveis: Cadastro, Edição, Remoção, Listagem e Busca
+ * @author Estagio
+ *
+ */
 @WebServlet("/consumo.do")
 public class ConsumoController extends HttpServlet {
 
+	/*
+	 * Método responsável por redirecionar as requisições dos usuarios ações
+	 * disponiveis: Cadastro, Edição, Remoção, Listagem e Busca (non-Javadoc)
+	 * 
+	 * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.
+	 * HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	 */
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -34,6 +48,8 @@ public class ConsumoController extends HttpServlet {
 		if (sessao != null)
 			usuAUT = (Usuario) sessao.getAttribute("usuAUT");
 
+		// Acao que redireciona para o método POST para realizar o cadastro de
+		// um item de consumo.
 		if (acao.equals("cad")) {
 			if (usuAUT.getTipo() == 3) {
 				Consumo con = null;
@@ -51,9 +67,11 @@ public class ConsumoController extends HttpServlet {
 						"<script> window.alert('Voce não possui permissão para acessar essa pagina!'); location.href='login.html'; </script>");
 			}
 
+			// Ação que redireciona para o método POST para filtragem dos dados
 		} else if (acao.equals("buscarefinada")) {
 			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/buscaConsumo.jsp");
 			dispatcher.forward(req, resp);
+		// Ação responsável por apresentar todos os itens de consumo
 		} else if (acao.equals("listar")) {
 			ConsumoDAO conDAO = new ConsumoDAO();
 			List<Consumo> lista = null;
@@ -68,13 +86,15 @@ public class ConsumoController extends HttpServlet {
 			req.setAttribute("listaCon", lista);
 			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/listaConsumo.jsp");
 			dispatcher.forward(req, resp);
+		// Acao que redireciona para o método POST para realizar a edição de
+		// um item de consumo de acordo com seu id.
 		} else if (acao.equals("alterar")) {
 			String id = req.getParameter("serial");
 			LogDAO logDao = new LogDAO();
 			Log log = new Log();
 
 			Consumo con = null;
-			;
+
 			ConsumoDAO conDAO = new ConsumoDAO();
 			try {
 				con = conDAO.buscaId(id);
@@ -96,6 +116,8 @@ public class ConsumoController extends HttpServlet {
 			req.setAttribute("consumoEdit", con);
 			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/registraConsumo.jsp");
 			dispatcher.forward(req, resp);
+			// Ação responsável por remover item de consumo de acordo com o
+			// seu id
 		} else if (acao.equals("remover")) {
 			if (usuAUT.getTipo() == 3) {
 				String id = req.getParameter("id");
@@ -142,6 +164,13 @@ public class ConsumoController extends HttpServlet {
 		}
 	}
 
+	/*
+	 * 
+	 * Método responsável por realizar postagens no servidor, seja pra buscar ou inserir dados(non-Javadoc)
+	 * 
+	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.
+	 * HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	 */
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -151,7 +180,8 @@ public class ConsumoController extends HttpServlet {
 		HttpSession sessao = req.getSession();
 		if (sessao != null)
 			usuAUT = (Usuario) sessao.getAttribute("usuAUT");
-
+		// Açao que realiza o cadastro e a edição de um item de consumo. Em caso
+		// de cadastro de um novo item id=0, caso contrario será uma edição
 		if (acao.equals("cad")) {
 
 			String id = req.getParameter("id");
@@ -162,15 +192,6 @@ public class ConsumoController extends HttpServlet {
 			if (usuAUT.getTipo() == 3
 					|| (((usuAUT.getTipo() == 2 || usuAUT.getTipo() == 1)) && Integer.parseInt(id) != 0)) {
 				Consumo con = new Consumo();
-
-				/*
-				 * if (!status.equals("1") || !status.equals("2")) {
-				 * resp.getWriter() .print(
-				 * "<script> window.alert('Selecione o Status!'); location.href='consumo.do?acao=alterar&serial="
-				 * + id + "'; </script>");
-				 * 
-				 * }
-				 */
 
 				con.setId(Integer.parseInt(id));
 
@@ -185,9 +206,6 @@ public class ConsumoController extends HttpServlet {
 				String historicoPos = "Nome: " + con.getNome() + " Status: " + con.getStatus() + " Localização: "
 						+ con.getLocalizacao() + " Observacao: " + con.getObservacao();
 
-				// System.out.println("");
-
-				// System.out.println(historicoPos);
 				ConsumoDAO conDAO = new ConsumoDAO();
 				Log log = new Log();
 				if (con.getId() != 0)
@@ -201,7 +219,6 @@ public class ConsumoController extends HttpServlet {
 							"Não existem informações prévias sobre este objeto. Provavelmente é um novo objeto.");
 				}
 				log.setPosHistorico(historicoPos);
-				// System.out.println("id "+ log.getId());
 				LogDAO logDao = new LogDAO();
 
 				try {
@@ -224,6 +241,8 @@ public class ConsumoController extends HttpServlet {
 			}
 		}
 
+		// Açao que realiza a busca de um item de consumo de acordo com seu
+		// nome, status ou localizacao
 		else if (acao.equals("busca")) {
 			List<Consumo> lista;
 			String nome = req.getParameter("nome");
@@ -233,6 +252,7 @@ public class ConsumoController extends HttpServlet {
 			ConsumoDAO conDao = new ConsumoDAO();
 			try {
 				lista = conDao.listaBusca(nome, status, localizacao);
+				// Salvando os itens buscados em um arquivo csv
 				File fileOrigem = new File("C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/");
 				File fileDestino = new File("C:/Users/Estagio/workspace/ControlePatrimonio/src/main/webapp/dados/");
 				File auxFile = new File("C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivoConsumo.csv");
