@@ -22,7 +22,7 @@ import br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Patrimonio;
 import br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Usuario;
 import br.edu.unifei.ControlePatrimonio.Modelo.Persistencia.LogDAO;
 import br.edu.unifei.ControlePatrimonio.Modelo.Persistencia.PatrimonioDAO;
-import br.edu.unifei.ControlePatrimonio.util.CopiaArquivo;
+
 
 /**
  * Servlet responsável por todas operações referentes ao controle de patrimonios
@@ -271,27 +271,20 @@ public class PatrimonioController extends HttpServlet {
 			String numero_serie = req.getParameter("numero_serie");
 			String localizacao = req.getParameter("localizacao");
 
+			
+			
 			PatrimonioDAO patDao = new PatrimonioDAO();
 			try {
 				lista = patDao.listaBusca(descricao_fabricante_modelo, status, numero_serie, localizacao);
-				File fileOrigem = new File("C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/");
-				File fileDestino = new File("C:/Users/Estagio/workspace/ControlePatrimonio/src/main/webapp/dados/");
-				File auxFile = new File("C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivoPatrimonio.csv");
-				if (auxFile.exists()) {
-					auxFile.delete();
-				}
+				
 				patDao.exportarArquivos(descricao_fabricante_modelo, status, numero_serie, localizacao);
-				CopiaArquivo aux = new CopiaArquivo();
+			
+				
+				String cmd2[] = {"bash","-c","echo scpECO2016 | sudo -S mv -f /tmp/arquivoPatrimonio.csv /opt/tomcat8/webapps/ControlePatrimonio/dados/arquivoPatrimonio.csv"};
+				Runtime.getRuntime().exec(cmd2); 
 
-				aux.copyFiles(fileOrigem, fileDestino);
-				// for (int i = 0; i < lista.size(); i++) {
-				// System.out.println("Numero de serie: " +
-				// lista.get(i).getNumero_serie() + " Descricao: "
-				// + lista.get(i).getDescricao_fabricante_modelo());
-
-				// }
 				req.setAttribute("listaPatRefinada", lista);
-			} catch (SQLException e) {
+			} catch (SQLException | InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

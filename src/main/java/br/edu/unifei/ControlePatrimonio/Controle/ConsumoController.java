@@ -19,7 +19,7 @@ import br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Usuario;
 import br.edu.unifei.ControlePatrimonio.Modelo.Persistencia.ConsumoDAO;
 import br.edu.unifei.ControlePatrimonio.Modelo.Persistencia.LogDAO;
 import br.edu.unifei.ControlePatrimonio.Modelo.Persistencia.PatrimonioDAO;
-import br.edu.unifei.ControlePatrimonio.util.CopiaArquivo;
+
 
 
 /**
@@ -252,17 +252,11 @@ public class ConsumoController extends HttpServlet {
 			ConsumoDAO conDao = new ConsumoDAO();
 			try {
 				lista = conDao.listaBusca(nome, status, localizacao);
-				// Salvando os itens buscados em um arquivo csv
-				File fileOrigem = new File("C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/");
-				File fileDestino = new File("C:/Users/Estagio/workspace/ControlePatrimonio/src/main/webapp/dados/");
-				File auxFile = new File("C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivoConsumo.csv");
-				if (auxFile.exists()) {
-					auxFile.delete();
-				}
 				conDao.exportarItens(nome, status, localizacao);
-				CopiaArquivo aux = new CopiaArquivo();
-
-				aux.copyFiles(fileOrigem, fileDestino);
+				
+				String cmd2[] = {"bash","-c","echo scpECO2016 | sudo -S mv -f /tmp/arquivoConsumo.csv /opt/tomcat8/webapps/ControlePatrimonio/dados/arquivoConsumo.csv"};
+				Runtime.getRuntime().exec(cmd2); 
+				
 				req.setAttribute("listaConRefinada", lista);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block

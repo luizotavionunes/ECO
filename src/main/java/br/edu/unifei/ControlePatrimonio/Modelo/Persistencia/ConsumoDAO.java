@@ -273,7 +273,7 @@ public class ConsumoDAO {
 	 */
 	public void exportarItens(String nome, String status, String localizacao) throws SQLException {
 
-		System.out.println("statusFRomServ " + status);
+		//System.out.println("statusFRomServ " + status);
 		String sql = null;
 		int status_ok;
 		if (status.equals("0")) {
@@ -286,30 +286,30 @@ public class ConsumoDAO {
 
 		if (nome == null && status == null && localizacao != null) {
 			sql = "SELECT * from consumo WHERE localizacao LIKE '%" + localizacao
-					+ "%' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivoConsumo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
+					+ "%' INTO OUTFILE '/tmp/arquivoConsumo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
 		} else if (nome == null && status != null && localizacao == null) {
 			sql = "SELECT * from consumo WHERE status LIKE '%" + status_ok
-					+ "%' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivoConsumo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
+					+ "%' INTO OUTFILE '/tmp/arquivoConsumo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
 		} else if (nome != null && status == null && localizacao == null) {
 			sql = "SELECT * from consumo WHERE nome LIKE '%" + nome
-					+ "%' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivoConsumo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
+					+ "%' INTO OUTFILE '/tmp/arquivoConsumo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
 		} else if (nome == null && status != null && localizacao != null) {
 			sql = "SELECT * from consumo WHERE status LIKE '%" + status_ok + "%' AND localizacao LIKE '%" + localizacao
-					+ "%' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivoConsumo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
+					+ "%' INTO OUTFILE '/tmp/arquivoConsumo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
 		} else if (nome != null && status == null && localizacao != null) {
 			sql = "SELECT * from consumo WHERE nome LIKE '%" + nome + "%' AND localizacao LIKE '%" + localizacao
-					+ "%' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivoConsumo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
+					+ "%' INTO OUTFILE '/tmp/arquivoConsumo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
 		} else if (nome != null && status != null && localizacao == null) {
 			sql = "SELECT * from consumo WHERE nome LIKE '%" + nome + "%' AND status LIKE '%" + status_ok
-					+ "%' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivoConsumo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
+					+ "%' INTO OUTFILE '/tmp/arquivoConsumo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
 		} else if (nome != null && status != null && localizacao != null) {
 			sql = "SELECT * FROM consumo WHERE nome Like '%" + nome + "%' AND status LIKE '%" + status_ok
 					+ "%' AND localizacao LIKE '%" + localizacao
-					+ "%' INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivoConsumo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
+					+ "%' INTO OUTFILE '/tmp/arquivoConsumo.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
 		}
 
 		PreparedStatement preparador = con.prepareStatement(sql);
-		System.out.println("Query " + sql);
+		//System.out.println("Query " + sql);
 		try {
 			preparador.executeQuery();
 		} catch (Exception e) {

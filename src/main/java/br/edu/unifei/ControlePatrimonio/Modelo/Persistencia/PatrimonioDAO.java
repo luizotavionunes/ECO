@@ -1,5 +1,6 @@
 package br.edu.unifei.ControlePatrimonio.Modelo.Persistencia;
 
+import java.io.IOException;
 import java.sql.Connection;
 
 import java.sql.PreparedStatement;
@@ -430,9 +431,11 @@ public class PatrimonioDAO {
 	 * @param String
 	 *            localizacao
 	 * @throws SQLException
+	 * @throws InterruptedException 
+	 * @throws IOException 
 	 */
 	public void exportarArquivos(String descricao_fabricante_modelo, String status, String numero_serie,
-			String localizacao) throws SQLException {
+			String localizacao) throws SQLException, InterruptedException, IOException {
 
 		String sql = null;
 		int status_ok;
@@ -448,7 +451,7 @@ public class PatrimonioDAO {
 			numero_serie = null;
 		if (localizacao.equals(""))
 			localizacao = null;
-
+		
 		if (descricao_fabricante_modelo == null && status == null && numero_serie == null && localizacao != null) {
 			sql = "SELECT * from patrimonio WHERE localizacao LIKE'%" + localizacao
 					+ "%' INTO OUTFILE '/tmp/arquivoPatrimonio.csv' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n'";
@@ -540,6 +543,7 @@ public class PatrimonioDAO {
 		PreparedStatement preparador = con.prepareStatement(sql);
 		try {
 			preparador.executeQuery();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

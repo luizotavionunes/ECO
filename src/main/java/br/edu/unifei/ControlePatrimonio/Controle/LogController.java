@@ -20,7 +20,7 @@ import br.edu.unifei.ControlePatrimonio.Modelo.Entidades.Usuario;
 import br.edu.unifei.ControlePatrimonio.Modelo.Persistencia.ConsumoDAO;
 import br.edu.unifei.ControlePatrimonio.Modelo.Persistencia.LogDAO;
 import br.edu.unifei.ControlePatrimonio.Modelo.Persistencia.PatrimonioDAO;
-import br.edu.unifei.ControlePatrimonio.util.CopiaArquivo;
+
 
 
 

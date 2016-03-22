@@ -97,8 +97,7 @@ function salva() {
 			<div class="row">
 				<label class="col1">Observação:&nbsp;&nbsp;</label> 
 				<span class="col2"> 
-					<textarea style="overflow: auto; resize: none" cols=35 rows=3 name="observacao"><%= Pat.getObservacao() %>
-					</textarea>
+					<textarea style="overflow: auto; resize: none" cols=35 rows=3 name="observacao"><%= Pat.getObservacao() %></textarea>
 				</span>
 			</div>
 			<br />
