@@ -22,13 +22,6 @@ import javax.servlet.DispatcherType;
  */
 @WebFilter(dispatcherTypes = { DispatcherType.REQUEST }, urlPatterns = "/*")
 public class GerenciaAutenticacao implements Filter {
-
-	@Override
-	public void destroy() {
-		// TODO Auto-generated method stub
-
-	}
-
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
@@ -44,6 +37,12 @@ public class GerenciaAutenticacao implements Filter {
 		} else {
 			httpResponse.sendRedirect("login.html");
 		}
+	}
+	
+		@Override
+	public void destroy() {
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override
