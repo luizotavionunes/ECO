@@ -50,7 +50,7 @@ public class PatrimonioController extends HttpServlet {
 			usuAUT = (Usuario) sessao.getAttribute("usuAUT");
 
 		//Acao que redireciona para o método POST para realizar o cadastro de
-		// um item de consumo.
+		// um item de patrimonio.
 		if (acao.equals("cad")) {
 			if (usuAUT.getTipo() == 3) {
 				Patrimonio pat = new Patrimonio();
